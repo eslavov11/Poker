@@ -101,7 +101,7 @@
             this.bRaise.Name = "bRaise";
             this.bRaise.Size = new System.Drawing.Size(124, 62);
             this.bRaise.TabIndex = 4;
-            this.bRaise.Text = "Raise";
+            this.bRaise.Text = "raise";
             this.bRaise.UseVisualStyleBackColor = true;
             this.bRaise.Click += new System.EventHandler(this.bRaise_Click);
             // 
@@ -353,7 +353,7 @@
             this.DoubleBuffered = true;
             this.Name = "Form1";
             this.Text = "GLS Texas Poker";
-            this.Layout += new System.Windows.Forms.LayoutEventHandler(this.Layout_Change);
+            this.Layout += new System.Windows.Forms.LayoutEventHandler(this.ChangeLayout);
             this.ResumeLayout(false);
             this.PerformLayout();
 
