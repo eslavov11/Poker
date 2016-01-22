@@ -138,8 +138,8 @@ namespace Poker
 
         private int t = 60;
         private int i;
-        private int bb = 500;
-        private int sb = 250;
+        private int bigBlindValue = 500;
+        private int smallBlindValue = 250;
         private int up = 10000000;
         private int turnCount = 0;
         #endregion
@@ -147,7 +147,7 @@ namespace Poker
         public Form1()
         {
             //playersGameStatus.Add(PFturn); playersGameStatus.Add(B1Fturn); playersGameStatus.Add(B2Fturn); playersGameStatus.Add(B3Fturn); playersGameStatus.Add(B4Fturn); playersGameStatus.Add(B5Fturn);
-            this.call = bb;
+            this.call = this.bigBlindValue;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Updates.Start();
@@ -172,19 +172,19 @@ namespace Poker
             this.timer.Tick += this.TimerTick;
             this.Updates.Interval = (1 * 1 * 100);
             this.Updates.Tick += this.UpdateTick;
-            this.tbBB.Visible = true;
-            this.tbSB.Visible = true;
+            this.tbBigBlind.Visible = true;
+            this.tbSmallBlind.Visible = true;
             this.bBB.Visible = true;
             this.bSB.Visible = true;
-            this.tbBB.Visible = true;
-            this.tbSB.Visible = true;
+            this.tbBigBlind.Visible = true;
+            this.tbSmallBlind.Visible = true;
             this.bBB.Visible = true;
             this.bSB.Visible = true;
-            this.tbBB.Visible = false;
-            this.tbSB.Visible = false;
+            this.tbBigBlind.Visible = false;
+            this.tbSmallBlind.Visible = false;
             this.bBB.Visible = false;
             this.bSB.Visible = false;
-            this.tbRaise.Text = (bb * 2).ToString();
+            this.tbRaise.Text = (this.bigBlindValue * 2).ToString();
         }
 
         async Task Shuffle()
@@ -205,25 +205,31 @@ namespace Poker
             Bitmap backImage = new Bitmap("Assets\\Back\\Back.png");
             int horizontal = 580;
             int vertical = 480;
-            Random r = new Random();
 
-            for (i = this.cardsImageLocation.Length; i > 0; i--)
+            var randomCardLocation = new Random();
+
+            //Shuffle cards location
+            for (int cardLocationIndex = DefaultCardsInDesk;
+                cardLocationIndex > 0;
+                cardLocationIndex--)
             {
-                int j = r.Next(i);
-                var k = this.cardsImageLocation[j];
-                this.cardsImageLocation[j] = this.cardsImageLocation[i - 1];
-                this.cardsImageLocation[i - 1] = k;
+                //Swaps two cards locations from the desk, taking one random and replacing it with the 
+                //card location from the loop index
+                int randomCardIndex = randomCardLocation.Next(cardLocationIndex);
+                string oldCardLocation = this.cardsImageLocation[randomCardIndex];
+                this.cardsImageLocation[randomCardIndex] = this.cardsImageLocation[cardLocationIndex - 1];
+                this.cardsImageLocation[cardLocationIndex - 1] = oldCardLocation;
             }
 
             for (i = 0; i < 17; i++)
             {
 
                 this.deskCardsAsImages[i] = Image.FromFile(this.cardsImageLocation[i]);
-                var charsToRemove = new string[] { "Assets\\Cards\\", ".png" };
-                foreach (var charToRemove in charsToRemove)
+                var partsToRemove = new [] { "Assets\\Cards\\", ".png" };
+                foreach (string part in partsToRemove)
                 {
                     this.cardsImageLocation[i] = this.cardsImageLocation[i]
-                        .Replace(charToRemove, string.Empty);
+                        .Replace(part, string.Empty);
                 }
 
                 this.reservedGameCardsIndeces[i] = int.Parse(this.cardsImageLocation[i]) - 1;
@@ -591,10 +597,11 @@ namespace Poker
                     }
                     timer.Start();
                 }
-#endregion
+                #endregion
             }
 
             //TODO: GameOver state
+            #region GameOverState?
             if (foldedPlayers == 5)
             {
                 DialogResult dialogResult =
@@ -625,6 +632,7 @@ namespace Poker
                 bRaise.Enabled = true;
                 bFold.Enabled = true;
             }
+            #endregion
         }
 
         async Task Turns()
@@ -2275,7 +2283,7 @@ namespace Poker
                 this.b5Call = 0;
                 this.b5Raise = 0;
                 this.last = 0;
-                this.call = bb;
+                this.call = this.bigBlindValue;
                 this.raise = 0;
                 this.cardsImageLocation = Directory.GetFiles("Assets\\Cards", "*.png", SearchOption.TopDirectoryOnly);
                 this.playersGameStatus.Clear();
@@ -2503,7 +2511,7 @@ namespace Poker
             this.bot3Panel.Visible = false;
             this.bot4Panel.Visible = false;
             this.bot5Panel.Visible = false;
-            this.call = bb; this.raise = 0;
+            this.call = this.bigBlindValue; this.raise = 0;
             this.foldedPlayers = 5;
             this.type = 0;
             this.rounds = 0;
@@ -3392,7 +3400,8 @@ namespace Poker
             await Turns();
         }
 
-        private void bAdd_Click(object sender, EventArgs e)
+        //TODO: validate chips are integer
+        private void bAddChipsClick(object sender, EventArgs e)
         {
             if (tbAdd.Text == "")
             {
@@ -3408,100 +3417,102 @@ namespace Poker
                 bot5Chips += int.Parse(tbAdd.Text);
             }
 
-            tbChips.Text = "Chips : " + Chips.ToString();
+            tbChips.Text = "Chips : " + Chips;
         }
 
         private void bOptions_Click(object sender, EventArgs e)
         {
-            tbBB.Text = bb.ToString();
-            tbSB.Text = sb.ToString();
+            this.tbBigBlind.Text = this.bigBlindValue.ToString();
+            this.tbSmallBlind.Text = this.smallBlindValue.ToString();
 
-            if (tbBB.Visible == false)
+            if (this.tbBigBlind.Visible == false)
             {
-                tbBB.Visible = true;
-                tbSB.Visible = true;
+                this.tbBigBlind.Visible = true;
+                this.tbSmallBlind.Visible = true;
                 bBB.Visible = true;
                 bSB.Visible = true;
             }
             else
             {
-                tbBB.Visible = false;
-                tbSB.Visible = false;
+                this.tbBigBlind.Visible = false;
+                this.tbSmallBlind.Visible = false;
                 bBB.Visible = false;
                 bSB.Visible = false;
             }
         }
 
-        private void bSB_Click(object sender, EventArgs e)
+        //TODO: Small and big blind have similar logic, extract in different method
+        private void bSmallBlindClick(object sender, EventArgs e)
         {
-            int parsedValue;
-            if (tbSB.Text.Contains(",") || tbSB.Text.Contains("."))
+            int smallBlindNewValue;
+            if (this.tbSmallBlind.Text.Contains(",") || this.tbSmallBlind.Text.Contains("."))
             {
                 MessageBox.Show("The Small Blind can be only round number !");
-                tbSB.Text = sb.ToString();
+                this.tbSmallBlind.Text = this.smallBlindValue.ToString();
 
                 return;
             }
 
-            if (!int.TryParse(tbSB.Text, out parsedValue))
+            if (!int.TryParse(this.tbSmallBlind.Text, out smallBlindNewValue))
             {
                 MessageBox.Show("This is a number only field");
-                tbSB.Text = sb.ToString();
+                this.tbSmallBlind.Text = this.smallBlindValue.ToString();
 
                 return;
             }
 
-            if (int.Parse(tbSB.Text) > 100000)
+            if (int.Parse(this.tbSmallBlind.Text) > 100000)
             {
                 MessageBox.Show("The maximum of the Small Blind is 100 000 $");
-                tbSB.Text = sb.ToString();
+                this.tbSmallBlind.Text = this.smallBlindValue.ToString();
             }
 
-            if (int.Parse(tbSB.Text) < 250)
+            if (int.Parse(this.tbSmallBlind.Text) < 250)
             {
                 MessageBox.Show("The minimum of the Small Blind is 250 $");
             }
 
-            if (int.Parse(tbSB.Text) >= 250 && int.Parse(tbSB.Text) <= 100000)
+            if (int.Parse(this.tbSmallBlind.Text) >= 250 && int.Parse(this.tbSmallBlind.Text) <= 100000)
             {
-                sb = int.Parse(tbSB.Text);
+                this.smallBlindValue = int.Parse(this.tbSmallBlind.Text);
                 MessageBox.Show(
                     "The changes have been saved ! They will become available the next hand you play. ");
             }
         }
 
-        private void bBB_Click(object sender, EventArgs e)
+        private void bBigBlindClick(object sender, EventArgs e)
         {
-            int parsedValue;
-            if (tbBB.Text.Contains(",") || tbBB.Text.Contains("."))
+            int bigBlindNewValue;
+            if (this.tbBigBlind.Text.Contains(",") || this.tbBigBlind.Text.Contains("."))
             {
                 MessageBox.Show("The Big Blind can be only round number !");
-                tbBB.Text = bb.ToString();
+                this.tbBigBlind.Text = this.bigBlindValue.ToString();
                 return;
             }
 
-            if (!int.TryParse(tbSB.Text, out parsedValue))
+            if (!int.TryParse(tbBigBlind.Text, out bigBlindNewValue))
             {
                 MessageBox.Show("This is a number only field");
-                tbSB.Text = bb.ToString();
+                tbBigBlind.Text = this.bigBlindValue.ToString();
                 return;
             }
 
-            if (int.Parse(tbBB.Text) > 200000)
+            if (int.Parse(this.tbBigBlind.Text) > 200000)
             {
                 MessageBox.Show("The maximum of the Big Blind is 200 000");
-                tbBB.Text = bb.ToString();
+                this.tbBigBlind.Text = this.bigBlindValue.ToString();
             }
 
-            if (int.Parse(tbBB.Text) < 500)
+            if (int.Parse(this.tbBigBlind.Text) < 500)
             {
                 MessageBox.Show("The minimum of the Big Blind is 500 $");
             }
 
-            if (int.Parse(tbBB.Text) >= 500 && int.Parse(tbBB.Text) <= 200000)
+            if (int.Parse(this.tbBigBlind.Text) >= 500 && int.Parse(this.tbBigBlind.Text) <= 200000)
             {
-                bb = int.Parse(tbBB.Text);
-                MessageBox.Show("The changes have been saved ! They will become available the next hand you play. ");
+                this.bigBlindValue = int.Parse(this.tbBigBlind.Text);
+                MessageBox.Show(
+                    "The changes have been saved ! They will become available the next hand you play. ");
             }
         }
 
