@@ -827,6 +827,8 @@ namespace Poker
                 #region Variables
                 bool done = false, vf = false;
                 int[] Straight1 = new int[5];
+
+                //TODO: Should Straight be an Enum?
                 int[] Straight = new int[7];
                 Straight[0] = Reserve[c1];
                 Straight[1] = Reserve[c2];
@@ -843,7 +845,11 @@ namespace Poker
                 var st2 = b.Select(o => o / 4).Distinct().ToArray();
                 var st3 = c.Select(o => o / 4).Distinct().ToArray();
                 var st4 = d.Select(o => o / 4).Distinct().ToArray();
-                Array.Sort(Straight); Array.Sort(st1); Array.Sort(st2); Array.Sort(st3); Array.Sort(st4);
+                Array.Sort(Straight);
+                Array.Sort(st1);
+                Array.Sort(st2);
+                Array.Sort(st3);
+                Array.Sort(st4);
                 #endregion
 
                 for (i = 0; i < 16; i++)
@@ -1658,6 +1664,7 @@ namespace Poker
                 }
             }
         }
+
         private void rTwoPair(ref double current, ref double Power)
         {
             if (current >= -1)
@@ -1711,6 +1718,7 @@ namespace Poker
                 }
             }
         }
+
         private void rPairTwoPair(ref double current, ref double Power)
         {
             if (current >= -1)
@@ -1812,6 +1820,7 @@ namespace Poker
                 }
             }
         }
+
         private void rPairFromHand(ref double current, ref double Power)
         {
             if (current >= -1)
@@ -1885,6 +1894,7 @@ namespace Poker
                 }
             }
         }
+
         private void rHighCard(ref double current, ref double Power)
         {
             if (current == -1)
@@ -2210,28 +2220,48 @@ namespace Poker
                         bRaise.Text = "raise";
                     }
                 }
-                pPanel.Visible = false; b1Panel.Visible = false; b2Panel.Visible = false; b3Panel.Visible = false; b4Panel.Visible = false; b5Panel.Visible = false;
-                pCall = 0; pRaise = 0;
-                b1Call = 0; b1Raise = 0;
-                b2Call = 0; b2Raise = 0;
-                b3Call = 0; b3Raise = 0;
-                b4Call = 0; b4Raise = 0;
-                b5Call = 0; b5Raise = 0;
-                last = 0;
-                call = bb;
+                this.pPanel.Visible = false;
+                this.b1Panel.Visible = false;
+                this.b2Panel.Visible = false;
+                this.b3Panel.Visible = false;
+                this.b4Panel.Visible = false;
+                this.b5Panel.Visible = false;
+                this.pCall = 0;
+                this.pRaise = 0;
+                this.b1Call = 0;
+                this.b1Raise = 0;
+                this.b2Call = 0;
+                this.b2Raise = 0;
+                this.b3Call = 0;
+                this.b3Raise = 0;
+                this.b4Call = 0;
+                this.b4Raise = 0;
+                this.b5Call = 0;
+                this.b5Raise = 0;
+                this.last = 0;
+                this.call = bb;
                 this.raise = 0;
-                ImgLocation = Directory.GetFiles("Assets\\Cards", "*.png", SearchOption.TopDirectoryOnly);
-                bools.Clear();
-                rounds = 0;
-                pPower = 0; pType = -1;
-                type = 0; b1Power = 0; b2Power = 0; b3Power = 0; b4Power = 0; b5Power = 0;
-                b1Type = -1; b2Type = -1; b3Type = -1; b4Type = -1; b5Type = -1;
-                ints.Clear();
-                CheckWinners.Clear();
-                winners = 0;
-                Win.Clear();
-                sorted.Current = 0;
-                sorted.Power = 0;
+                this.ImgLocation = Directory.GetFiles("Assets\\Cards", "*.png", SearchOption.TopDirectoryOnly);
+                this.bools.Clear();
+                this.rounds = 0;
+                this.pPower = 0; pType = -1;
+                this.type = 0;
+                this.b1Power = 0;
+                this.b2Power = 0;
+                this.b3Power = 0;
+                this.b4Power = 0;
+                this.b5Power = 0;
+                this.b1Type = -1;
+                this.b2Type = -1;
+                this.b3Type = -1;
+                this.b4Type = -1;
+                this.b5Type = -1;
+                this.ints.Clear();
+                this.CheckWinners.Clear();
+                this.winners = 0;
+                this.Win.Clear();
+                this.sorted.Current = 0;
+                this.sorted.Power = 0;
                 for (int os = 0; os < 17; os++)
                 {
                     Holder[os].Image = null;
@@ -2431,50 +2461,106 @@ namespace Poker
             {
                 FixWinners();
             }
-            pPanel.Visible = false; b1Panel.Visible = false; b2Panel.Visible = false; b3Panel.Visible = false; b4Panel.Visible = false; b5Panel.Visible = false;
-            call = bb; this.raise = 0;
-            foldedPlayers = 5;
-            type = 0; rounds = 0; b1Power = 0; b2Power = 0; b3Power = 0; b4Power = 0; b5Power = 0; pPower = 0; pType = -1; this.raise = 0;
-            b1Type = -1; b2Type = -1; b3Type = -1; b4Type = -1; b5Type = -1;
-            B1turn = false; B2turn = false; B3turn = false; B4turn = false; B5turn = false;
-            B1Fturn = false; B2Fturn = false; B3Fturn = false; B4Fturn = false; B5Fturn = false;
-            pFolded = false; b1Folded = false; b2Folded = false; b3Folded = false; b4Folded = false; b5Folded = false;
-            PFturn = false; Pturn = true; restart = false; raising = false;
-            pCall = 0; b1Call = 0; b2Call = 0; b3Call = 0; b4Call = 0; b5Call = 0; pRaise = 0; b1Raise = 0; b2Raise = 0; b3Raise = 0; b4Raise = 0; b5Raise = 0;
-            height = 0; width = 0; winners = 0; Flop = 1; Turn = 2; River = 3; End = 4; maxLeft = 6;
-            last = 123; raisedTurn = 1;
-            bools.Clear();
-            CheckWinners.Clear();
-            ints.Clear();
-            Win.Clear();
-            sorted.Current = 0;
-            sorted.Power = 0;
-            tbPot.Text = "0";
-            t = 60; up = 10000000; turnCount = 0;
-            pStatus.Text = "";
-            b1Status.Text = "";
-            b2Status.Text = "";
-            b3Status.Text = "";
-            b4Status.Text = "";
-            b5Status.Text = "";
+            this.pPanel.Visible = false;
+            this.b1Panel.Visible = false;
+            this.b2Panel.Visible = false;
+            this.b3Panel.Visible = false;
+            this.b4Panel.Visible = false;
+            this.b5Panel.Visible = false;
+            this.call = bb; this.raise = 0;
+            this.foldedPlayers = 5;
+            this.type = 0;
+            this.rounds = 0;
+            this.b1Power = 0;
+            this.b2Power = 0;
+            this.b3Power = 0;
+            this.b4Power = 0;
+            this.b5Power = 0;
+            this.pPower = 0;
+            this.pType = -1;
+            this.raise = 0;
+            this.b1Type = -1;
+            this.b2Type = -1;
+            this.b3Type = -1;
+            this.b4Type = -1;
+            this.b5Type = -1;
+            this.B1turn = false;
+            this.B2turn = false;
+            this.B3turn = false;
+            this.B4turn = false;
+            this.B5turn = false;
+            this.B1Fturn = false;
+            this.B2Fturn = false;
+            this.B3Fturn = false;
+            this.B4Fturn = false;
+            this.B5Fturn = false;
+            this.pFolded = false;
+            this.b1Folded = false;
+            this.b2Folded = false;
+            this.b3Folded = false;
+            this.b4Folded = false;
+            this.b5Folded = false;
+            this.PFturn = false;
+            this.Pturn = true;
+            this.restart = false;
+            this.raising = false;
+            this.pCall = 0;
+            this.b1Call = 0;
+            this.b2Call = 0;
+            this.b3Call = 0;
+            this.b4Call = 0;
+            this.b5Call = 0;
+            this.pRaise = 0;
+            this.b1Raise = 0;
+            this.b2Raise = 0;
+            this.b3Raise = 0;
+            this.b4Raise = 0;
+            this.b5Raise = 0;
+            this.height = 0;
+            this.width = 0;
+            this.winners = 0;
+            this.Flop = 1;
+            this.Turn = 2;
+            this.River = 3;
+            this.End = 4;
+            this.maxLeft = 6;
+            this.last = 123;
+            this.raisedTurn = 1;
+            this.bools.Clear();
+            this.CheckWinners.Clear();
+            this.ints.Clear();
+            this.Win.Clear();
+            this.sorted.Current = 0;
+            this.sorted.Power = 0;
+            this.tbPot.Text = "0";
+            this.t = 60;
+            this.up = 10000000;
+            this.turnCount = 0;
+            this.pStatus.Text = string.Empty;
+            this.b1Status.Text = string.Empty;
+            this.b2Status.Text = string.Empty;
+            this.b3Status.Text = string.Empty;
+            this.b4Status.Text = string.Empty;
+            this.b5Status.Text = string.Empty;
+
             if (Chips <= 0)
             {
                 AddChips f2 = new AddChips();
                 f2.ShowDialog();
                 if (f2.a != 0)
                 {
-                    Chips = f2.a;
-                    bot1Chips += f2.a;
-                    bot2Chips += f2.a;
-                    bot3Chips += f2.a;
-                    bot4Chips += f2.a;
-                    bot5Chips += f2.a;
-                    PFturn = false;
-                    Pturn = true;
-                    bRaise.Enabled = true;
-                    bFold.Enabled = true;
-                    bCheck.Enabled = true;
-                    bRaise.Text = "raise";
+                    this.Chips = f2.a;
+                    this.bot1Chips += f2.a;
+                    this.bot2Chips += f2.a;
+                    this.bot3Chips += f2.a;
+                    this.bot4Chips += f2.a;
+                    this.bot5Chips += f2.a;
+                    this.PFturn = false;
+                    this.Pturn = true;
+                    this.bRaise.Enabled = true;
+                    this.bFold.Enabled = true;
+                    this.bCheck.Enabled = true;
+                    this.bRaise.Text = "raise";
                 }
             }
             ImgLocation = Directory.GetFiles("Assets\\Cards", "*.png", SearchOption.TopDirectoryOnly);
@@ -2499,37 +2585,43 @@ namespace Poker
                 fixedLast = "Player";
                 Rules(0, 1, "Player", ref pType, ref pPower, PFturn);
             }
+
             if (!b1Status.Text.Contains("Fold"))
             {
                 fixedLast = "Bot 1";
                 Rules(2, 3, "Bot 1", ref b1Type, ref b1Power, B1Fturn);
             }
+
             if (!b2Status.Text.Contains("Fold"))
             {
                 fixedLast = "Bot 2";
                 Rules(4, 5, "Bot 2", ref b2Type, ref b2Power, B2Fturn);
             }
+
             if (!b3Status.Text.Contains("Fold"))
             {
                 fixedLast = "Bot 3";
                 Rules(6, 7, "Bot 3", ref b3Type, ref b3Power, B3Fturn);
             }
+
             if (!b4Status.Text.Contains("Fold"))
             {
                 fixedLast = "Bot 4";
                 Rules(8, 9, "Bot 4", ref b4Type, ref b4Power, B4Fturn);
             }
+
             if (!b5Status.Text.Contains("Fold"))
             {
                 fixedLast = "Bot 5";
                 Rules(10, 11, "Bot 5", ref b5Type, ref b5Power, B5Fturn);
             }
-            Winner(pType, pPower, "Player", Chips, fixedLast);
-            Winner(b1Type, b1Power, "Bot 1", bot1Chips, fixedLast);
-            Winner(b2Type, b2Power, "Bot 2", bot2Chips, fixedLast);
-            Winner(b3Type, b3Power, "Bot 3", bot3Chips, fixedLast);
-            Winner(b4Type, b4Power, "Bot 4", bot4Chips, fixedLast);
-            Winner(b5Type, b5Power, "Bot 5", bot5Chips, fixedLast);
+
+            this.Winner(this.pType, this.pPower, "Player", this.Chips, fixedLast);
+            this.Winner(this.b1Type, this.b1Power, "Bot 1", this.bot1Chips, fixedLast);
+            this.Winner(this.b2Type, this.b2Power, "Bot 2", this.bot2Chips, fixedLast);
+            this.Winner(this.b3Type, this.b3Power, "Bot 3", this.bot3Chips, fixedLast);
+            this.Winner(this.b4Type, this.b4Power, "Bot 4", this.bot4Chips, fixedLast);
+            this.Winner(this.b5Type, this.b5Power, "Bot 5", this.bot5Chips, fixedLast);
         }
 
         void AI(int c1, int c2, ref int sChips, ref bool sTurn, ref bool sFTurn, Label sStatus, int name, double botPower, double botCurrent)
