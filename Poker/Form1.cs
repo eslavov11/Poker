@@ -19,12 +19,12 @@ namespace Poker
         #region Variables
         private ProgressBar asd = new ProgressBar();
         private int Nm;
-        private Panel pPanel = new Panel();
-        private Panel b1Panel = new Panel();
-        private Panel b2Panel = new Panel();
-        private Panel b3Panel = new Panel();
-        private Panel b4Panel = new Panel();
-        private Panel b5Panel = new Panel();
+        private Panel playerPanel = new Panel();
+        private Panel bot1Panel = new Panel();
+        private Panel bot2Panel = new Panel();
+        private Panel bot3Panel = new Panel();
+        private Panel bot4Panel = new Panel();
+        private Panel bot5Panel = new Panel();
 
         private int call = 500;
         private int foldedPlayers = 5;
@@ -95,11 +95,12 @@ namespace Poker
         private int last = 123;
         private int raisedTurn = 1;
 
-        //TODO: previous name - bools
+        //TODO: Check if name is proper, previous name - bools
         private List<bool?> playersGameStatus = new List<bool?>();
         private List<Type> Win = new List<Type>();
         private List<string> CheckWinners = new List<string>();
-        private List<int> ints = new List<int>();
+        //TODO: Check if name is proper, previous name - chips
+        private List<int> chips = new List<int>();
 
         private bool PFturn = false;
         private bool Pturn = true;
@@ -233,12 +234,12 @@ namespace Poker
                     //Holder[i].Dock = DockStyle.Top;
                     Holder[i].Location = new Point(horizontal, vertical);
                     horizontal += Holder[i].Width;
-                    this.Controls.Add(pPanel);
-                    pPanel.Location = new Point(Holder[0].Left - 10, Holder[0].Top - 10);
-                    pPanel.BackColor = Color.DarkBlue;
-                    pPanel.Height = 150;
-                    pPanel.Width = 180;
-                    pPanel.Visible = false;
+                    this.Controls.Add(this.playerPanel);
+                    this.playerPanel.Location = new Point(Holder[0].Left - 10, Holder[0].Top - 10);
+                    this.playerPanel.BackColor = Color.DarkBlue;
+                    this.playerPanel.Height = 150;
+                    this.playerPanel.Width = 180;
+                    this.playerPanel.Visible = false;
                 }
 
                 if (bot1Chips > 0)
@@ -265,12 +266,12 @@ namespace Poker
                         Holder[i].Location = new Point(horizontal, vertical);
                         horizontal += Holder[i].Width;
                         Holder[i].Visible = true;
-                        this.Controls.Add(b1Panel);
-                        b1Panel.Location = new Point(Holder[2].Left - 10, Holder[2].Top - 10);
-                        b1Panel.BackColor = Color.DarkBlue;
-                        b1Panel.Height = 150;
-                        b1Panel.Width = 180;
-                        b1Panel.Visible = false;
+                        this.Controls.Add(this.bot1Panel);
+                        this.bot1Panel.Location = new Point(Holder[2].Left - 10, Holder[2].Top - 10);
+                        this.bot1Panel.BackColor = Color.DarkBlue;
+                        this.bot1Panel.Height = 150;
+                        this.bot1Panel.Width = 180;
+                        this.bot1Panel.Visible = false;
                         if (i == 3)
                         {
                             check = false;
@@ -300,12 +301,12 @@ namespace Poker
                         Holder[i].Location = new Point(horizontal, vertical);
                         horizontal += Holder[i].Width;
                         Holder[i].Visible = true;
-                        this.Controls.Add(b2Panel);
-                        b2Panel.Location = new Point(Holder[4].Left - 10, Holder[4].Top - 10);
-                        b2Panel.BackColor = Color.DarkBlue;
-                        b2Panel.Height = 150;
-                        b2Panel.Width = 180;
-                        b2Panel.Visible = false;
+                        this.Controls.Add(this.bot2Panel);
+                        this.bot2Panel.Location = new Point(Holder[4].Left - 10, Holder[4].Top - 10);
+                        this.bot2Panel.BackColor = Color.DarkBlue;
+                        this.bot2Panel.Height = 150;
+                        this.bot2Panel.Width = 180;
+                        this.bot2Panel.Visible = false;
                         if (i == 5)
                         {
                             check = false;
@@ -336,12 +337,12 @@ namespace Poker
                         Holder[i].Location = new Point(horizontal, vertical);
                         horizontal += Holder[i].Width;
                         Holder[i].Visible = true;
-                        this.Controls.Add(b3Panel);
-                        b3Panel.Location = new Point(Holder[6].Left - 10, Holder[6].Top - 10);
-                        b3Panel.BackColor = Color.DarkBlue;
-                        b3Panel.Height = 150;
-                        b3Panel.Width = 180;
-                        b3Panel.Visible = false;
+                        this.Controls.Add(this.bot3Panel);
+                        this.bot3Panel.Location = new Point(Holder[6].Left - 10, Holder[6].Top - 10);
+                        this.bot3Panel.BackColor = Color.DarkBlue;
+                        this.bot3Panel.Height = 150;
+                        this.bot3Panel.Width = 180;
+                        this.bot3Panel.Visible = false;
                         if (i == 7)
                         {
                             check = false;
@@ -372,12 +373,12 @@ namespace Poker
                         Holder[i].Location = new Point(horizontal, vertical);
                         horizontal += Holder[i].Width;
                         Holder[i].Visible = true;
-                        this.Controls.Add(b4Panel);
-                        b4Panel.Location = new Point(Holder[8].Left - 10, Holder[8].Top - 10);
-                        b4Panel.BackColor = Color.DarkBlue;
-                        b4Panel.Height = 150;
-                        b4Panel.Width = 180;
-                        b4Panel.Visible = false;
+                        this.Controls.Add(this.bot4Panel);
+                        this.bot4Panel.Location = new Point(Holder[8].Left - 10, Holder[8].Top - 10);
+                        this.bot4Panel.BackColor = Color.DarkBlue;
+                        this.bot4Panel.Height = 150;
+                        this.bot4Panel.Width = 180;
+                        this.bot4Panel.Visible = false;
                         if (i == 9)
                         {
                             check = false;
@@ -407,12 +408,12 @@ namespace Poker
                         Holder[i].Location = new Point(horizontal, vertical);
                         horizontal += Holder[i].Width;
                         Holder[i].Visible = true;
-                        this.Controls.Add(b5Panel);
-                        b5Panel.Location = new Point(Holder[10].Left - 10, Holder[10].Top - 10);
-                        b5Panel.BackColor = Color.DarkBlue;
-                        b5Panel.Height = 150;
-                        b5Panel.Width = 180;
-                        b5Panel.Visible = false;
+                        this.Controls.Add(this.bot5Panel);
+                        this.bot5Panel.Location = new Point(Holder[10].Left - 10, Holder[10].Top - 10);
+                        this.bot5Panel.BackColor = Color.DarkBlue;
+                        this.bot5Panel.Height = 150;
+                        this.bot5Panel.Width = 180;
+                        this.bot5Panel.Visible = false;
                         if (i == 11)
                         {
                             check = false;
@@ -1993,38 +1994,38 @@ namespace Poker
                     {
                         Chips += int.Parse(tbPot.Text) / winners;
                         tbChips.Text = Chips.ToString();
-                        //pPanel.Visible = true;
+                        //playerPanel.Visible = true;
 
                     }
                     if (CheckWinners.Contains("Bot 1"))
                     {
                         bot1Chips += int.Parse(tbPot.Text) / winners;
                         tbBotChips1.Text = bot1Chips.ToString();
-                        //b1Panel.Visible = true;
+                        //bot1Panel.Visible = true;
                     }
                     if (CheckWinners.Contains("Bot 2"))
                     {
                         bot2Chips += int.Parse(tbPot.Text) / winners;
                         tbBotChips2.Text = bot2Chips.ToString();
-                        //b2Panel.Visible = true;
+                        //bot2Panel.Visible = true;
                     }
                     if (CheckWinners.Contains("Bot 3"))
                     {
                         bot3Chips += int.Parse(tbPot.Text) / winners;
                         tbBotChips3.Text = bot3Chips.ToString();
-                        //b3Panel.Visible = true;
+                        //bot3Panel.Visible = true;
                     }
                     if (CheckWinners.Contains("Bot 4"))
                     {
                         bot4Chips += int.Parse(tbPot.Text) / winners;
                         tbBotChips4.Text = bot4Chips.ToString();
-                        //b4Panel.Visible = true;
+                        //bot4Panel.Visible = true;
                     }
                     if (CheckWinners.Contains("Bot 5"))
                     {
                         bot5Chips += int.Parse(tbPot.Text) / winners;
                         tbBotChips5.Text = bot5Chips.ToString();
-                        //b5Panel.Visible = true;
+                        //bot5Panel.Visible = true;
                     }
                     //await Finish(1);
                 }
@@ -2034,38 +2035,38 @@ namespace Poker
                     {
                         Chips += int.Parse(tbPot.Text);
                         //await Finish(1);
-                        //pPanel.Visible = true;
+                        //playerPanel.Visible = true;
                     }
                     if (CheckWinners.Contains("Bot 1"))
                     {
                         bot1Chips += int.Parse(tbPot.Text);
                         //await Finish(1);
-                        //b1Panel.Visible = true;
+                        //bot1Panel.Visible = true;
                     }
                     if (CheckWinners.Contains("Bot 2"))
                     {
                         bot2Chips += int.Parse(tbPot.Text);
                         //await Finish(1);
-                        //b2Panel.Visible = true;
+                        //bot2Panel.Visible = true;
 
                     }
                     if (CheckWinners.Contains("Bot 3"))
                     {
                         bot3Chips += int.Parse(tbPot.Text);
                         //await Finish(1);
-                        //b3Panel.Visible = true;
+                        //bot3Panel.Visible = true;
                     }
                     if (CheckWinners.Contains("Bot 4"))
                     {
                         bot4Chips += int.Parse(tbPot.Text);
                         //await Finish(1);
-                        //b4Panel.Visible = true;
+                        //bot4Panel.Visible = true;
                     }
                     if (CheckWinners.Contains("Bot 5"))
                     {
                         bot5Chips += int.Parse(tbPot.Text);
                         //await Finish(1);
-                        //b5Panel.Visible = true;
+                        //bot5Panel.Visible = true;
                     }
                 }
             }
@@ -2222,12 +2223,12 @@ namespace Poker
                         bRaise.Text = "raise";
                     }
                 }
-                this.pPanel.Visible = false;
-                this.b1Panel.Visible = false;
-                this.b2Panel.Visible = false;
-                this.b3Panel.Visible = false;
-                this.b4Panel.Visible = false;
-                this.b5Panel.Visible = false;
+                this.playerPanel.Visible = false;
+                this.bot1Panel.Visible = false;
+                this.bot2Panel.Visible = false;
+                this.bot3Panel.Visible = false;
+                this.bot4Panel.Visible = false;
+                this.bot5Panel.Visible = false;
                 this.pCall = 0;
                 this.pRaise = 0;
                 this.b1Call = 0;
@@ -2258,7 +2259,7 @@ namespace Poker
                 this.b3Type = -1;
                 this.b4Type = -1;
                 this.b5Type = -1;
-                this.ints.Clear();
+                this.chips.Clear();
                 this.CheckWinners.Clear();
                 this.winners = 0;
                 this.Win.Clear();
@@ -2326,12 +2327,12 @@ namespace Poker
             {
                 if (pStatus.Text.Contains("raise"))
                 {
-                    ints.Add(Chips);
+                    this.chips.Add(Chips);
                     intsadded = true;
                 }
                 if (pStatus.Text.Contains("Call"))
                 {
-                    ints.Add(Chips);
+                    this.chips.Add(Chips);
                     intsadded = true;
                 }
             }
@@ -2340,7 +2341,7 @@ namespace Poker
             {
                 if (!intsadded)
                 {
-                    ints.Add(bot1Chips);
+                    this.chips.Add(bot1Chips);
                     intsadded = true;
                 }
                 intsadded = false;
@@ -2349,7 +2350,7 @@ namespace Poker
             {
                 if (!intsadded)
                 {
-                    ints.Add(bot2Chips);
+                    this.chips.Add(bot2Chips);
                     intsadded = true;
                 }
                 intsadded = false;
@@ -2358,7 +2359,7 @@ namespace Poker
             {
                 if (!intsadded)
                 {
-                    ints.Add(bot3Chips);
+                    this.chips.Add(bot3Chips);
                     intsadded = true;
                 }
                 intsadded = false;
@@ -2367,7 +2368,7 @@ namespace Poker
             {
                 if (!intsadded)
                 {
-                    ints.Add(bot4Chips);
+                    this.chips.Add(bot4Chips);
                     intsadded = true;
                 }
                 intsadded = false;
@@ -2376,17 +2377,17 @@ namespace Poker
             {
                 if (!intsadded)
                 {
-                    ints.Add(bot5Chips);
+                    this.chips.Add(bot5Chips);
                     intsadded = true;
                 }
             }
-            if (ints.ToArray().Length == maxLeft)
+            if (this.chips.ToArray().Length == maxLeft)
             {
                 await Finish(2);
             }
             else
             {
-                ints.Clear();
+                this.chips.Clear();
             }
             #endregion
             //TODO: previous name abs
@@ -2400,42 +2401,42 @@ namespace Poker
                 {
                     Chips += int.Parse(tbPot.Text);
                     tbChips.Text = Chips.ToString();
-                    pPanel.Visible = true;
+                    this.playerPanel.Visible = true;
                     MessageBox.Show("Player Wins");
                 }
                 if (index == 1)
                 {
                     bot1Chips += int.Parse(tbPot.Text);
                     tbChips.Text = bot1Chips.ToString();
-                    b1Panel.Visible = true;
+                    this.bot1Panel.Visible = true;
                     MessageBox.Show("Bot 1 Wins");
                 }
                 if (index == 2)
                 {
                     bot2Chips += int.Parse(tbPot.Text);
                     tbChips.Text = bot2Chips.ToString();
-                    b2Panel.Visible = true;
+                    this.bot2Panel.Visible = true;
                     MessageBox.Show("Bot 2 Wins");
                 }
                 if (index == 3)
                 {
                     bot3Chips += int.Parse(tbPot.Text);
                     tbChips.Text = bot3Chips.ToString();
-                    b3Panel.Visible = true;
+                    this.bot3Panel.Visible = true;
                     MessageBox.Show("Bot 3 Wins");
                 }
                 if (index == 4)
                 {
                     bot4Chips += int.Parse(tbPot.Text);
                     tbChips.Text = bot4Chips.ToString();
-                    b4Panel.Visible = true;
+                    this.bot4Panel.Visible = true;
                     MessageBox.Show("Bot 4 Wins");
                 }
                 if (index == 5)
                 {
                     bot5Chips += int.Parse(tbPot.Text);
                     tbChips.Text = bot5Chips.ToString();
-                    b5Panel.Visible = true;
+                    this.bot5Panel.Visible = true;
                     MessageBox.Show("Bot 5 Wins");
                 }
                 for (int j = 0; j <= 16; j++)
@@ -2463,12 +2464,12 @@ namespace Poker
             {
                 FixWinners();
             }
-            this.pPanel.Visible = false;
-            this.b1Panel.Visible = false;
-            this.b2Panel.Visible = false;
-            this.b3Panel.Visible = false;
-            this.b4Panel.Visible = false;
-            this.b5Panel.Visible = false;
+            this.playerPanel.Visible = false;
+            this.bot1Panel.Visible = false;
+            this.bot2Panel.Visible = false;
+            this.bot3Panel.Visible = false;
+            this.bot4Panel.Visible = false;
+            this.bot5Panel.Visible = false;
             this.call = bb; this.raise = 0;
             this.foldedPlayers = 5;
             this.type = 0;
@@ -2530,7 +2531,7 @@ namespace Poker
             this.raisedTurn = 1;
             this.playersGameStatus.Clear();
             this.CheckWinners.Clear();
-            this.ints.Clear();
+            this.chips.Clear();
             this.Win.Clear();
             this.sorted.Current = 0;
             this.sorted.Power = 0;
