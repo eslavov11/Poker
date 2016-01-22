@@ -194,12 +194,12 @@
             this.tbBotChips1.TabIndex = 13;
             this.tbBotChips1.Text = "Chips : 0";
             // 
-            // tbPot
+            // txtPot
             // 
             this.tbPot.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tbPot.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tbPot.Location = new System.Drawing.Point(606, 212);
-            this.tbPot.Name = "tbPot";
+            this.tbPot.Name = "txtPot";
             this.tbPot.Size = new System.Drawing.Size(125, 23);
             this.tbPot.TabIndex = 14;
             this.tbPot.Text = "0";

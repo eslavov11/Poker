@@ -94,7 +94,9 @@ namespace Poker
         private int maxLeft = 6;
         private int last = 123;
         private int raisedTurn = 1;
-        private List<bool?> bools = new List<bool?>();
+
+        //TODO: previous name - bools
+        private List<bool?> playersGameStatus = new List<bool?>();
         private List<Type> Win = new List<Type>();
         private List<string> CheckWinners = new List<string>();
         private List<int> ints = new List<int>();
@@ -132,7 +134,7 @@ namespace Poker
 
         public Form1()
         {
-            //bools.Add(PFturn); bools.Add(B1Fturn); bools.Add(B2Fturn); bools.Add(B3Fturn); bools.Add(B4Fturn); bools.Add(B5Fturn);
+            //playersGameStatus.Add(PFturn); playersGameStatus.Add(B1Fturn); playersGameStatus.Add(B2Fturn); playersGameStatus.Add(B3Fturn); playersGameStatus.Add(B4Fturn); playersGameStatus.Add(B5Fturn);
             this.call = bb;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -175,12 +177,12 @@ namespace Poker
 
         async Task Shuffle()
         {
-            this.bools.Add(this.PFturn);
-            this.bools.Add(this.B1Fturn);
-            this.bools.Add(this.B2Fturn);
-            this.bools.Add(this.B3Fturn);
-            this.bools.Add(this.B4Fturn);
-            this.bools.Add(this.B5Fturn);
+            this.playersGameStatus.Add(this.PFturn);
+            this.playersGameStatus.Add(this.B1Fturn);
+            this.playersGameStatus.Add(this.B2Fturn);
+            this.playersGameStatus.Add(this.B3Fturn);
+            this.playersGameStatus.Add(this.B4Fturn);
+            this.playersGameStatus.Add(this.B5Fturn);
             this.bCall.Enabled = false;
             this.bRaise.Enabled = false;
             this.bFold.Enabled = false;
@@ -623,8 +625,8 @@ namespace Poker
                 {
                     if (bCall.Text.Contains("All in") == false || bRaise.Text.Contains("All in") == false)
                     {
-                        bools.RemoveAt(0);
-                        bools.Insert(0, null);
+                        this.playersGameStatus.RemoveAt(0);
+                        this.playersGameStatus.Insert(0, null);
                         maxLeft--;
                         pFolded = true;
                     }
@@ -657,8 +659,8 @@ namespace Poker
 
                 if (B1Fturn && !b1Folded)
                 {
-                    bools.RemoveAt(1);
-                    bools.Insert(1, null);
+                    this.playersGameStatus.RemoveAt(1);
+                    this.playersGameStatus.Insert(1, null);
                     maxLeft--;
                     b1Folded = true;
                 }
@@ -687,8 +689,8 @@ namespace Poker
 
                 if (B2Fturn && !b2Folded)
                 {
-                    bools.RemoveAt(2);
-                    bools.Insert(2, null);
+                    this.playersGameStatus.RemoveAt(2);
+                    this.playersGameStatus.Insert(2, null);
                     maxLeft--;
                     b2Folded = true;
                 }
@@ -717,8 +719,8 @@ namespace Poker
 
                 if (B3Fturn && !b3Folded)
                 {
-                    bools.RemoveAt(3);
-                    bools.Insert(3, null);
+                    this.playersGameStatus.RemoveAt(3);
+                    this.playersGameStatus.Insert(3, null);
                     maxLeft--;
                     b3Folded = true;
                 }
@@ -747,8 +749,8 @@ namespace Poker
 
                 if (B4Fturn && !b4Folded)
                 {
-                    bools.RemoveAt(4);
-                    bools.Insert(4, null);
+                    this.playersGameStatus.RemoveAt(4);
+                    this.playersGameStatus.Insert(4, null);
                     maxLeft--;
                     b4Folded = true;
                 }
@@ -776,8 +778,8 @@ namespace Poker
 
                 if (B5Fturn && !b5Folded)
                 {
-                    bools.RemoveAt(5);
-                    bools.Insert(5, null);
+                    this.playersGameStatus.RemoveAt(5);
+                    this.playersGameStatus.Insert(5, null);
                     maxLeft--;
                     b5Folded = true;
                 }
@@ -792,8 +794,8 @@ namespace Poker
                 {
                     if (bCall.Text.Contains("All in") == false || bRaise.Text.Contains("All in") == false)
                     {
-                        bools.RemoveAt(0);
-                        bools.Insert(0, null);
+                        this.playersGameStatus.RemoveAt(0);
+                        this.playersGameStatus.Insert(0, null);
                         maxLeft--;
                         pFolded = true;
                     }
@@ -2242,7 +2244,7 @@ namespace Poker
                 this.call = bb;
                 this.raise = 0;
                 this.ImgLocation = Directory.GetFiles("Assets\\Cards", "*.png", SearchOption.TopDirectoryOnly);
-                this.bools.Clear();
+                this.playersGameStatus.Clear();
                 this.rounds = 0;
                 this.pPower = 0; pType = -1;
                 this.type = 0;
@@ -2387,13 +2389,13 @@ namespace Poker
                 ints.Clear();
             }
             #endregion
-
-            var abc = bools.Count(x => x == false);
+            //TODO: previous name abs
+            var leftPlayers = this.playersGameStatus.Count(x => x == false);
 
             #region LastManStanding
-            if (abc == 1)
+            if (leftPlayers == 1)
             {
-                int index = bools.IndexOf(false);
+                int index = this.playersGameStatus.IndexOf(false);
                 if (index == 0)
                 {
                     Chips += int.Parse(tbPot.Text);
@@ -2446,7 +2448,7 @@ namespace Poker
             #endregion
 
             #region FiveOrLessLeft
-            if (abc < 6 && abc > 1 && rounds >= End)
+            if (leftPlayers < 6 && leftPlayers > 1 && rounds >= End)
             {
                 await Finish(2);
             }
@@ -2526,7 +2528,7 @@ namespace Poker
             this.maxLeft = 6;
             this.last = 123;
             this.raisedTurn = 1;
-            this.bools.Clear();
+            this.playersGameStatus.Clear();
             this.CheckWinners.Clear();
             this.ints.Clear();
             this.Win.Clear();
@@ -2628,6 +2630,7 @@ namespace Poker
         {
             if (!sFTurn)
             {
+                //TODO: consider switch case here
                 if (botCurrent == -1)
                 {
                     HighCard(ref sChips, ref sTurn, ref sFTurn, sStatus, botPower);
@@ -3075,6 +3078,7 @@ namespace Poker
                 sFTurn = true;
             }
         }
+
         void Smooth(ref int botChips, ref bool botTurn, ref bool botFTurn, Label botStatus, int name, int n, int r)
         {
             Random rand = new Random();
