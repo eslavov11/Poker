@@ -109,7 +109,7 @@ namespace Poker
         private Type sorted;
 
         //TODO: previous name ImgLocation
-        private string[] cardsImageLocation = Directory.GetFiles("Assets\\Cards", "*.png", SearchOption.TopDirectoryOnly);
+        private string[] cardsImageLocation = Directory.GetFiles("..\\..\\Resources\\Assets\\Cards", "*.png", SearchOption.TopDirectoryOnly);
 
         /*string[] cardsImageLocation ={
                    "Assets\\Cards\\33.png","Assets\\Cards\\22.png",
@@ -202,7 +202,7 @@ namespace Poker
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             bool check = false;
-            Bitmap backImage = new Bitmap("Assets\\Back\\Back.png");
+            Bitmap backImage = new Bitmap("..\\..\\Resources\\Assets\\Back\\Back.png");
             int horizontal = 580;
             int vertical = 480;
 
@@ -225,7 +225,7 @@ namespace Poker
             {
 
                 this.deskCardsAsImages[i] = Image.FromFile(this.cardsImageLocation[i]);
-                var partsToRemove = new [] { "Assets\\Cards\\", ".png" };
+                var partsToRemove = new [] { "..\\..\\Resources\\Assets\\Cards\\", ".png" };
                 foreach (string part in partsToRemove)
                 {
                     this.cardsImageLocation[i] = this.cardsImageLocation[i]
@@ -2285,7 +2285,7 @@ namespace Poker
                 this.last = 0;
                 this.call = this.bigBlindValue;
                 this.raise = 0;
-                this.cardsImageLocation = Directory.GetFiles("Assets\\Cards", "*.png", SearchOption.TopDirectoryOnly);
+                this.cardsImageLocation = Directory.GetFiles("..\\..\\Resources\\Assets\\Cards", "*.png", SearchOption.TopDirectoryOnly);
                 this.playersGameStatus.Clear();
                 this.rounds = 0;
                 this.pPower = 0; pType = -1;
@@ -2607,7 +2607,7 @@ namespace Poker
                     this.bRaise.Text = "raise";
                 }
             }
-            this.cardsImageLocation = Directory.GetFiles("Assets\\Cards", "*.png", SearchOption.TopDirectoryOnly);
+            this.cardsImageLocation = Directory.GetFiles("..\\..\\Resources\\Assets\\Cards", "*.png", SearchOption.TopDirectoryOnly);
             for (int os = 0; os < 17; os++)
             {
                 this.cardsPictureBoxList[os].Image = null;
@@ -3121,7 +3121,14 @@ namespace Poker
             }
         }
 
-        void Smooth(ref int botChips, ref bool botTurn, ref bool botFTurn, Label botStatus, int name, int n, int r)
+        void Smooth(
+            ref int botChips, 
+            ref bool botTurn, 
+            ref bool botFTurn,
+            Label botStatus, 
+            int name,
+            int n, 
+            int r)
         {
             Random rand = new Random();
             int rnd = rand.Next(1, 3);
