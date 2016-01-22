@@ -133,59 +133,65 @@ namespace Poker
         public Form1()
         {
             //bools.Add(PFturn); bools.Add(B1Fturn); bools.Add(B2Fturn); bools.Add(B3Fturn); bools.Add(B4Fturn); bools.Add(B5Fturn);
-            call = bb;
-            MaximizeBox = false;
-            MinimizeBox = false;
-            Updates.Start();
-            InitializeComponent();
-            width = this.Width;
-            height = this.Height;
-            Shuffle();
-            tbPot.Enabled = false;
-            tbChips.Enabled = false;
-            tbBotChips1.Enabled = false;
-            tbBotChips2.Enabled = false;
-            tbBotChips3.Enabled = false;
-            tbBotChips4.Enabled = false;
-            tbBotChips5.Enabled = false;
-            tbChips.Text = "Chips : " + Chips.ToString();
-            tbBotChips1.Text = "Chips : " + bot1Chips.ToString();
-            tbBotChips2.Text = "Chips : " + bot2Chips.ToString();
-            tbBotChips3.Text = "Chips : " + bot3Chips.ToString();
-            tbBotChips4.Text = "Chips : " + bot4Chips.ToString();
-            tbBotChips5.Text = "Chips : " + bot5Chips.ToString();
-            timer.Interval = (1 * 1 * 1000);
-            timer.Tick += this.TimerTick;
-            Updates.Interval = (1 * 1 * 100);
-            Updates.Tick += this.UpdateTick;
-            tbBB.Visible = true;
-            tbSB.Visible = true;
-            bBB.Visible = true;
-            bSB.Visible = true;
-            tbBB.Visible = true;
-            tbSB.Visible = true;
-            bBB.Visible = true;
-            bSB.Visible = true;
-            tbBB.Visible = false;
-            tbSB.Visible = false;
-            bBB.Visible = false;
-            bSB.Visible = false;
-            tbRaise.Text = (bb * 2).ToString();
+            this.call = bb;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Updates.Start();
+            this.InitializeComponent();
+            this.width = this.Width;
+            this.height = this.Height;
+            this.Shuffle();
+            this.tbPot.Enabled = false;
+            this.tbChips.Enabled = false;
+            this.tbBotChips1.Enabled = false;
+            this.tbBotChips2.Enabled = false;
+            this.tbBotChips3.Enabled = false;
+            this.tbBotChips4.Enabled = false;
+            this.tbBotChips5.Enabled = false;
+            this.tbChips.Text = "Chips : " + Chips.ToString();
+            this.tbBotChips1.Text = "Chips : " + bot1Chips.ToString();
+            this.tbBotChips2.Text = "Chips : " + bot2Chips.ToString();
+            this.tbBotChips3.Text = "Chips : " + bot3Chips.ToString();
+            this.tbBotChips4.Text = "Chips : " + bot4Chips.ToString();
+            this.tbBotChips5.Text = "Chips : " + bot5Chips.ToString();
+            this.timer.Interval = (1 * 1 * 1000);
+            this.timer.Tick += this.TimerTick;
+            this.Updates.Interval = (1 * 1 * 100);
+            this.Updates.Tick += this.UpdateTick;
+            this.tbBB.Visible = true;
+            this.tbSB.Visible = true;
+            this.bBB.Visible = true;
+            this.bSB.Visible = true;
+            this.tbBB.Visible = true;
+            this.tbSB.Visible = true;
+            this.bBB.Visible = true;
+            this.bSB.Visible = true;
+            this.tbBB.Visible = false;
+            this.tbSB.Visible = false;
+            this.bBB.Visible = false;
+            this.bSB.Visible = false;
+            this.tbRaise.Text = (bb * 2).ToString();
         }
 
         async Task Shuffle()
         {
-            bools.Add(PFturn); bools.Add(B1Fturn); bools.Add(B2Fturn); bools.Add(B3Fturn); bools.Add(B4Fturn); bools.Add(B5Fturn);
-            bCall.Enabled = false;
-            bRaise.Enabled = false;
-            bFold.Enabled = false;
-            bCheck.Enabled = false;
-            MaximizeBox = false;
-            MinimizeBox = false;
+            this.bools.Add(this.PFturn);
+            this.bools.Add(this.B1Fturn);
+            this.bools.Add(this.B2Fturn);
+            this.bools.Add(this.B3Fturn);
+            this.bools.Add(this.B4Fturn);
+            this.bools.Add(this.B5Fturn);
+            this.bCall.Enabled = false;
+            this.bRaise.Enabled = false;
+            this.bFold.Enabled = false;
+            this.bCheck.Enabled = false;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             bool check = false;
             Bitmap backImage = new Bitmap("Assets\\Back\\Back.png");
             int horizontal = 580, vertical = 480;
             Random r = new Random();
+
             for (i = ImgLocation.Length; i > 0; i--)
             {
                 int j = r.Next(i);
@@ -1589,6 +1595,7 @@ namespace Poker
                 }
             }
         }
+
         private void rStraight(ref double current, ref double Power, int[] Straight)
         {
             if (current >= -1)
@@ -1623,6 +1630,7 @@ namespace Poker
                 }
             }
         }
+
         private void rThreeOfAKind(ref double current, ref double Power, int[] Straight)
         {
             if (current >= -1)
@@ -2050,6 +2058,7 @@ namespace Poker
                 }
             }
         }
+
         async Task CheckRaise(int currentTurn, int raiseTurn)
         {
             if (raising)
@@ -2235,6 +2244,7 @@ namespace Poker
                 await Turns();
             }
         }
+
         void FixCall(Label status, ref int cCall, ref int cRaise, int options)
         {
             if (rounds != 4)
@@ -2276,6 +2286,7 @@ namespace Poker
                 }
             }
         }
+
         async Task AllIn()
         {
             #region All in
@@ -2413,6 +2424,7 @@ namespace Poker
 
 
         }
+
         async Task Finish(int n)
         {
             if (n == 2)
@@ -2475,6 +2487,7 @@ namespace Poker
             await Shuffle();
             //await Turns();
         }
+
         void FixWinners()
         {
             Win.Clear();
@@ -2518,6 +2531,7 @@ namespace Poker
             Winner(b4Type, b4Power, "Bot 4", bot4Chips, fixedLast);
             Winner(b5Type, b5Power, "Bot 5", bot5Chips, fixedLast);
         }
+
         void AI(int c1, int c2, ref int sChips, ref bool sTurn, ref bool sFTurn, Label sStatus, int name, double botPower, double botCurrent)
         {
             if (!sFTurn)
@@ -2569,14 +2583,17 @@ namespace Poker
                 Holder[c2].Visible = false;
             }
         }
+
         private void HighCard(ref int sChips, ref bool sTurn, ref bool sFTurn, Label sStatus, double botPower)
         {
             HP(ref sChips, ref sTurn, ref sFTurn, sStatus, botPower, 20, 25);
         }
+
         private void PairTable(ref int sChips, ref bool sTurn, ref bool sFTurn, Label sStatus, double botPower)
         {
             HP(ref sChips, ref sTurn, ref sFTurn, sStatus, botPower, 16, 25);
         }
+
         private void PairHand(ref int sChips, ref bool sTurn, ref bool sFTurn, Label sStatus, double botPower)
         {
             Random rPair = new Random();
@@ -2595,6 +2612,7 @@ namespace Poker
                 PH(ref sChips, ref sTurn, ref sFTurn, sStatus, rCall, 9, rRaise);
             }
         }
+
         private void TwoPair(ref int sChips, ref bool sTurn, ref bool sFTurn, Label sStatus, double botPower)
         {
             Random rPair = new Random();
@@ -2613,6 +2631,7 @@ namespace Poker
                 PH(ref sChips, ref sTurn, ref sFTurn, sStatus, rCall, 4, rRaise);
             }
         }
+
         private void ThreeOfAKind(
             ref int sChips,
             ref bool sTurn,
