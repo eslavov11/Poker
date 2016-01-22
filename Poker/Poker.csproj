@@ -65,6 +65,7 @@
     <Compile Include="Interfaces\IRule.cs" />
     <Compile Include="Interfaces\IUserInterface.cs" />
     <Compile Include="Models\Card.cs" />
+    <Compile Include="Models\Desk.cs" />
     <Compile Include="Models\Players\Bot.cs" />
     <Compile Include="Models\Players\Human.cs" />
     <Compile Include="Models\Players\Player.cs" />
