@@ -59,10 +59,15 @@
     </Compile>
     <Compile Include="Interfaces\IBot.cs" />
     <Compile Include="Interfaces\ICard.cs" />
+    <Compile Include="Interfaces\IHuman.cs" />
     <Compile Include="Interfaces\IPlayer.cs" />
     <Compile Include="Interfaces\IDatabase.cs" />
     <Compile Include="Interfaces\IRule.cs" />
     <Compile Include="Interfaces\IUserInterface.cs" />
+    <Compile Include="Models\Card.cs" />
+    <Compile Include="Models\Players\Bot.cs" />
+    <Compile Include="Models\Players\Human.cs" />
+    <Compile Include="Models\Players\Player.cs" />
     <Compile Include="Models\Rules\Rule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProgressBars.cs" />

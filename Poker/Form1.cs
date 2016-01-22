@@ -107,8 +107,11 @@ namespace Poker
         private bool restart = false;
         private bool raising = false;
         private Type sorted;
-        private string[] ImgLocation = Directory.GetFiles("Assets\\Cards", "*.png", SearchOption.TopDirectoryOnly);
-        /*string[] ImgLocation ={
+
+        //TODO: previous name ImgLocation
+        private string[] cardsImageLocation = Directory.GetFiles("Assets\\Cards", "*.png", SearchOption.TopDirectoryOnly);
+
+        /*string[] cardsImageLocation ={
                    "Assets\\Cards\\33.png","Assets\\Cards\\22.png",
                     "Assets\\Cards\\29.png","Assets\\Cards\\21.png",
                     "Assets\\Cards\\36.png","Assets\\Cards\\17.png",
@@ -120,8 +123,12 @@ namespace Poker
                     "Assets\\Cards\\8.png","Assets\\Cards\\18.png",
                     "Assets\\Cards\\15.png","Assets\\Cards\\27.png"};*/
         private int[] Reserve = new int[17];
-        private Image[] Deck = new Image[52];
-        private PictureBox[] Holder = new PictureBox[52];
+
+        //TODO: previous name Desk
+        private Image[] deskCardsAsImages = new Image[52];
+
+        //TODO: previous name Holder
+        private PictureBox[] cardsPictureBoxList = new PictureBox[52];
         private Timer timer = new Timer();
         private Timer Updates = new Timer();
 
@@ -152,11 +159,11 @@ namespace Poker
             this.tbBotChips4.Enabled = false;
             this.tbBotChips5.Enabled = false;
             this.tbChips.Text = "Chips : " + Chips.ToString();
-            this.tbBotChips1.Text = "Chips : " + bot1Chips.ToString();
-            this.tbBotChips2.Text = "Chips : " + bot2Chips.ToString();
-            this.tbBotChips3.Text = "Chips : " + bot3Chips.ToString();
-            this.tbBotChips4.Text = "Chips : " + bot4Chips.ToString();
-            this.tbBotChips5.Text = "Chips : " + bot5Chips.ToString();
+            this.tbBotChips1.Text = "Chips : " + bot1Chips;
+            this.tbBotChips2.Text = "Chips : " + bot2Chips;
+            this.tbBotChips3.Text = "Chips : " + bot3Chips;
+            this.tbBotChips4.Text = "Chips : " + bot4Chips;
+            this.tbBotChips5.Text = "Chips : " + bot5Chips;
             this.timer.Interval = (1 * 1 * 1000);
             this.timer.Tick += this.TimerTick;
             this.Updates.Interval = (1 * 1 * 100);
@@ -195,47 +202,49 @@ namespace Poker
             int horizontal = 580, vertical = 480;
             Random r = new Random();
 
-            for (i = ImgLocation.Length; i > 0; i--)
+            for (i = this.cardsImageLocation.Length; i > 0; i--)
             {
                 int j = r.Next(i);
-                var k = ImgLocation[j];
-                ImgLocation[j] = ImgLocation[i - 1];
-                ImgLocation[i - 1] = k;
+                var k = this.cardsImageLocation[j];
+                this.cardsImageLocation[j] = this.cardsImageLocation[i - 1];
+                this.cardsImageLocation[i - 1] = k;
             }
 
             for (i = 0; i < 17; i++)
             {
 
-                Deck[i] = Image.FromFile(ImgLocation[i]);
+                this.deskCardsAsImages[i] = Image.FromFile(this.cardsImageLocation[i]);
                 var charsToRemove = new string[] { "Assets\\Cards\\", ".png" };
                 foreach (var c in charsToRemove)
                 {
-                    ImgLocation[i] = ImgLocation[i].Replace(c, string.Empty);
+                    this.cardsImageLocation[i] = this.cardsImageLocation[i].Replace(c, string.Empty);
                 }
-                Reserve[i] = int.Parse(ImgLocation[i]) - 1;
-                Holder[i] = new PictureBox();
-                Holder[i].SizeMode = PictureBoxSizeMode.StretchImage;
-                Holder[i].Height = 130;
-                Holder[i].Width = 80;
-                this.Controls.Add(Holder[i]);
-                Holder[i].Name = "pb" + i.ToString();
+                Reserve[i] = int.Parse(this.cardsImageLocation[i]) - 1;
+                this.cardsPictureBoxList[i] = new PictureBox
+                {
+                    SizeMode = PictureBoxSizeMode.StretchImage,
+                    Height = 130,
+                    Width = 80
+                };
+                this.Controls.Add(this.cardsPictureBoxList[i]);
+                this.cardsPictureBoxList[i].Name = "pb" + i.ToString();
                 await Task.Delay(200);
                 #region Throwing Cards
                 if (i < 2)
                 {
-                    if (Holder[0].Tag != null)
+                    if (this.cardsPictureBoxList[0].Tag != null)
                     {
-                        Holder[1].Tag = Reserve[1];
+                        this.cardsPictureBoxList[1].Tag = Reserve[1];
                     }
 
-                    Holder[0].Tag = Reserve[0];
-                    Holder[i].Image = Deck[i];
-                    Holder[i].Anchor = (AnchorStyles.Bottom);
-                    //Holder[i].Dock = DockStyle.Top;
-                    Holder[i].Location = new Point(horizontal, vertical);
-                    horizontal += Holder[i].Width;
+                    this.cardsPictureBoxList[0].Tag = Reserve[0];
+                    this.cardsPictureBoxList[i].Image = this.deskCardsAsImages[i];
+                    this.cardsPictureBoxList[i].Anchor = (AnchorStyles.Bottom);
+                    //cardsPictureBoxList[i].Dock = DockStyle.Top;
+                    this.cardsPictureBoxList[i].Location = new Point(horizontal, vertical);
+                    horizontal += this.cardsPictureBoxList[i].Width;
                     this.Controls.Add(this.playerPanel);
-                    this.playerPanel.Location = new Point(Holder[0].Left - 10, Holder[0].Top - 10);
+                    this.playerPanel.Location = new Point(this.cardsPictureBoxList[0].Left - 10, this.cardsPictureBoxList[0].Top - 10);
                     this.playerPanel.BackColor = Color.DarkBlue;
                     this.playerPanel.Height = 150;
                     this.playerPanel.Width = 180;
@@ -247,12 +256,12 @@ namespace Poker
                     foldedPlayers--;
                     if (i >= 2 && i < 4)
                     {
-                        if (Holder[2].Tag != null)
+                        if (this.cardsPictureBoxList[2].Tag != null)
                         {
-                            Holder[3].Tag = Reserve[3];
+                            this.cardsPictureBoxList[3].Tag = Reserve[3];
                         }
 
-                        Holder[2].Tag = Reserve[2];
+                        this.cardsPictureBoxList[2].Tag = Reserve[2];
                         if (!check)
                         {
                             horizontal = 15;
@@ -260,14 +269,14 @@ namespace Poker
                         }
 
                         check = true;
-                        Holder[i].Anchor = (AnchorStyles.Bottom | AnchorStyles.Left);
-                        Holder[i].Image = backImage;
-                        //Holder[i].Image = Deck[i];
-                        Holder[i].Location = new Point(horizontal, vertical);
-                        horizontal += Holder[i].Width;
-                        Holder[i].Visible = true;
+                        this.cardsPictureBoxList[i].Anchor = (AnchorStyles.Bottom | AnchorStyles.Left);
+                        this.cardsPictureBoxList[i].Image = backImage;
+                        //cardsPictureBoxList[i].Image = deskCardsAsImages[i];
+                        this.cardsPictureBoxList[i].Location = new Point(horizontal, vertical);
+                        horizontal += this.cardsPictureBoxList[i].Width;
+                        this.cardsPictureBoxList[i].Visible = true;
                         this.Controls.Add(this.bot1Panel);
-                        this.bot1Panel.Location = new Point(Holder[2].Left - 10, Holder[2].Top - 10);
+                        this.bot1Panel.Location = new Point(this.cardsPictureBoxList[2].Left - 10, this.cardsPictureBoxList[2].Top - 10);
                         this.bot1Panel.BackColor = Color.DarkBlue;
                         this.bot1Panel.Height = 150;
                         this.bot1Panel.Width = 180;
@@ -284,25 +293,25 @@ namespace Poker
                     foldedPlayers--;
                     if (i >= 4 && i < 6)
                     {
-                        if (Holder[4].Tag != null)
+                        if (this.cardsPictureBoxList[4].Tag != null)
                         {
-                            Holder[5].Tag = Reserve[5];
+                            this.cardsPictureBoxList[5].Tag = Reserve[5];
                         }
-                        Holder[4].Tag = Reserve[4];
+                        this.cardsPictureBoxList[4].Tag = Reserve[4];
                         if (!check)
                         {
                             horizontal = 75;
                             vertical = 65;
                         }
                         check = true;
-                        Holder[i].Anchor = (AnchorStyles.Top | AnchorStyles.Left);
-                        Holder[i].Image = backImage;
-                        //Holder[i].Image = Deck[i];
-                        Holder[i].Location = new Point(horizontal, vertical);
-                        horizontal += Holder[i].Width;
-                        Holder[i].Visible = true;
+                        this.cardsPictureBoxList[i].Anchor = (AnchorStyles.Top | AnchorStyles.Left);
+                        this.cardsPictureBoxList[i].Image = backImage;
+                        //cardsPictureBoxList[i].Image = deskCardsAsImages[i];
+                        this.cardsPictureBoxList[i].Location = new Point(horizontal, vertical);
+                        horizontal += this.cardsPictureBoxList[i].Width;
+                        this.cardsPictureBoxList[i].Visible = true;
                         this.Controls.Add(this.bot2Panel);
-                        this.bot2Panel.Location = new Point(Holder[4].Left - 10, Holder[4].Top - 10);
+                        this.bot2Panel.Location = new Point(this.cardsPictureBoxList[4].Left - 10, this.cardsPictureBoxList[4].Top - 10);
                         this.bot2Panel.BackColor = Color.DarkBlue;
                         this.bot2Panel.Height = 150;
                         this.bot2Panel.Width = 180;
@@ -319,26 +328,26 @@ namespace Poker
                     foldedPlayers--;
                     if (i >= 6 && i < 8)
                     {
-                        if (Holder[6].Tag != null)
+                        if (this.cardsPictureBoxList[6].Tag != null)
                         {
-                            Holder[7].Tag = Reserve[7];
+                            this.cardsPictureBoxList[7].Tag = Reserve[7];
                         }
 
-                        Holder[6].Tag = Reserve[6];
+                        this.cardsPictureBoxList[6].Tag = Reserve[6];
                         if (!check)
                         {
                             horizontal = 590;
                             vertical = 25;
                         }
                         check = true;
-                        Holder[i].Anchor = (AnchorStyles.Top);
-                        Holder[i].Image = backImage;
-                        //Holder[i].Image = Deck[i];
-                        Holder[i].Location = new Point(horizontal, vertical);
-                        horizontal += Holder[i].Width;
-                        Holder[i].Visible = true;
+                        this.cardsPictureBoxList[i].Anchor = (AnchorStyles.Top);
+                        this.cardsPictureBoxList[i].Image = backImage;
+                        //cardsPictureBoxList[i].Image = deskCardsAsImages[i];
+                        this.cardsPictureBoxList[i].Location = new Point(horizontal, vertical);
+                        horizontal += this.cardsPictureBoxList[i].Width;
+                        this.cardsPictureBoxList[i].Visible = true;
                         this.Controls.Add(this.bot3Panel);
-                        this.bot3Panel.Location = new Point(Holder[6].Left - 10, Holder[6].Top - 10);
+                        this.bot3Panel.Location = new Point(this.cardsPictureBoxList[6].Left - 10, this.cardsPictureBoxList[6].Top - 10);
                         this.bot3Panel.BackColor = Color.DarkBlue;
                         this.bot3Panel.Height = 150;
                         this.bot3Panel.Width = 180;
@@ -354,12 +363,12 @@ namespace Poker
                     foldedPlayers--;
                     if (i >= 8 && i < 10)
                     {
-                        if (Holder[8].Tag != null)
+                        if (this.cardsPictureBoxList[8].Tag != null)
                         {
-                            Holder[9].Tag = Reserve[9];
+                            this.cardsPictureBoxList[9].Tag = Reserve[9];
                         }
 
-                        Holder[8].Tag = Reserve[8];
+                        this.cardsPictureBoxList[8].Tag = Reserve[8];
                         if (!check)
                         {
                             horizontal = 1115;
@@ -367,14 +376,14 @@ namespace Poker
                         }
 
                         check = true;
-                        Holder[i].Anchor = (AnchorStyles.Top | AnchorStyles.Right);
-                        Holder[i].Image = backImage;
-                        //Holder[i].Image = Deck[i];
-                        Holder[i].Location = new Point(horizontal, vertical);
-                        horizontal += Holder[i].Width;
-                        Holder[i].Visible = true;
+                        this.cardsPictureBoxList[i].Anchor = (AnchorStyles.Top | AnchorStyles.Right);
+                        this.cardsPictureBoxList[i].Image = backImage;
+                        //cardsPictureBoxList[i].Image = deskCardsAsImages[i];
+                        this.cardsPictureBoxList[i].Location = new Point(horizontal, vertical);
+                        horizontal += this.cardsPictureBoxList[i].Width;
+                        this.cardsPictureBoxList[i].Visible = true;
                         this.Controls.Add(this.bot4Panel);
-                        this.bot4Panel.Location = new Point(Holder[8].Left - 10, Holder[8].Top - 10);
+                        this.bot4Panel.Location = new Point(this.cardsPictureBoxList[8].Left - 10, this.cardsPictureBoxList[8].Top - 10);
                         this.bot4Panel.BackColor = Color.DarkBlue;
                         this.bot4Panel.Height = 150;
                         this.bot4Panel.Width = 180;
@@ -390,26 +399,26 @@ namespace Poker
                     foldedPlayers--;
                     if (i >= 10 && i < 12)
                     {
-                        if (Holder[10].Tag != null)
+                        if (this.cardsPictureBoxList[10].Tag != null)
                         {
-                            Holder[11].Tag = Reserve[11];
+                            this.cardsPictureBoxList[11].Tag = Reserve[11];
                         }
 
-                        Holder[10].Tag = Reserve[10];
+                        this.cardsPictureBoxList[10].Tag = Reserve[10];
                         if (!check)
                         {
                             horizontal = 1160;
                             vertical = 420;
                         }
                         check = true;
-                        Holder[i].Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
-                        Holder[i].Image = backImage;
-                        //Holder[i].Image = Deck[i];
-                        Holder[i].Location = new Point(horizontal, vertical);
-                        horizontal += Holder[i].Width;
-                        Holder[i].Visible = true;
+                        this.cardsPictureBoxList[i].Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
+                        this.cardsPictureBoxList[i].Image = backImage;
+                        //cardsPictureBoxList[i].Image = deskCardsAsImages[i];
+                        this.cardsPictureBoxList[i].Location = new Point(horizontal, vertical);
+                        horizontal += this.cardsPictureBoxList[i].Width;
+                        this.cardsPictureBoxList[i].Visible = true;
                         this.Controls.Add(this.bot5Panel);
-                        this.bot5Panel.Location = new Point(Holder[10].Left - 10, Holder[10].Top - 10);
+                        this.bot5Panel.Location = new Point(this.cardsPictureBoxList[10].Left - 10, this.cardsPictureBoxList[10].Top - 10);
                         this.bot5Panel.BackColor = Color.DarkBlue;
                         this.bot5Panel.Height = 150;
                         this.bot5Panel.Width = 180;
@@ -422,25 +431,25 @@ namespace Poker
                 }
                 if (i >= 12)
                 {
-                    Holder[12].Tag = Reserve[12];
+                    this.cardsPictureBoxList[12].Tag = Reserve[12];
                     if (i > 12)
                     {
-                        Holder[13].Tag = Reserve[13];
+                        this.cardsPictureBoxList[13].Tag = Reserve[13];
                     }
 
                     if (i > 13)
                     {
-                        Holder[14].Tag = Reserve[14];
+                        this.cardsPictureBoxList[14].Tag = Reserve[14];
                     }
 
                     if (i > 14)
                     {
-                        Holder[15].Tag = Reserve[15];
+                        this.cardsPictureBoxList[15].Tag = Reserve[15];
                     }
 
                     if (i > 15)
                     {
-                        Holder[16].Tag = Reserve[16];
+                        this.cardsPictureBoxList[16].Tag = Reserve[16];
 
                     }
 
@@ -451,12 +460,12 @@ namespace Poker
                     }
 
                     check = true;
-                    if (Holder[i] != null)
+                    if (this.cardsPictureBoxList[i] != null)
                     {
-                        Holder[i].Anchor = AnchorStyles.None;
-                        Holder[i].Image = backImage;
-                        //Holder[i].Image = Deck[i];
-                        Holder[i].Location = new Point(horizontal, vertical);
+                        this.cardsPictureBoxList[i].Anchor = AnchorStyles.None;
+                        this.cardsPictureBoxList[i].Image = backImage;
+                        //cardsPictureBoxList[i].Image = deskCardsAsImages[i];
+                        this.cardsPictureBoxList[i].Location = new Point(horizontal, vertical);
                         horizontal += 110;
                     }
                 }
@@ -465,18 +474,18 @@ namespace Poker
                 if (bot1Chips <= 0)
                 {
                     B1Fturn = true;
-                    Holder[2].Visible = false;
-                    Holder[3].Visible = false;
+                    this.cardsPictureBoxList[2].Visible = false;
+                    this.cardsPictureBoxList[3].Visible = false;
                 }
                 else
                 {
                     B1Fturn = false;
                     if (i == 3)
                     {
-                        if (Holder[3] != null)
+                        if (this.cardsPictureBoxList[3] != null)
                         {
-                            Holder[2].Visible = true;
-                            Holder[3].Visible = true;
+                            this.cardsPictureBoxList[2].Visible = true;
+                            this.cardsPictureBoxList[3].Visible = true;
                         }
                     }
                 }
@@ -484,18 +493,18 @@ namespace Poker
                 if (bot2Chips <= 0)
                 {
                     B2Fturn = true;
-                    Holder[4].Visible = false;
-                    Holder[5].Visible = false;
+                    this.cardsPictureBoxList[4].Visible = false;
+                    this.cardsPictureBoxList[5].Visible = false;
                 }
                 else
                 {
                     B2Fturn = false;
                     if (i == 5)
                     {
-                        if (Holder[5] != null)
+                        if (this.cardsPictureBoxList[5] != null)
                         {
-                            Holder[4].Visible = true;
-                            Holder[5].Visible = true;
+                            this.cardsPictureBoxList[4].Visible = true;
+                            this.cardsPictureBoxList[5].Visible = true;
                         }
                     }
                 }
@@ -503,18 +512,18 @@ namespace Poker
                 if (bot3Chips <= 0)
                 {
                     B3Fturn = true;
-                    Holder[6].Visible = false;
-                    Holder[7].Visible = false;
+                    this.cardsPictureBoxList[6].Visible = false;
+                    this.cardsPictureBoxList[7].Visible = false;
                 }
                 else
                 {
                     B3Fturn = false;
                     if (i == 7)
                     {
-                        if (Holder[7] != null)
+                        if (this.cardsPictureBoxList[7] != null)
                         {
-                            Holder[6].Visible = true;
-                            Holder[7].Visible = true;
+                            this.cardsPictureBoxList[6].Visible = true;
+                            this.cardsPictureBoxList[7].Visible = true;
                         }
                     }
                 }
@@ -522,18 +531,18 @@ namespace Poker
                 if (bot4Chips <= 0)
                 {
                     B4Fturn = true;
-                    Holder[8].Visible = false;
-                    Holder[9].Visible = false;
+                    this.cardsPictureBoxList[8].Visible = false;
+                    this.cardsPictureBoxList[9].Visible = false;
                 }
                 else
                 {
                     B4Fturn = false;
                     if (i == 9)
                     {
-                        if (Holder[9] != null)
+                        if (this.cardsPictureBoxList[9] != null)
                         {
-                            Holder[8].Visible = true;
-                            Holder[9].Visible = true;
+                            this.cardsPictureBoxList[8].Visible = true;
+                            this.cardsPictureBoxList[9].Visible = true;
                         }
                     }
                 }
@@ -541,18 +550,18 @@ namespace Poker
                 if (bot5Chips <= 0)
                 {
                     B5Fturn = true;
-                    Holder[10].Visible = false;
-                    Holder[11].Visible = false;
+                    this.cardsPictureBoxList[10].Visible = false;
+                    this.cardsPictureBoxList[11].Visible = false;
                 }
                 else
                 {
                     B5Fturn = false;
                     if (i == 11)
                     {
-                        if (Holder[11] != null)
+                        if (this.cardsPictureBoxList[11] != null)
                         {
-                            Holder[10].Visible = true;
-                            Holder[11].Visible = true;
+                            this.cardsPictureBoxList[10].Visible = true;
+                            this.cardsPictureBoxList[11].Visible = true;
                         }
                     }
                 }
@@ -814,18 +823,19 @@ namespace Poker
         }
 
         void Rules(
-            int c1,
-            int c2,
+            // TODO: validate for real var name: Previous names c1 and c2, renamed to cardOne and CardTwo
+            int cardOne,
+            int cardTwo,
             string currentText,
             ref double current,
             ref double Power,
             bool foldedTurn)
         {
-            if (c1 == 0 && c2 == 1)
+            if (cardOne == 0 && cardTwo == 1)
             {
             }
 
-            if (!foldedTurn || c1 == 0 && c2 == 1 && pStatus.Text.Contains("Fold") == false)
+            if (!foldedTurn || cardOne == 0 && cardTwo == 1 && pStatus.Text.Contains("Fold") == false)
             {
                 #region Variables
                 bool done = false, vf = false;
@@ -833,8 +843,8 @@ namespace Poker
 
                 //TODO: Should Straight be an Enum?
                 int[] Straight = new int[7];
-                Straight[0] = Reserve[c1];
-                Straight[1] = Reserve[c2];
+                Straight[0] = Reserve[cardOne];
+                Straight[1] = Reserve[cardTwo];
                 Straight1[0] = Straight[2] = Reserve[12];
                 Straight1[1] = Straight[3] = Reserve[13];
                 Straight1[2] = Straight[4] = Reserve[14];
@@ -857,8 +867,8 @@ namespace Poker
 
                 for (i = 0; i < 16; i++)
                 {
-                    if (Reserve[i] == int.Parse(Holder[c1].Tag.ToString()) &&
-                        Reserve[i + 1] == int.Parse(Holder[c2].Tag.ToString()))
+                    if (Reserve[i] == int.Parse(this.cardsPictureBoxList[cardOne].Tag.ToString()) &&
+                        Reserve[i + 1] == int.Parse(this.cardsPictureBoxList[cardTwo].Tag.ToString()))
                     {
                         //Pair from Hand current = 1
 
@@ -1935,8 +1945,8 @@ namespace Poker
             for (int j = 0; j <= 16; j++)
             {
                 //await Task.Delay(5);
-                if (Holder[j].Visible)
-                    Holder[j].Image = Deck[j];
+                if (this.cardsPictureBoxList[j].Visible)
+                    this.cardsPictureBoxList[j].Image = this.deskCardsAsImages[j];
             }
             if (current == sorted.Current)
             {
@@ -2112,9 +2122,9 @@ namespace Poker
             {
                 for (int j = 12; j <= 14; j++)
                 {
-                    if (Holder[j].Image != Deck[j])
+                    if (this.cardsPictureBoxList[j].Image != this.deskCardsAsImages[j])
                     {
-                        Holder[j].Image = Deck[j];
+                        this.cardsPictureBoxList[j].Image = this.deskCardsAsImages[j];
                         pCall = 0; pRaise = 0;
                         b1Call = 0; b1Raise = 0;
                         b2Call = 0; b2Raise = 0;
@@ -2128,9 +2138,9 @@ namespace Poker
             {
                 for (int j = 14; j <= 15; j++)
                 {
-                    if (Holder[j].Image != Deck[j])
+                    if (this.cardsPictureBoxList[j].Image != this.deskCardsAsImages[j])
                     {
-                        Holder[j].Image = Deck[j];
+                        this.cardsPictureBoxList[j].Image = this.deskCardsAsImages[j];
                         pCall = 0; pRaise = 0;
                         b1Call = 0; b1Raise = 0;
                         b2Call = 0; b2Raise = 0;
@@ -2144,9 +2154,9 @@ namespace Poker
             {
                 for (int j = 15; j <= 16; j++)
                 {
-                    if (Holder[j].Image != Deck[j])
+                    if (this.cardsPictureBoxList[j].Image != this.deskCardsAsImages[j])
                     {
-                        Holder[j].Image = Deck[j];
+                        this.cardsPictureBoxList[j].Image = this.deskCardsAsImages[j];
                         pCall = 0; pRaise = 0;
                         b1Call = 0; b1Raise = 0;
                         b2Call = 0; b2Raise = 0;
@@ -2244,7 +2254,7 @@ namespace Poker
                 this.last = 0;
                 this.call = bb;
                 this.raise = 0;
-                this.ImgLocation = Directory.GetFiles("Assets\\Cards", "*.png", SearchOption.TopDirectoryOnly);
+                this.cardsImageLocation = Directory.GetFiles("Assets\\Cards", "*.png", SearchOption.TopDirectoryOnly);
                 this.playersGameStatus.Clear();
                 this.rounds = 0;
                 this.pPower = 0; pType = -1;
@@ -2267,9 +2277,9 @@ namespace Poker
                 this.sorted.Power = 0;
                 for (int os = 0; os < 17; os++)
                 {
-                    Holder[os].Image = null;
-                    Holder[os].Invalidate();
-                    Holder[os].Visible = false;
+                    this.cardsPictureBoxList[os].Image = null;
+                    this.cardsPictureBoxList[os].Invalidate();
+                    this.cardsPictureBoxList[os].Visible = false;
                 }
                 tbPot.Text = "0";
                 pStatus.Text = "";
@@ -2441,7 +2451,7 @@ namespace Poker
                 }
                 for (int j = 0; j <= 16; j++)
                 {
-                    Holder[j].Visible = false;
+                    this.cardsPictureBoxList[j].Visible = false;
                 }
                 await Finish(1);
             }
@@ -2566,12 +2576,12 @@ namespace Poker
                     this.bRaise.Text = "raise";
                 }
             }
-            ImgLocation = Directory.GetFiles("Assets\\Cards", "*.png", SearchOption.TopDirectoryOnly);
+            this.cardsImageLocation = Directory.GetFiles("Assets\\Cards", "*.png", SearchOption.TopDirectoryOnly);
             for (int os = 0; os < 17; os++)
             {
-                Holder[os].Image = null;
-                Holder[os].Invalidate();
-                Holder[os].Visible = false;
+                this.cardsPictureBoxList[os].Image = null;
+                this.cardsPictureBoxList[os].Invalidate();
+                this.cardsPictureBoxList[os].Visible = false;
             }
             await Shuffle();
             //await Turns();
@@ -2675,8 +2685,8 @@ namespace Poker
             }
             if (sFTurn)
             {
-                Holder[c1].Visible = false;
-                Holder[c2].Visible = false;
+                this.cardsPictureBoxList[c1].Visible = false;
+                this.cardsPictureBoxList[c2].Visible = false;
             }
         }
 
