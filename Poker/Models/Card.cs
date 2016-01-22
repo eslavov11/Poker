@@ -4,15 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Poker.Models.Players
+namespace Poker.Models
 {
     using Interfaces;
 
-    public class Human : Player, IHuman
+    public class Card : ICard
     {
-        public Human(string name)
-            : base(name)
-        {
-        }
     }
 }
