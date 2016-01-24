@@ -16,15 +16,17 @@ namespace Poker.UserInterface
     using Interfaces;
     using Models.Players;
     using Models;
-
     using Poker.Data;
 
     public partial class PokerTable : Form
     {
         #region Variables
+        public const int NumberOfDeskCards = 17;
+
         private readonly IAssertHandType assertHandType;
         private readonly IHandType handType;
         private readonly IPlayer human;
+        // TODO: put all bots in one list!
         private readonly IPlayer firstBot;
         private readonly IPlayer secondBot;
         private readonly IPlayer thirdBot;
@@ -169,9 +171,7 @@ namespace Poker.UserInterface
             var randomCardLocation = new Random();
 
             //Shuffle cards location
-            for (int cardLocationIndex = DefaultCardsInDesk;
-                cardLocationIndex > 0;
-                cardLocationIndex--)
+            for (int cardLocationIndex = DefaultCardsInDesk; cardLocationIndex > 0; cardLocationIndex--)
             {
                 //Swaps two cards locations from the desk, taking one random and replacing it with the 
                 //card location from the loop index
@@ -181,30 +181,31 @@ namespace Poker.UserInterface
                 this.cardsImageLocation[cardLocationIndex - 1] = oldCardLocation;
             }
 
-            for (i = 0; i < 17; i++)
+            
+            for (int cardNumber = 0; cardNumber < NumberOfDeskCards; cardNumber++)
             {
-                this.deskCardsAsImages[i] = Image.FromFile(this.cardsImageLocation[i]);
+                this.deskCardsAsImages[cardNumber] = Image.FromFile(this.cardsImageLocation[cardNumber]);
                 var partsToRemove = new[] { "..\\..\\Resources\\Assets\\Cards\\", ".png" };
                 foreach (string part in partsToRemove)
                 {
-                    this.cardsImageLocation[i] = this.cardsImageLocation[i]
+                    this.cardsImageLocation[cardNumber] = this.cardsImageLocation[cardNumber]
                         .Replace(part, string.Empty);
                 }
 
-                this.reservedGameCardsIndeces[i] = int.Parse(this.cardsImageLocation[i]) - 1;
-                this.cardsPictureBoxList[i] = new PictureBox
+                this.reservedGameCardsIndeces[cardNumber] = int.Parse(this.cardsImageLocation[cardNumber]) - 1;
+                this.cardsPictureBoxList[cardNumber] = new PictureBox
                 {
                     SizeMode = PictureBoxSizeMode.StretchImage,
                     Height = 130,
                     Width = 80
                 };
-                this.Controls.Add(this.cardsPictureBoxList[i]);
-                this.cardsPictureBoxList[i].Name = "pb" + i.ToString();
+                this.Controls.Add(this.cardsPictureBoxList[cardNumber]);
+                this.cardsPictureBoxList[cardNumber].Name = "pb" + cardNumber.ToString();
                 await Task.Delay(200);
 
                 //TODO: Should this region be in the for loop at all?
                 #region Throwing Cards
-                if (i < 2)
+                if (cardNumber < 2)
                 {
                     if (this.cardsPictureBoxList[0].Tag != null)
                     {
@@ -212,21 +213,21 @@ namespace Poker.UserInterface
                     }
 
                     this.cardsPictureBoxList[0].Tag = this.reservedGameCardsIndeces[0];
-                    this.cardsPictureBoxList[i].Image = this.deskCardsAsImages[i];
-                    this.cardsPictureBoxList[i].Anchor = (AnchorStyles.Bottom);
+                    this.cardsPictureBoxList[cardNumber].Image = this.deskCardsAsImages[cardNumber];
+                    this.cardsPictureBoxList[cardNumber].Anchor = (AnchorStyles.Bottom);
                     //cardsPictureBoxList[i].Dock = DockStyle.Top;
-                    this.cardsPictureBoxList[i].Location = new Point(horizontal, vertical);
-                    horizontal += this.cardsPictureBoxList[i].Width;
+                    this.cardsPictureBoxList[cardNumber].Location = new Point(horizontal, vertical);
+                    horizontal += this.cardsPictureBoxList[cardNumber].Width;
                     this.Controls.Add(this.human.Panel);
                     this.human.InitializePanel(new Point(
                         this.cardsPictureBoxList[0].Left - 10,
                         this.cardsPictureBoxList[0].Top - 10));
                 }
-
+                // TODO: avoid code repetition!
                 if (this.firstBot.Chips > 0)
                 {
                     foldedPlayers--;
-                    if (i >= 2 && i < 4)
+                    if (cardNumber >= 2 && cardNumber < 4)
                     {
                         if (this.cardsPictureBoxList[2].Tag != null)
                         {
@@ -241,18 +242,18 @@ namespace Poker.UserInterface
                         }
 
                         check = true;
-                        this.cardsPictureBoxList[i].Anchor = (AnchorStyles.Bottom | AnchorStyles.Left);
-                        this.cardsPictureBoxList[i].Image = backImage;
+                        this.cardsPictureBoxList[cardNumber].Anchor = (AnchorStyles.Bottom | AnchorStyles.Left);
+                        this.cardsPictureBoxList[cardNumber].Image = backImage;
                         //cardsPictureBoxList[i].Image = deskCardsAsImages[i];
-                        this.cardsPictureBoxList[i].Location = new Point(horizontal, vertical);
-                        horizontal += this.cardsPictureBoxList[i].Width;
-                        this.cardsPictureBoxList[i].Visible = true;
+                        this.cardsPictureBoxList[cardNumber].Location = new Point(horizontal, vertical);
+                        horizontal += this.cardsPictureBoxList[cardNumber].Width;
+                        this.cardsPictureBoxList[cardNumber].Visible = true;
                         this.Controls.Add(this.firstBot.Panel);
                         this.firstBot.InitializePanel(new Point(
                             this.cardsPictureBoxList[2].Left - 10,
                             this.cardsPictureBoxList[2].Top - 10));
 
-                        if (i == 3)
+                        if (cardNumber == 3)
                         {
                             check = false;
                         }
@@ -262,7 +263,7 @@ namespace Poker.UserInterface
                 if (this.secondBot.Chips > 0)
                 {
                     foldedPlayers--;
-                    if (i >= 4 && i < 6)
+                    if (cardNumber >= 4 && cardNumber < 6)
                     {
                         if (this.cardsPictureBoxList[4].Tag != null)
                         {
@@ -277,18 +278,18 @@ namespace Poker.UserInterface
                         }
 
                         check = true;
-                        this.cardsPictureBoxList[i].Anchor = (AnchorStyles.Top | AnchorStyles.Left);
-                        this.cardsPictureBoxList[i].Image = backImage;
+                        this.cardsPictureBoxList[cardNumber].Anchor = (AnchorStyles.Top | AnchorStyles.Left);
+                        this.cardsPictureBoxList[cardNumber].Image = backImage;
                         //cardsPictureBoxList[i].Image = deskCardsAsImages[i];
-                        this.cardsPictureBoxList[i].Location = new Point(horizontal, vertical);
-                        horizontal += this.cardsPictureBoxList[i].Width;
-                        this.cardsPictureBoxList[i].Visible = true;
+                        this.cardsPictureBoxList[cardNumber].Location = new Point(horizontal, vertical);
+                        horizontal += this.cardsPictureBoxList[cardNumber].Width;
+                        this.cardsPictureBoxList[cardNumber].Visible = true;
                         this.Controls.Add(this.secondBot.Panel);
                         this.secondBot.InitializePanel(new Point(
                             this.cardsPictureBoxList[4].Left - 10,
                             this.cardsPictureBoxList[4].Top - 10));
 
-                        if (i == 5)
+                        if (cardNumber == 5)
                         {
                             check = false;
                         }
@@ -298,7 +299,7 @@ namespace Poker.UserInterface
                 if (this.thirdBot.Chips > 0)
                 {
                     foldedPlayers--;
-                    if (i >= 6 && i < 8)
+                    if (cardNumber >= 6 && cardNumber < 8)
                     {
                         if (this.cardsPictureBoxList[6].Tag != null)
                         {
@@ -312,18 +313,18 @@ namespace Poker.UserInterface
                             vertical = 25;
                         }
                         check = true;
-                        this.cardsPictureBoxList[i].Anchor = (AnchorStyles.Top);
-                        this.cardsPictureBoxList[i].Image = backImage;
+                        this.cardsPictureBoxList[cardNumber].Anchor = (AnchorStyles.Top);
+                        this.cardsPictureBoxList[cardNumber].Image = backImage;
                         //cardsPictureBoxList[i].Image = deskCardsAsImages[i];
-                        this.cardsPictureBoxList[i].Location = new Point(horizontal, vertical);
-                        horizontal += this.cardsPictureBoxList[i].Width;
-                        this.cardsPictureBoxList[i].Visible = true;
+                        this.cardsPictureBoxList[cardNumber].Location = new Point(horizontal, vertical);
+                        horizontal += this.cardsPictureBoxList[cardNumber].Width;
+                        this.cardsPictureBoxList[cardNumber].Visible = true;
                         this.Controls.Add(this.thirdBot.Panel);
                         this.thirdBot.InitializePanel(new Point(
                             this.cardsPictureBoxList[6].Left - 10,
                             this.cardsPictureBoxList[6].Top - 10));
 
-                        if (i == 7)
+                        if (cardNumber == 7)
                         {
                             check = false;
                         }
@@ -333,7 +334,7 @@ namespace Poker.UserInterface
                 if (this.fourthBot.Chips > 0)
                 {
                     foldedPlayers--;
-                    if (i >= 8 && i < 10)
+                    if (cardNumber >= 8 && cardNumber < 10)
                     {
                         if (this.cardsPictureBoxList[8].Tag != null)
                         {
@@ -348,18 +349,18 @@ namespace Poker.UserInterface
                         }
 
                         check = true;
-                        this.cardsPictureBoxList[i].Anchor = (AnchorStyles.Top | AnchorStyles.Right);
-                        this.cardsPictureBoxList[i].Image = backImage;
+                        this.cardsPictureBoxList[cardNumber].Anchor = (AnchorStyles.Top | AnchorStyles.Right);
+                        this.cardsPictureBoxList[cardNumber].Image = backImage;
                         //cardsPictureBoxList[i].Image = deskCardsAsImages[i];
-                        this.cardsPictureBoxList[i].Location = new Point(horizontal, vertical);
-                        horizontal += this.cardsPictureBoxList[i].Width;
-                        this.cardsPictureBoxList[i].Visible = true;
+                        this.cardsPictureBoxList[cardNumber].Location = new Point(horizontal, vertical);
+                        horizontal += this.cardsPictureBoxList[cardNumber].Width;
+                        this.cardsPictureBoxList[cardNumber].Visible = true;
                         this.Controls.Add(this.fourthBot.Panel);
                         this.fourthBot.InitializePanel(new Point(
                             this.cardsPictureBoxList[8].Left - 10,
                             this.cardsPictureBoxList[8].Top - 10));
 
-                        if (i == 9)
+                        if (cardNumber == 9)
                         {
                             check = false;
                         }
@@ -369,7 +370,7 @@ namespace Poker.UserInterface
                 if (this.fifthBot.Chips > 0)
                 {
                     foldedPlayers--;
-                    if (i >= 10 && i < 12)
+                    if (cardNumber >= 10 && cardNumber < 12)
                     {
                         if (this.cardsPictureBoxList[10].Tag != null)
                         {
@@ -383,44 +384,44 @@ namespace Poker.UserInterface
                             vertical = 420;
                         }
                         check = true;
-                        this.cardsPictureBoxList[i].Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
-                        this.cardsPictureBoxList[i].Image = backImage;
+                        this.cardsPictureBoxList[cardNumber].Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
+                        this.cardsPictureBoxList[cardNumber].Image = backImage;
                         //cardsPictureBoxList[i].Image = deskCardsAsImages[i];
-                        this.cardsPictureBoxList[i].Location = new Point(horizontal, vertical);
-                        horizontal += this.cardsPictureBoxList[i].Width;
-                        this.cardsPictureBoxList[i].Visible = true;
+                        this.cardsPictureBoxList[cardNumber].Location = new Point(horizontal, vertical);
+                        horizontal += this.cardsPictureBoxList[cardNumber].Width;
+                        this.cardsPictureBoxList[cardNumber].Visible = true;
                         this.Controls.Add(this.fifthBot.Panel);
                         this.fifthBot.InitializePanel(
                             new Point(
                                 this.cardsPictureBoxList[10].Left - 10,
                                 this.cardsPictureBoxList[10].Top - 10));
 
-                        if (i == 11)
+                        if (cardNumber == 11)
                         {
                             check = false;
                         }
                     }
                 }
 
-                if (i >= 12)
+                if (cardNumber >= 12)
                 {
                     this.cardsPictureBoxList[12].Tag = this.reservedGameCardsIndeces[12];
-                    if (i > 12)
+                    if (cardNumber > 12)
                     {
                         this.cardsPictureBoxList[13].Tag = this.reservedGameCardsIndeces[13];
                     }
 
-                    if (i > 13)
+                    if (cardNumber > 13)
                     {
                         this.cardsPictureBoxList[14].Tag = this.reservedGameCardsIndeces[14];
                     }
 
-                    if (i > 14)
+                    if (cardNumber > 14)
                     {
                         this.cardsPictureBoxList[15].Tag = this.reservedGameCardsIndeces[15];
                     }
 
-                    if (i > 15)
+                    if (cardNumber > 15)
                     {
                         this.cardsPictureBoxList[16].Tag = this.reservedGameCardsIndeces[16];
 
@@ -433,12 +434,12 @@ namespace Poker.UserInterface
                     }
 
                     check = true;
-                    if (this.cardsPictureBoxList[i] != null)
+                    if (this.cardsPictureBoxList[cardNumber] != null)
                     {
-                        this.cardsPictureBoxList[i].Anchor = AnchorStyles.None;
-                        this.cardsPictureBoxList[i].Image = backImage;
+                        this.cardsPictureBoxList[cardNumber].Anchor = AnchorStyles.None;
+                        this.cardsPictureBoxList[cardNumber].Image = backImage;
                         //cardsPictureBoxList[i].Image = deskCardsAsImages[i];
-                        this.cardsPictureBoxList[i].Location = new Point(horizontal, vertical);
+                        this.cardsPictureBoxList[cardNumber].Location = new Point(horizontal, vertical);
                         horizontal += 110;
                     }
                 }
@@ -456,7 +457,7 @@ namespace Poker.UserInterface
                 else
                 {
                     this.firstBot.OutOfChips = false;
-                    if (i == 3)
+                    if (cardNumber == 3)
                     {
                         if (this.cardsPictureBoxList[3] != null)
                         {
@@ -476,7 +477,7 @@ namespace Poker.UserInterface
                 else
                 {
                     this.secondBot.OutOfChips = false;
-                    if (i == 5)
+                    if (cardNumber == 5)
                     {
                         if (this.cardsPictureBoxList[5] != null)
                         {
@@ -495,7 +496,7 @@ namespace Poker.UserInterface
                 else
                 {
                     this.thirdBot.OutOfChips = false;
-                    if (i == 7)
+                    if (cardNumber == 7)
                     {
                         if (this.cardsPictureBoxList[7] != null)
                         {
@@ -514,7 +515,7 @@ namespace Poker.UserInterface
                 else
                 {
                     this.fourthBot.OutOfChips = false;
-                    if (i == 9)
+                    if (cardNumber == 9)
                     {
                         if (this.cardsPictureBoxList[9] != null)
                         {
@@ -533,7 +534,7 @@ namespace Poker.UserInterface
                 else
                 {
                     this.fifthBot.OutOfChips = false;
-                    if (i == 11)
+                    if (cardNumber == 11)
                     {
                         if (this.cardsPictureBoxList[11] != null)
                         {
@@ -543,7 +544,7 @@ namespace Poker.UserInterface
                     }
                 }
 
-                if (i == 16)
+                if (cardNumber == 16)
                 {
                     if (!restart)
                     {
