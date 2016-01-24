@@ -1,6 +1,6 @@
 ﻿namespace Poker.Interfaces
 {
-    public interface IBot
+    public interface IBot : IPlayer
     {
     }
 }
