@@ -17,36 +17,33 @@ namespace Poker.UserInterface
     using Models.Players;
     using Models;
 
+    using Poker.Data;
+
     public partial class PokerTable : Form
     {
         #region Variables
         private readonly IAssertHandType assertHandType;
         private readonly IHandType handType;
-
         private readonly IPlayer human;
         private readonly IPlayer firstBot;
         private readonly IPlayer secondBot;
         private readonly IPlayer thirdBot;
         private readonly IPlayer fourthBot;
         private readonly IPlayer fifthBot;
+        private readonly IDatabase pokerDatabase;
 
-        private ProgressBar asd = new ProgressBar();
-        private int nm;
+        //private ProgressBar asd = new ProgressBar();
+        //private int nm;
 
         private int neededChipsToCall = 500;
         private int foldedPlayers = 5;
-
         private double type;
         private int rounds;
-
         private int raise;
-
         private bool chipsAreAdded;
         private bool changed;
-
         private int height;
         private int width;
-
         private int winners = 0;
 
         private int flop = 1;
@@ -57,16 +54,8 @@ namespace Poker.UserInterface
         private int maxLeft = 6;
         private int last = 123;
         private int raisedTurn = 1;
-
-        //TODO: PlayerCheck if name is proper, previous name - bools
-        private List<bool?> playersGameStatus = new List<bool?>();
-        private List<Type> Win = new List<Type>();
-        private List<string> CheckWinners = new List<string>();
-        //TODO: PlayerCheck if name is proper, previous name - chips
-        private List<int> chips = new List<int>();
-
-        private bool restart = false;
-        private bool raising = false;
+        private bool restart;
+        private bool raising;
         private Type sorted;
 
         //TODO: previous name ImgLocation
@@ -109,7 +98,7 @@ namespace Poker.UserInterface
         {
             this.handType = new HandType();
             this.assertHandType = new AssertHandType();
-
+            this.pokerDatabase = new PokerDatabase();
             this.human = new Human("Player");
             this.firstBot = new Bot("Bot 1");
             this.secondBot = new Bot("Bot 2");
@@ -117,7 +106,7 @@ namespace Poker.UserInterface
             this.fourthBot = new Bot("Bot 4");
             this.fifthBot = new Bot("Bot 5");
 
-            //playersGameStatus.Add(humanOutOfChips); playersGameStatus.Add(firstBotOutOfChips); playersGameStatus.Add(secondBotOutOfChips); playersGameStatus.Add(thirdBotOutOfChips); playersGameStatus.Add(fourthBotOutOfChips); playersGameStatus.Add(fifthBotOutOfChips);
+            //pokerDatabasePlayersGameStatus.Add(humanOutOfChips); pokerDatabasePlayersGameStatus.Add(firstBotOutOfChips); pokerDatabasePlayersGameStatus.Add(secondBotOutOfChips); pokerDatabasePlayersGameStatus.Add(thirdBotOutOfChips); pokerDatabasePlayersGameStatus.Add(fourthBotOutOfChips); pokerDatabasePlayersGameStatus.Add(fifthBotOutOfChips);
             this.neededChipsToCall = this.bigBlindValue;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -160,12 +149,12 @@ namespace Poker.UserInterface
 
         private async Task Shuffle()
         {
-            this.playersGameStatus.Add(this.human.OutOfChips);
-            this.playersGameStatus.Add(this.firstBot.OutOfChips);
-            this.playersGameStatus.Add(this.secondBot.OutOfChips);
-            this.playersGameStatus.Add(this.thirdBot.OutOfChips);
-            this.playersGameStatus.Add(this.fourthBot.OutOfChips);
-            this.playersGameStatus.Add(this.fifthBot.OutOfChips);
+            this.pokerDatabase.PlayersGameStatus.Add(this.human.OutOfChips);
+            this.pokerDatabase.PlayersGameStatus.Add(this.firstBot.OutOfChips);
+            this.pokerDatabase.PlayersGameStatus.Add(this.secondBot.OutOfChips);
+            this.pokerDatabase.PlayersGameStatus.Add(this.thirdBot.OutOfChips);
+            this.pokerDatabase.PlayersGameStatus.Add(this.fourthBot.OutOfChips);
+            this.pokerDatabase.PlayersGameStatus.Add(this.fifthBot.OutOfChips);
             this.buttonCall.Enabled = false;
             this.buttonRaise.Enabled = false;
             this.buttonFold.Enabled = false;
@@ -632,8 +621,8 @@ namespace Poker.UserInterface
                 {
                     if (this.buttonCall.Text.Contains("All in") == false || this.buttonRaise.Text.Contains("All in") == false)
                     {
-                        this.playersGameStatus.RemoveAt(0);
-                        this.playersGameStatus.Insert(0, null);
+                        this.pokerDatabase.PlayersGameStatus.RemoveAt(0);
+                        this.pokerDatabase.PlayersGameStatus.Insert(0, null);
                         this.maxLeft--;
                         this.human.Folded = true;
                     }
@@ -666,8 +655,8 @@ namespace Poker.UserInterface
 
                 if (this.firstBot.OutOfChips && !this.firstBot.Folded)
                 {
-                    this.playersGameStatus.RemoveAt(1);
-                    this.playersGameStatus.Insert(1, null);
+                    this.pokerDatabase.PlayersGameStatus.RemoveAt(1);
+                    this.pokerDatabase.PlayersGameStatus.Insert(1, null);
                     this.maxLeft--;
                     this.firstBot.Folded = true;
                 }
@@ -696,8 +685,8 @@ namespace Poker.UserInterface
 
                 if (this.secondBot.OutOfChips && !this.secondBot.Folded)
                 {
-                    this.playersGameStatus.RemoveAt(2);
-                    this.playersGameStatus.Insert(2, null);
+                    this.pokerDatabase.PlayersGameStatus.RemoveAt(2);
+                    this.pokerDatabase.PlayersGameStatus.Insert(2, null);
                     this.maxLeft--;
                     this.secondBot.Folded = true;
                 }
@@ -726,8 +715,8 @@ namespace Poker.UserInterface
 
                 if (this.thirdBot.OutOfChips && !this.thirdBot.Folded)
                 {
-                    this.playersGameStatus.RemoveAt(3);
-                    this.playersGameStatus.Insert(3, null);
+                    this.pokerDatabase.PlayersGameStatus.RemoveAt(3);
+                    this.pokerDatabase.PlayersGameStatus.Insert(3, null);
                     this.maxLeft--;
                     this.thirdBot.Folded = true;
                 }
@@ -756,8 +745,8 @@ namespace Poker.UserInterface
 
                 if (this.fourthBot.OutOfChips && !this.fourthBot.Folded)
                 {
-                    this.playersGameStatus.RemoveAt(4);
-                    this.playersGameStatus.Insert(4, null);
+                    this.pokerDatabase.PlayersGameStatus.RemoveAt(4);
+                    this.pokerDatabase.PlayersGameStatus.Insert(4, null);
                     this.maxLeft--;
                     this.fourthBot.Folded = true;
                 }
@@ -785,8 +774,8 @@ namespace Poker.UserInterface
 
                 if (this.fifthBot.OutOfChips && !this.fifthBot.Folded)
                 {
-                    this.playersGameStatus.RemoveAt(5);
-                    this.playersGameStatus.Insert(5, null);
+                    this.pokerDatabase.PlayersGameStatus.RemoveAt(5);
+                    this.pokerDatabase.PlayersGameStatus.Insert(5, null);
                     this.maxLeft--;
                     this.fifthBot.Folded = true;
                 }
@@ -801,8 +790,8 @@ namespace Poker.UserInterface
                 {
                     if (this.buttonCall.Text.Contains("All in") == false || this.buttonRaise.Text.Contains("All in") == false)
                     {
-                        this.playersGameStatus.RemoveAt(0);
-                        this.playersGameStatus.Insert(0, null);
+                        this.pokerDatabase.PlayersGameStatus.RemoveAt(0);
+                        this.pokerDatabase.PlayersGameStatus.Insert(0, null);
                         this.maxLeft--;
                         this.human.Folded = true;
                     }
@@ -860,25 +849,25 @@ namespace Poker.UserInterface
                     if (this.reservedGameCardsIndeces[index] == int.Parse(this.cardsPictureBoxList[card1].Tag.ToString()) &&
                         this.reservedGameCardsIndeces[index + 1] == int.Parse(this.cardsPictureBoxList[card2].Tag.ToString()))
                     {
-                        this.assertHandType.rPairFromHand(player, index, ref this.Win, ref this.sorted, ref reservedGameCardsIndeces);
+                        this.assertHandType.rPairFromHand(player, index, this.pokerDatabase.Win, ref this.sorted, ref reservedGameCardsIndeces);
 
-                        this.assertHandType.rPairTwoPair(player, index, ref this.Win, ref this.sorted, ref reservedGameCardsIndeces);
+                        this.assertHandType.rPairTwoPair(player, index, this.pokerDatabase.Win, ref this.sorted, ref reservedGameCardsIndeces);
 
-                        this.assertHandType.rTwoPair(player, index, ref this.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
+                        this.assertHandType.rTwoPair(player, index, this.pokerDatabase.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
 
-                        this.assertHandType.rThreeOfAKind(player, Straight, index, ref this.Win, ref this.sorted);
+                        this.assertHandType.rThreeOfAKind(player, Straight, index, this.pokerDatabase.Win, ref this.sorted);
 
-                        this.assertHandType.rStraight(player, Straight, index, ref this.Win, ref this.sorted);
+                        this.assertHandType.rStraight(player, Straight, index, this.pokerDatabase.Win, ref this.sorted);
 
-                        this.assertHandType.rFlush(player, ref vf, cardsOnBoard, ref index, ref this.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
+                        this.assertHandType.rFlush(player, ref vf, cardsOnBoard, ref index, this.pokerDatabase.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
 
-                        this.assertHandType.rFullHouse(player, ref done, Straight, ref this.Win, ref this.sorted, ref this.type);
+                        this.assertHandType.rFullHouse(player, ref done, Straight, this.pokerDatabase.Win, ref this.sorted, ref this.type);
 
-                        this.assertHandType.rFourOfAKind(player, Straight, ref this.Win, ref this.sorted);
+                        this.assertHandType.rFourOfAKind(player, Straight, this.pokerDatabase.Win, ref this.sorted);
 
-                        this.assertHandType.rStraightFlush(player, clubes, diamonds, hearts, spades, ref this.Win, ref this.sorted);
+                        this.assertHandType.rStraightFlush(player, clubes, diamonds, hearts, spades, this.pokerDatabase.Win, ref this.sorted);
 
-                        this.assertHandType.rHighCard(player, index, ref this.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
+                        this.assertHandType.rHighCard(player, index, this.pokerDatabase.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
                     }
                 }
             }
@@ -905,7 +894,7 @@ namespace Poker.UserInterface
                 if (player.Power == sorted.Power)
                 {
                     this.winners++;
-                    this.CheckWinners.Add(player.Name);
+                    this.pokerDatabase.CheckWinners.Add(player.Name);
                     if (player.Type == -1)
                     {
                         MessageBox.Show(player.Type + " High Card ");
@@ -961,7 +950,7 @@ namespace Poker.UserInterface
             {
                 if (this.winners > 1)
                 {
-                    if (this.CheckWinners.Contains("Player"))
+                    if (this.pokerDatabase.CheckWinners.Contains("Player"))
                     {
                         this.human.Chips += int.Parse(this.potStatus.Text) / this.winners;
                         this.txtBoxHumanChips.Text = this.human.Chips.ToString();
@@ -969,35 +958,35 @@ namespace Poker.UserInterface
 
                     }
 
-                    if (this.CheckWinners.Contains("Bot 1"))
+                    if (this.pokerDatabase.CheckWinners.Contains("Bot 1"))
                     {
                         this.firstBot.Chips += int.Parse(this.potStatus.Text) / this.winners;
                         this.txtBoxFirstBotChips.Text = this.firstBot.Chips.ToString();
                         //bot1Panel.Visible = true;
                     }
 
-                    if (this.CheckWinners.Contains("Bot 2"))
+                    if (this.pokerDatabase.CheckWinners.Contains("Bot 2"))
                     {
                         this.secondBot.Chips += int.Parse(this.potStatus.Text) / this.winners;
                         this.txtBoxSecondBotChips.Text = this.secondBot.Chips.ToString();
                         //bot2Panel.Visible = true;
                     }
 
-                    if (this.CheckWinners.Contains("Bot 3"))
+                    if (this.pokerDatabase.CheckWinners.Contains("Bot 3"))
                     {
                         this.thirdBot.Chips += int.Parse(this.potStatus.Text) / this.winners;
                         this.txtBoxThirdBotChips.Text = this.thirdBot.Chips.ToString();
                         //bot3Panel.Visible = true;
                     }
 
-                    if (this.CheckWinners.Contains("Bot 4"))
+                    if (this.pokerDatabase.CheckWinners.Contains("Bot 4"))
                     {
                         this.fourthBot.Chips += int.Parse(this.potStatus.Text) / this.winners;
                         this.txtBoxFourthBotChips.Text = this.fourthBot.Chips.ToString();
                         //bot4Panel.Visible = true;
                     }
 
-                    if (this.CheckWinners.Contains("Bot 5"))
+                    if (this.pokerDatabase.CheckWinners.Contains("Bot 5"))
                     {
                         this.fifthBot.Chips += int.Parse(this.potStatus.Text) / this.winners;
                         this.txtBoxFifthBotChips.Text = this.fifthBot.Chips.ToString();
@@ -1007,42 +996,42 @@ namespace Poker.UserInterface
                 }
                 if (this.winners == 1)
                 {
-                    if (this.CheckWinners.Contains("Player"))
+                    if (this.pokerDatabase.CheckWinners.Contains("Player"))
                     {
                         this.human.Chips += int.Parse(this.potStatus.Text);
                         //await Finish(1);
                         //playerPanel.Visible = true;
                     }
 
-                    if (this.CheckWinners.Contains("Bot 1"))
+                    if (this.pokerDatabase.CheckWinners.Contains("Bot 1"))
                     {
                         this.firstBot.Chips += int.Parse(this.potStatus.Text);
                         //await Finish(1);
                         //bot1Panel.Visible = true;
                     }
 
-                    if (this.CheckWinners.Contains("Bot 2"))
+                    if (this.pokerDatabase.CheckWinners.Contains("Bot 2"))
                     {
                         this.secondBot.Chips += int.Parse(this.potStatus.Text);
                         //await Finish(1);
                         //bot2Panel.Visible = true;
                     }
 
-                    if (this.CheckWinners.Contains("Bot 3"))
+                    if (this.pokerDatabase.CheckWinners.Contains("Bot 3"))
                     {
                         this.thirdBot.Chips += int.Parse(this.potStatus.Text);
                         //await Finish(1);
                         //bot3Panel.Visible = true;
                     }
 
-                    if (this.CheckWinners.Contains("Bot 4"))
+                    if (this.pokerDatabase.CheckWinners.Contains("Bot 4"))
                     {
                         this.fourthBot.Chips += int.Parse(this.potStatus.Text);
                         //await Finish(1);
                         //bot4Panel.Visible = true;
                     }
 
-                    if (this.CheckWinners.Contains("Bot 5"))
+                    if (this.pokerDatabase.CheckWinners.Contains("Bot 5"))
                     {
                         this.fifthBot.Chips += int.Parse(this.potStatus.Text);
                         //await Finish(1);
@@ -1241,7 +1230,7 @@ namespace Poker.UserInterface
                 this.neededChipsToCall = this.bigBlindValue;
                 this.raise = 0;
                 this.cardsImageLocation = Directory.GetFiles("..\\..\\Resources\\Assets\\Cards", "*.png", SearchOption.TopDirectoryOnly);
-                this.playersGameStatus.Clear();
+                this.pokerDatabase.PlayersGameStatus.Clear();
                 this.rounds = 0;
                 this.type = 0;
 
@@ -1259,10 +1248,10 @@ namespace Poker.UserInterface
                 this.fifthBot.Type = -1;
                 this.human.Type = -1;
 
-                this.chips.Clear();
-                this.CheckWinners.Clear();
+                this.pokerDatabase.Chips.Clear();
+                this.pokerDatabase.CheckWinners.Clear();
                 this.winners = 0;
-                this.Win.Clear();
+                this.pokerDatabase.Win.Clear();
                 this.sorted.Current = 0;
                 this.sorted.Power = 0;
                 for (int os = 0; os < 17; os++)
@@ -1349,13 +1338,13 @@ namespace Poker.UserInterface
             {
                 if (this.humanStatus.Text.Contains("Raise"))
                 {
-                    this.chips.Add(this.human.Chips);
+                    this.pokerDatabase.Chips.Add(this.human.Chips);
                     this.chipsAreAdded = true;
                 }
 
                 if (this.humanStatus.Text.Contains("Call"))
                 {
-                    this.chips.Add(this.human.Chips);
+                    this.pokerDatabase.Chips.Add(this.human.Chips);
                     this.chipsAreAdded = true;
                 }
             }
@@ -1366,7 +1355,7 @@ namespace Poker.UserInterface
             {
                 if (!this.chipsAreAdded)
                 {
-                    this.chips.Add(this.firstBot.Chips);
+                    this.pokerDatabase.Chips.Add(this.firstBot.Chips);
                     this.chipsAreAdded = true;
                 }
 
@@ -1377,7 +1366,7 @@ namespace Poker.UserInterface
             {
                 if (!this.chipsAreAdded)
                 {
-                    this.chips.Add(this.secondBot.Chips);
+                    this.pokerDatabase.Chips.Add(this.secondBot.Chips);
                     this.chipsAreAdded = true;
                 }
 
@@ -1388,7 +1377,7 @@ namespace Poker.UserInterface
             {
                 if (!this.chipsAreAdded)
                 {
-                    this.chips.Add(this.thirdBot.Chips);
+                    this.pokerDatabase.Chips.Add(this.thirdBot.Chips);
                     this.chipsAreAdded = true;
                 }
 
@@ -1399,7 +1388,7 @@ namespace Poker.UserInterface
             {
                 if (!this.chipsAreAdded)
                 {
-                    this.chips.Add(this.fourthBot.Chips);
+                    this.pokerDatabase.Chips.Add(this.fourthBot.Chips);
                     this.chipsAreAdded = true;
                 }
 
@@ -1410,27 +1399,27 @@ namespace Poker.UserInterface
             {
                 if (!this.chipsAreAdded)
                 {
-                    this.chips.Add(this.fifthBot.Chips);
+                    this.pokerDatabase.Chips.Add(this.fifthBot.Chips);
                     this.chipsAreAdded = true;
                 }
             }
 
-            if (this.chips.ToArray().Length == this.maxLeft)
+            if (this.pokerDatabase.Chips.ToArray().Length == this.maxLeft)
             {
                 await Finish(2);
             }
             else
             {
-                this.chips.Clear();
+                this.pokerDatabase.Chips.Clear();
             }
             #endregion
             //TODO: previous name abs
-            var leftPlayers = this.playersGameStatus.Count(x => x == false);
+            var leftPlayers = this.pokerDatabase.PlayersGameStatus.Count(x => x == false);
 
             #region LastManStanding
             if (leftPlayers == 1)
             {
-                int index = this.playersGameStatus.IndexOf(false);
+                int index = this.pokerDatabase.PlayersGameStatus.IndexOf(false);
                 if (index == 0)
                 {
                     this.human.Chips += int.Parse(this.potStatus.Text);
@@ -1575,10 +1564,10 @@ namespace Poker.UserInterface
             this.maxLeft = 6;
             this.last = 123;
             this.raisedTurn = 1;
-            this.playersGameStatus.Clear();
-            this.CheckWinners.Clear();
-            this.chips.Clear();
-            this.Win.Clear();
+            this.pokerDatabase.PlayersGameStatus.Clear();
+            this.pokerDatabase.CheckWinners.Clear();
+            this.pokerDatabase.Chips.Clear();
+            this.pokerDatabase.Win.Clear();
             this.sorted.Current = 0;
             this.sorted.Power = 0;
             this.potStatus.Text = "0";
@@ -1627,7 +1616,7 @@ namespace Poker.UserInterface
 
         private void FixWinners()
         {
-            Win.Clear();
+            this.pokerDatabase.Win.Clear();
             sorted.Current = 0;
             sorted.Power = 0;
             string fixedLast = "qwerty";
@@ -1966,7 +1955,7 @@ namespace Poker.UserInterface
             await Turns();
         }
 
-        //TODO: validate chips are integer
+        //TODO: validate pokerDatabaseChips are integer
         private void ButtonAddChips_Click(object sender, EventArgs e)
         {
             if (tbAdd.Text == "")

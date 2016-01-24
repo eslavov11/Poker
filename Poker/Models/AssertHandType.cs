@@ -6,7 +6,7 @@
 
     public class AssertHandType : IAssertHandType
     {
-        public void rStraightFlush(IPlayer player, int[] clubes, int[] dimonds, int[] hearts, int[] spades, ref List<Type> Win, ref Type sorted)
+        public void rStraightFlush(IPlayer player, int[] clubes, int[] dimonds, int[] hearts, int[] spades, List<Type> Win, ref Type sorted)
         {
             if (player.Type >= -1)
             {
@@ -96,7 +96,7 @@
             sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
         }
 
-        public void rFourOfAKind(IPlayer player, int[] Straight, ref List<Type> Win, ref Type sorted)
+        public void rFourOfAKind(IPlayer player, int[] Straight, List<Type> Win, ref Type sorted)
         {
             if (player.Type >= -1)
             {
@@ -126,7 +126,7 @@
             }
         }
 
-        public void rFullHouse(IPlayer player, ref bool done, int[] Straight, ref List<Type> Win, ref Type sorted, ref double type)
+        public void rFullHouse(IPlayer player, ref bool done, int[] Straight, List<Type> Win, ref Type sorted, ref double type)
         {
             if (player.Type >= -1)
             {
@@ -189,7 +189,7 @@
             return sorted;
         }
 
-        public void rFlush(IPlayer player, ref bool vf, int[] Straight1, ref int index, ref List<Type> Win, ref Type sorted, ref int[] Reserve)
+        public void rFlush(IPlayer player, ref bool vf, int[] Straight1, ref int index, List<Type> Win, ref Type sorted, ref int[] Reserve)
         {
             if (player.Type >= -1)
             {
@@ -692,7 +692,7 @@
             }
         }
 
-        public void rStraight(IPlayer player, int[] Straight, int index, ref List<Type> Win, ref Type sorted)
+        public void rStraight(IPlayer player, int[] Straight, int index, List<Type> Win, ref Type sorted)
         {
 
             if (player.Type >= -1)
@@ -729,7 +729,7 @@
             }
         }
 
-        public void rThreeOfAKind(IPlayer player, int[] Straight, int index, ref List<Type> Win, ref Type sorted)
+        public void rThreeOfAKind(IPlayer player, int[] Straight, int index, List<Type> Win, ref Type sorted)
         {
             if (player.Type >= -1)
             {
@@ -757,7 +757,7 @@
             }
         }
 
-        public void rTwoPair(IPlayer player, int index, ref List<Type> Win, ref Type sorted, ref int[] Reserve)
+        public void rTwoPair(IPlayer player, int index, List<Type> Win, ref Type sorted, ref int[] Reserve)
         {
             if (player.Type >= -1)
             {
@@ -816,7 +816,7 @@
             }
         }
 
-        public void rPairTwoPair(IPlayer player, int index, ref List<Type> Win, ref Type sorted, ref int[] Reserve)
+        public void rPairTwoPair(IPlayer player, int index, List<Type> Win, ref Type sorted, ref int[] Reserve)
         {
             if (player.Type >= -1)
             {
@@ -925,7 +925,7 @@
             }
         }
 
-        public void rPairFromHand(IPlayer player, int index, ref List<Type> Win, ref Type sorted, ref int[] Reserve)
+        public void rPairFromHand(IPlayer player, int index, List<Type> Win, ref Type sorted, ref int[] Reserve)
         {
             if (player.Type >= -1)
             {
@@ -1003,7 +1003,7 @@
             }
         }
 
-        public void rHighCard(IPlayer player, int index, ref List<Type> Win, ref Type sorted, ref int[] Reserve)
+        public void rHighCard(IPlayer player, int index, List<Type> Win, ref Type sorted, ref int[] Reserve)
         {
             if (player.Type == -1)
             {
