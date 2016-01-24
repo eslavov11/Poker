@@ -15,7 +15,6 @@
 
         protected Player(string name)
         {
-            //TODO: Is name needed
             this.Name = name;
             this.Chips = DefaultStartChips;
             this.Panel = new Panel();

@@ -2,7 +2,7 @@
 {
     using System.Windows.Forms;
 
-    partial class PokerTable
+    public partial class PokerTable
     {
         private Button buttonFold;
         private Button buttonCheck;
@@ -391,4 +391,3 @@
         #endregion
     }
 }
-

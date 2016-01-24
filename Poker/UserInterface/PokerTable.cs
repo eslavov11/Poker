@@ -15,8 +15,7 @@ namespace Poker.UserInterface
 {
     using Interfaces;
     using Models.Players;
-
-    using Poker.Models;
+    using Models;
 
     public partial class PokerTable : Form
     {
@@ -32,7 +31,7 @@ namespace Poker.UserInterface
         private readonly IPlayer fifthBot;
 
         private ProgressBar asd = new ProgressBar();
-        private int Nm;
+        private int nm;
 
         private int neededChipsToCall = 500;
         private int foldedPlayers = 5;
@@ -195,7 +194,6 @@ namespace Poker.UserInterface
 
             for (i = 0; i < 17; i++)
             {
-
                 this.deskCardsAsImages[i] = Image.FromFile(this.cardsImageLocation[i]);
                 var partsToRemove = new[] { "..\\..\\Resources\\Assets\\Cards\\", ".png" };
                 foreach (string part in partsToRemove)
@@ -281,12 +279,14 @@ namespace Poker.UserInterface
                         {
                             this.cardsPictureBoxList[5].Tag = this.reservedGameCardsIndeces[5];
                         }
+
                         this.cardsPictureBoxList[4].Tag = this.reservedGameCardsIndeces[4];
                         if (!check)
                         {
                             horizontal = 75;
                             vertical = 65;
                         }
+
                         check = true;
                         this.cardsPictureBoxList[i].Anchor = (AnchorStyles.Top | AnchorStyles.Left);
                         this.cardsPictureBoxList[i].Image = backImage;
@@ -1139,6 +1139,7 @@ namespace Poker.UserInterface
                     }
                 }
             }
+
             if (this.rounds == this.end && this.maxLeft == 6)
             {
                 string fixedLast = "qwerty";
@@ -1494,8 +1495,6 @@ namespace Poker.UserInterface
                 await Finish(2);
             }
             #endregion
-
-
         }
 
         private async Task Finish(int n)
@@ -1613,6 +1612,7 @@ namespace Poker.UserInterface
                     this.buttonRaise.Text = "Raise";
                 }
             }
+
             this.cardsImageLocation = Directory.GetFiles("..\\..\\Resources\\Assets\\Cards", "*.png", SearchOption.TopDirectoryOnly);
             for (int os = 0; os < 17; os++)
             {
@@ -1620,11 +1620,12 @@ namespace Poker.UserInterface
                 this.cardsPictureBoxList[os].Invalidate();
                 this.cardsPictureBoxList[os].Visible = false;
             }
+
             await Shuffle();
             //await Turns();
         }
 
-        void FixWinners()
+        private void FixWinners()
         {
             Win.Clear();
             sorted.Current = 0;
@@ -1874,7 +1875,6 @@ namespace Poker.UserInterface
             else
             {
                 //humanStatus.Text = "All in " + Chips;
-
                 this.buttonCheck.Enabled = false;
             }
             await Turns();

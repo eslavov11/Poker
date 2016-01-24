@@ -26,6 +26,7 @@
             {
                 return this.chips;
             }
+
             set
             {
                 this.chips = value;
@@ -38,6 +39,7 @@
             {
                 return this.checkWinners;
             }
+
             set
             {
                 this.checkWinners = value;
@@ -50,6 +52,7 @@
             {
                 return this.win;
             }
+
             set
             {
                 this.win = value;
@@ -62,6 +65,7 @@
             {
                 return this.playersGameStatus;
             }
+
             set
             {
                 this.playersGameStatus = value;

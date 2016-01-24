@@ -78,7 +78,7 @@
                     }
                     else
                     {
-                        Fold(player, sStatus, ref raising);
+                        this.Fold(player, sStatus, ref raising);
                     }
                 }
             }
@@ -88,18 +88,18 @@
                 if (raise == 0)
                 {
                     raise = neededChipsToCall * 2;
-                    Raised(player, sStatus, ref raising, ref raise, ref neededChipsToCall, potStatus);
+                    this.Raised(player, sStatus, ref raising, ref raise, ref neededChipsToCall, potStatus);
                 }
                 else
                 {
                     if (raise <= RoundN(player.Chips, n))
                     {
                         raise = neededChipsToCall * 2;
-                        Raised(player, sStatus, ref raising, ref raise, ref neededChipsToCall, potStatus);
+                        this.Raised(player, sStatus, ref raising, ref raise, ref neededChipsToCall, potStatus);
                     }
                     else
                     {
-                        Fold(player, sStatus, ref raising);
+                        this.Fold(player, sStatus, ref raising);
                     }
                 }
             }

@@ -140,10 +140,7 @@
                         {
                             if (fh.Max() / 4 == 0)
                             {
-                                player.Type = 6;
-                                player.Power = 13 * 2 + player.Type * 100;
-                                Win.Add(new Type() { Power = player.Power, Current = 6 });
-                                sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+                                sorted = NewMethod(player, Win);
                                 break;
                             }
 
@@ -180,6 +177,16 @@
                     player.Power = type;
                 }
             }
+        }
+
+        private static Type NewMethod(IPlayer player, List<Type> Win)
+        {
+            Type sorted;
+            player.Type = 6;
+            player.Power = 13 * 2 + player.Type * 100;
+            Win.Add(new Type() { Power = player.Power, Current = 6 });
+            sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
+            return sorted;
         }
 
         public void rFlush(IPlayer player, ref bool vf, int[] Straight1, ref int index, ref List<Type> Win, ref Type sorted, ref int[] Reserve)
@@ -1024,6 +1031,5 @@
                 }
             }
         }
-
     }
 }

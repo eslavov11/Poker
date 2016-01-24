@@ -17,20 +17,20 @@ namespace Poker.UserInterface
         public AddChips()
         {
             FontFamily fontFamily = new FontFamily("Arial");
-            InitializeComponent();
-            ControlBox = false;
-            label1.BorderStyle = BorderStyle.FixedSingle;
+            this.InitializeComponent();
+            this.ControlBox = false;
+            this.label1.BorderStyle = BorderStyle.FixedSingle;
         }
 
         public void ButtonAddChips_Click(object sender, EventArgs e)
         {
             int parsedValue;
-            if (int.Parse(textBox1.Text) > 100000000)
+            if (int.Parse(this.textBox1.Text) > 100000000)
             {
                 MessageBox.Show("The maximium chips you can add is 100000000");
                 return;
             }
-            if (!int.TryParse(textBox1.Text, out parsedValue))
+            if (!int.TryParse(this.textBox1.Text, out parsedValue))
             {
                 MessageBox.Show("This is chipsAmount number only field");
                 return;
@@ -42,7 +42,8 @@ namespace Poker.UserInterface
                 this.Close();
             }
         }
-        private void button2_Click(object sender, EventArgs e)
+
+        private void ButtonExit_Click(object sender, EventArgs e)
         {
             var message = "Are you sure?";
             var title = "Quit";
@@ -50,6 +51,7 @@ namespace Poker.UserInterface
             message,title,
             MessageBoxButtons.YesNo, 
             MessageBoxIcon.Question);
+
             switch (result)
             {
                 case DialogResult.No:
