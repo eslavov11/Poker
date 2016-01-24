@@ -1,4 +1,4 @@
-﻿namespace Poker
+﻿namespace Poker.UserInterface
 {
     partial class AddChips
     {

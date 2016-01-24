@@ -1,6 +1,6 @@
-﻿namespace Poker
+﻿namespace Poker.UserInterface
 {
-    partial class Form1
+    partial class PokerTable
     {
         /// <summary>
         /// Required designer variable.
@@ -51,7 +51,7 @@
             this.b4Status = new System.Windows.Forms.Label();
             this.b3Status = new System.Windows.Forms.Label();
             this.b1Status = new System.Windows.Forms.Label();
-            this.pStatus = new System.Windows.Forms.Label();
+            this.playerStatus = new System.Windows.Forms.Label();
             this.b2Status = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tbRaise = new System.Windows.Forms.TextBox();
@@ -283,13 +283,13 @@
             this.b1Status.Size = new System.Drawing.Size(142, 32);
             this.b1Status.TabIndex = 29;
             // 
-            // pStatus
+            // playerStatus
             // 
-            this.pStatus.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.pStatus.Location = new System.Drawing.Point(755, 579);
-            this.pStatus.Name = "pStatus";
-            this.pStatus.Size = new System.Drawing.Size(163, 32);
-            this.pStatus.TabIndex = 30;
+            this.playerStatus.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.playerStatus.Location = new System.Drawing.Point(755, 579);
+            this.playerStatus.Name = "playerStatus";
+            this.playerStatus.Size = new System.Drawing.Size(163, 32);
+            this.playerStatus.TabIndex = 30;
             // 
             // b2Status
             // 
@@ -326,7 +326,7 @@
             this.Controls.Add(this.tbRaise);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.b2Status);
-            this.Controls.Add(this.pStatus);
+            this.Controls.Add(this.playerStatus);
             this.Controls.Add(this.b1Status);
             this.Controls.Add(this.b3Status);
             this.Controls.Add(this.b4Status);
@@ -384,7 +384,7 @@
         private System.Windows.Forms.Label b4Status;
         private System.Windows.Forms.Label b3Status;
         private System.Windows.Forms.Label b1Status;
-        private System.Windows.Forms.Label pStatus;
+        private System.Windows.Forms.Label playerStatus;
         private System.Windows.Forms.Label b2Status;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbRaise;

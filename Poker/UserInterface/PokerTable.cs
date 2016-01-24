@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
-namespace Poker
+namespace Poker.UserInterface
 {
 
-    public partial class Form1 : Form
+    public partial class PokerTable : Form
     {
         #region Variables
         private ProgressBar asd = new ProgressBar();
@@ -144,7 +144,7 @@ namespace Poker
         private int turnCount = 0;
         #endregion
 
-        public Form1()
+        public PokerTable()
         {
             //playersGameStatus.Add(PFturn); playersGameStatus.Add(B1Fturn); playersGameStatus.Add(B2Fturn); playersGameStatus.Add(B3Fturn); playersGameStatus.Add(B4Fturn); playersGameStatus.Add(B5Fturn);
             this.call = this.bigBlindValue;
@@ -642,7 +642,7 @@ namespace Poker
             {
                 if (Pturn)
                 {
-                    FixCall(pStatus, ref pCall, ref pRaise, 1);
+                    FixCall(this.playerStatus, ref pCall, ref pRaise, 1);
                     //MessageBox.Show("Player's Turn");
                     pbTimer.Visible = true;
                     pbTimer.Value = 1000;
@@ -655,7 +655,7 @@ namespace Poker
                     bRaise.Enabled = true;
                     bFold.Enabled = true;
                     turnCount++;
-                    FixCall(pStatus, ref pCall, ref pRaise, 2);
+                    FixCall(this.playerStatus, ref pCall, ref pRaise, 2);
                 }
             }
 
@@ -866,7 +866,7 @@ namespace Poker
             {
             }
 
-            if (!foldedTurn || cardOne == 0 && cardTwo == 1 && pStatus.Text.Contains("Fold") == false)
+            if (!foldedTurn || cardOne == 0 && cardTwo == 1 && this.playerStatus.Text.Contains("Fold") == false)
             {
                 #region Variables
                 bool done = false, vf = false;
@@ -2135,7 +2135,7 @@ namespace Poker
                         raisedTurn = 123;
                         rounds++;
                         if (!PFturn)
-                            pStatus.Text = "";
+                            this.playerStatus.Text = "";
                         if (!B1Fturn)
                             b1Status.Text = "";
                         if (!B2Fturn)
@@ -2200,7 +2200,7 @@ namespace Poker
             if (rounds == End && maxLeft == 6)
             {
                 string fixedLast = "qwerty";
-                if (!pStatus.Text.Contains("Fold"))
+                if (!this.playerStatus.Text.Contains("Fold"))
                 {
                     fixedLast = "Player";
                     Rules(0, 1, "Player", ref pType, ref pPower, PFturn);
@@ -2313,7 +2313,7 @@ namespace Poker
                     this.cardsPictureBoxList[os].Visible = false;
                 }
                 tbPot.Text = "0";
-                pStatus.Text = "";
+                this.playerStatus.Text = "";
                 await Shuffle();
                 await Turns();
             }
@@ -2366,12 +2366,12 @@ namespace Poker
             #region All in
             if (Chips <= 0 && !intsadded)
             {
-                if (pStatus.Text.Contains("raise"))
+                if (this.playerStatus.Text.Contains("raise"))
                 {
                     this.chips.Add(Chips);
                     intsadded = true;
                 }
-                if (pStatus.Text.Contains("Call"))
+                if (this.playerStatus.Text.Contains("Call"))
                 {
                     this.chips.Add(Chips);
                     intsadded = true;
@@ -2580,7 +2580,7 @@ namespace Poker
             this.t = 60;
             this.up = 10000000;
             this.turnCount = 0;
-            this.pStatus.Text = string.Empty;
+            this.playerStatus.Text = string.Empty;
             this.b1Status.Text = string.Empty;
             this.b2Status.Text = string.Empty;
             this.b3Status.Text = string.Empty;
@@ -2624,7 +2624,7 @@ namespace Poker
             sorted.Current = 0;
             sorted.Power = 0;
             string fixedLast = "qwerty";
-            if (!pStatus.Text.Contains("Fold"))
+            if (!this.playerStatus.Text.Contains("Fold"))
             {
                 fixedLast = "Player";
                 Rules(0, 1, "Player", ref pType, ref pPower, PFturn);
@@ -2783,7 +2783,7 @@ namespace Poker
 
             if (botPower <= 390 && botPower >= 330)
             {
-                //TODO: previously sChips
+                //TODO: previously Smooth(ref sChips, ref sTurn, ref sFTurn, sStatus, name, tCall, tRaise);
                 Smooth(ref botCurrentChips, ref sTurn, ref sFTurn, sStatus, name, tCall, tRaise);
             }
 
@@ -3302,7 +3302,7 @@ namespace Poker
 
         private async void ButtonFold_Click(object sender, EventArgs e)
         {
-            pStatus.Text = "Fold";
+            this.playerStatus.Text = "Fold";
             Pturn = false;
             PFturn = true;
             await Turns();
@@ -3313,11 +3313,11 @@ namespace Poker
             if (call <= 0)
             {
                 Pturn = false;
-                pStatus.Text = "PlayerCheck";
+                this.playerStatus.Text = "PlayerCheck";
             }
             else
             {
-                //pStatus.Text = "All in " + Chips;
+                //playerStatus.Text = "All in " + Chips;
 
                 bCheck.Enabled = false;
             }
@@ -3340,13 +3340,13 @@ namespace Poker
                     tbPot.Text = call.ToString();
                 }
                 Pturn = false;
-                pStatus.Text = "Call " + call;
+                this.playerStatus.Text = "Call " + call;
                 pCall = call;
             }
             else if (Chips <= call && call > 0)
             {
                 tbPot.Text = (int.Parse(tbPot.Text) + Chips).ToString();
-                pStatus.Text = "All in " + Chips;
+                this.playerStatus.Text = "All in " + Chips;
                 Chips = 0;
                 tbChips.Text = "Chips : " + Chips.ToString();
                 Pturn = false;
@@ -3377,7 +3377,7 @@ namespace Poker
                         {
                             call = int.Parse(tbRaise.Text);
                             this.raise = int.Parse(tbRaise.Text);
-                            pStatus.Text = "raise " + call.ToString();
+                            this.playerStatus.Text = "raise " + call.ToString();
                             tbPot.Text = (int.Parse(tbPot.Text) + call).ToString();
                             bCall.Text = "Call";
                             Chips -= int.Parse(tbRaise.Text);
@@ -3390,7 +3390,7 @@ namespace Poker
                             call = Chips;
                             this.raise = Chips;
                             tbPot.Text = (int.Parse(tbPot.Text) + Chips).ToString();
-                            pStatus.Text = "raise " + call.ToString();
+                            this.playerStatus.Text = "raise " + call.ToString();
                             Chips = 0;
                             raising = true;
                             last = 0;

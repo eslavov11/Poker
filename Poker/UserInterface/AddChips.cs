@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Poker
+namespace Poker.UserInterface
 {
     public partial class AddChips : Form
     {

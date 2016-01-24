@@ -4,8 +4,8 @@
 
     public class Bot : Player, IBot
     {
-        public Bot(string name)
-            : base(name)
+        public Bot()
+            : base()
         {
         }
     }
