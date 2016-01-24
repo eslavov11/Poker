@@ -95,11 +95,11 @@ namespace Poker
         private int last = 123;
         private int raisedTurn = 1;
 
-        //TODO: Check if name is proper, previous name - bools
+        //TODO: PlayerCheck if name is proper, previous name - bools
         private List<bool?> playersGameStatus = new List<bool?>();
         private List<Type> Win = new List<Type>();
         private List<string> CheckWinners = new List<string>();
-        //TODO: Check if name is proper, previous name - chips
+        //TODO: PlayerCheck if name is proper, previous name - chips
         private List<int> chips = new List<int>();
 
         private bool PFturn = false;
@@ -2335,7 +2335,7 @@ namespace Poker
                         var changeCall = status.Text.Substring(5);
                         cCall = int.Parse(changeCall);
                     }
-                    if (status.Text.Contains("Check"))
+                    if (status.Text.Contains("PlayerCheck"))
                     {
                         cRaise = 0;
                         cCall = 0;
@@ -2770,7 +2770,7 @@ namespace Poker
         }
 
         private void ThreeOfAKind(
-            ref int sChips,
+            ref int botCurrentChips,
             ref bool sTurn,
             ref bool sFTurn,
             Label sStatus,
@@ -2783,17 +2783,18 @@ namespace Poker
 
             if (botPower <= 390 && botPower >= 330)
             {
-                Smooth(ref sChips, ref sTurn, ref sFTurn, sStatus, name, tCall, tRaise);
+                //TODO: previously sChips
+                Smooth(ref botCurrentChips, ref sTurn, ref sFTurn, sStatus, name, tCall, tRaise);
             }
 
             if (botPower <= 327 && botPower >= 321)//10  8
             {
-                Smooth(ref sChips, ref sTurn, ref sFTurn, sStatus, name, tCall, tRaise);
+                Smooth(ref botCurrentChips, ref sTurn, ref sFTurn, sStatus, name, tCall, tRaise);
             }
 
             if (botPower < 321 && botPower >= 303)//7 2
             {
-                Smooth(ref sChips, ref sTurn, ref sFTurn, sStatus, name, tCall, tRaise);
+                Smooth(ref botCurrentChips, ref sTurn, ref sFTurn, sStatus, name, tCall, tRaise);
             }
         }
 
@@ -2903,10 +2904,10 @@ namespace Poker
             sFTurn = true;
         }
 
-        private void Check(ref bool cTurn, Label cStatus)
+        private void PlayerCheck(ref bool botIsOnTurn, Label botStatus)
         {
-            cStatus.Text = "Check";
-            cTurn = false;
+            botStatus.Text = "PlayerCheck";
+            botIsOnTurn = false;
             raising = false;
         }
 
@@ -2948,7 +2949,7 @@ namespace Poker
             int rnd = rand.Next(1, 4);
             if (call <= 0)
             {
-                Check(ref sTurn, sStatus);
+                this.PlayerCheck(ref sTurn, sStatus);
             }
 
             if (call > 0)
@@ -3021,7 +3022,7 @@ namespace Poker
             {
                 if (call <= 0)
                 {
-                    Check(ref sTurn, sStatus);
+                    this.PlayerCheck(ref sTurn, sStatus);
                 }
 
                 if (call > 0)
@@ -3122,8 +3123,8 @@ namespace Poker
         }
 
         void Smooth(
-            ref int botChips, 
-            ref bool botTurn, 
+            ref int botCurrentChips, 
+            ref bool botIsOnTurn, 
             ref bool botFTurn,
             Label botStatus, 
             int name,
@@ -3134,48 +3135,49 @@ namespace Poker
             int rnd = rand.Next(1, 3);
             if (call <= 0)
             {
-                Check(ref botTurn, botStatus);
+                //call is none, so the player checks/skips
+                this.PlayerCheck(ref botIsOnTurn, botStatus);
             }
             else
             {
-                if (call >= RoundN(botChips, n))
+                if (call >= RoundN(botCurrentChips, n))
                 {
-                    if (botChips > call)
+                    if (botCurrentChips > call)
                     {
-                        Call(ref botChips, ref botTurn, botStatus);
+                        Call(ref botCurrentChips, ref botIsOnTurn, botStatus);
                     }
-                    else if (botChips <= call)
+                    else if (botCurrentChips <= call)
                     {
                         raising = false;
-                        botTurn = false;
-                        botChips = 0;
-                        botStatus.Text = "Call " + botChips;
-                        tbPot.Text = (int.Parse(tbPot.Text) + botChips).ToString();
+                        botIsOnTurn = false;
+                        botCurrentChips = 0;
+                        botStatus.Text = "Call " + botCurrentChips;
+                        tbPot.Text = (int.Parse(tbPot.Text) + botCurrentChips).ToString();
                     }
                 }
                 else
                 {
                     if (this.raise > 0)
                     {
-                        if (botChips >= this.raise * 2)
+                        if (botCurrentChips >= this.raise * 2)
                         {
                             this.raise *= 2;
-                            Raised(ref botChips, ref botTurn, botStatus);
+                            Raised(ref botCurrentChips, ref botIsOnTurn, botStatus);
                         }
                         else
                         {
-                            Call(ref botChips, ref botTurn, botStatus);
+                            Call(ref botCurrentChips, ref botIsOnTurn, botStatus);
                         }
                     }
                     else
                     {
                         this.raise = call * 2;
-                        Raised(ref botChips, ref botTurn, botStatus);
+                        Raised(ref botCurrentChips, ref botIsOnTurn, botStatus);
                     }
                 }
             }
 
-            if (botChips <= 0)
+            if (botCurrentChips <= 0)
             {
                 botFTurn = true;
             }
@@ -3298,7 +3300,7 @@ namespace Poker
             }
         }
 
-        private async void bFold_Click(object sender, EventArgs e)
+        private async void ButtonFold_Click(object sender, EventArgs e)
         {
             pStatus.Text = "Fold";
             Pturn = false;
@@ -3306,12 +3308,12 @@ namespace Poker
             await Turns();
         }
 
-        private async void bCheck_Click(object sender, EventArgs e)
+        private async void ButtonCheck_Click(object sender, EventArgs e)
         {
             if (call <= 0)
             {
                 Pturn = false;
-                pStatus.Text = "Check";
+                pStatus.Text = "PlayerCheck";
             }
             else
             {
@@ -3322,7 +3324,7 @@ namespace Poker
             await Turns();
         }
 
-        private async void bCall_Click(object sender, EventArgs e)
+        private async void ButtonCall_Click(object sender, EventArgs e)
         {
             Rules(0, 1, "Player", ref pType, ref pPower, PFturn);
             if (Chips >= call)
@@ -3355,7 +3357,7 @@ namespace Poker
             await Turns();
         }
 
-        private async void bRaise_Click(object sender, EventArgs e)
+        private async void ButtonRaise_Click(object sender, EventArgs e)
         {
             Rules(0, 1, "Player", ref pType, ref pPower, PFturn);
             int parsedValue;
@@ -3408,7 +3410,7 @@ namespace Poker
         }
 
         //TODO: validate chips are integer
-        private void bAddChipsClick(object sender, EventArgs e)
+        private void ButtonAddChipsClick(object sender, EventArgs e)
         {
             if (tbAdd.Text == "")
             {
@@ -3427,7 +3429,7 @@ namespace Poker
             tbChips.Text = "Chips : " + Chips;
         }
 
-        private void bOptions_Click(object sender, EventArgs e)
+        private void ButtonOptions_Click(object sender, EventArgs e)
         {
             this.tbBigBlind.Text = this.bigBlindValue.ToString();
             this.tbSmallBlind.Text = this.smallBlindValue.ToString();
@@ -3449,7 +3451,7 @@ namespace Poker
         }
 
         //TODO: Small and big blind have similar logic, extract in different method
-        private void bSmallBlindClick(object sender, EventArgs e)
+        private void ButtonSmallBlind_Click(object sender, EventArgs e)
         {
             int smallBlindNewValue;
             if (this.tbSmallBlind.Text.Contains(",") || this.tbSmallBlind.Text.Contains("."))
@@ -3487,7 +3489,7 @@ namespace Poker
             }
         }
 
-        private void bBigBlindClick(object sender, EventArgs e)
+        private void ButtonBigBlind_Click(object sender, EventArgs e)
         {
             int bigBlindNewValue;
             if (this.tbBigBlind.Text.Contains(",") || this.tbBigBlind.Text.Contains("."))
