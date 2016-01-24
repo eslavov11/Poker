@@ -16,10 +16,12 @@ namespace Poker.UserInterface
     using Interfaces;
     using Models.Players;
 
+    using Poker.Models;
+
     public partial class PokerTable : Form
     {
         #region Variables
-        //private readonly ICheckHandType checkHand;
+        private readonly IAssertHandType assertHandType;
         private readonly IHandType handType;
 
         private IPlayer human;
@@ -162,7 +164,7 @@ namespace Poker.UserInterface
         private Timer timer = new Timer();
         private Timer Updates = new Timer();
 
-        private int t = 60;
+        private int secondsLeft = 60;
         private int i;
         private int bigBlindValue = 500;
         private int smallBlindValue = 250;
@@ -172,6 +174,9 @@ namespace Poker.UserInterface
 
         public PokerTable()
         {
+            this.handType = new HandType();
+            this.assertHandType = new AssertHandType();
+
             this.human = new Human();
             this.firstBot = new Bot();
             this.secondBot = new Bot();
@@ -669,20 +674,20 @@ namespace Poker.UserInterface
             {
                 if (this.human.CanMakeTurn)
                 {
-                    FixCall(this.humanStatus, this.human.Call, this.human.Raise, 1);
+                    this.FixCall(this.humanStatus, this.human.Call, this.human.Raise, 1);
                     //MessageBox.Show("Player's Turn");
-                    pbTimer.Visible = true;
-                    pbTimer.Value = 1000;
-                    t = 60;
-                    up = 10000000;
-                    timer.Start();
-                    bRaise.Enabled = true;
-                    bCall.Enabled = true;
-                    bRaise.Enabled = true;
-                    bRaise.Enabled = true;
-                    bFold.Enabled = true;
-                    turnCount++;
-                    FixCall(this.humanStatus, this.human.Call, this.human.Raise, 2);
+                    this.pbTimer.Visible = true;
+                    this.pbTimer.Value = 1000;
+                    this.secondsLeft = 60;
+                    this.up = 10000000;
+                    this.timer.Start();
+                    this.bRaise.Enabled = true;
+                    this.bCall.Enabled = true;
+                    this.bRaise.Enabled = true;
+                    this.bRaise.Enabled = true;
+                    this.bFold.Enabled = true;
+                    this.turnCount++;
+                    this.FixCall(this.humanStatus, this.human.Call, this.human.Raise, 2);
                 }
             }
 
@@ -715,7 +720,7 @@ namespace Poker.UserInterface
                     {
                         FixCall(this.firstBotStatus, this.firstBot.Call, this.firstBot.Raise, 1);
                         FixCall(this.firstBotStatus, this.firstBot.Call, this.firstBot.Raise, 2);
-                        Rules(2, 3, "Bot 1", this.firstBot.Type, this.firstBot.Power, this.firstBot.OutOfChips);
+                        Rules(2, 3, "Bot 1", this.firstBot);
                         MessageBox.Show("Bot 1's Turn");
                         this.AI(2, 3, this.firstBotStatus, 0, this.firstBot);
                         turnCount++;
@@ -745,7 +750,7 @@ namespace Poker.UserInterface
                     {
                         FixCall(this.secondBotStatus, this.secondBot.Call, this.secondBot.Raise, 1);
                         FixCall(this.secondBotStatus, this.secondBot.Call, this.secondBot.Raise, 2);
-                        Rules(4, 5, "Bot 2", this.secondBot.Type, this.secondBot.Power, this.secondBot.OutOfChips);
+                        Rules(4, 5, "Bot 2", this.secondBot);
                         MessageBox.Show("Bot 2's Turn");
                         this.AI(4, 5, this.secondBotStatus, 1, this.secondBot);
                         turnCount++;
@@ -775,7 +780,7 @@ namespace Poker.UserInterface
                     {
                         FixCall(this.thirdBotStatus, this.thirdBot.Call, this.thirdBot.Raise, 1);
                         FixCall(this.thirdBotStatus, this.thirdBot.Call, this.thirdBot.Raise, 2);
-                        Rules(6, 7, "Bot 3", this.thirdBot.Type, this.thirdBot.Power, this.thirdBot.OutOfChips);
+                        Rules(6, 7, "Bot 3", this.thirdBot);
                         MessageBox.Show("Bot 3's Turn");
                         this.AI(6, 7, this.thirdBotStatus, 2, this.thirdBot);
                         turnCount++;
@@ -805,7 +810,7 @@ namespace Poker.UserInterface
                     {
                         FixCall(this.fourthBotStatus, this.fourthBot.Call, this.fourthBot.Raise, 1);
                         FixCall(this.fourthBotStatus, this.fourthBot.Call, this.fourthBot.Raise, 2);
-                        Rules(8, 9, "Bot 4", this.fourthBot.Type, this.fourthBot.Power, this.fourthBot.OutOfChips);
+                        Rules(8, 9, "Bot 4", this.fourthBot);
                         MessageBox.Show("Bot 4's Turn");
                         this.AI(8, 9, this.fourthBotStatus, 3, this.fourthBot);
                         turnCount++;
@@ -835,7 +840,7 @@ namespace Poker.UserInterface
                     {
                         FixCall(this.fifthBotStatus, this.fifthBot.Call, this.fifthBot.Raise, 1);
                         FixCall(this.fifthBotStatus, this.fifthBot.Call, this.fifthBot.Raise, 2);
-                        Rules(10, 11, "Bot 5", this.fifthBot.Type, this.fifthBot.Power, this.fifthBot.OutOfChips);
+                        Rules(10, 11, "Bot 5", this.fifthBot);
                         MessageBox.Show("Bot 5's Turn");
                         this.AI(10, 11, this.fifthBotStatus, 4, this.fifthBot);
                         turnCount++;
@@ -880,97 +885,163 @@ namespace Poker.UserInterface
             }
         }
 
-        void Rules(
-            // TODO: validate for real var name: Previous names c1 and c2, renamed to cardOne and CardTwo
-            int cardOne,
-            int cardTwo,
-            string currentText,
-            double current,
-            double Power,
-            bool foldedTurn)
+        //void Rules(
+        //    // TODO: validate for real var name: Previous names c1 and c2, renamed to cardOne and CardTwo
+        //    int cardOne,
+        //    int cardTwo,
+        //    string currentText,
+        //    double current,
+        //    double Power,
+        //    bool foldedTurn)
+        //{
+        //    if (cardOne == 0 && cardTwo == 1)
+        //    {
+        //    }
+
+        //    if (!foldedTurn || cardOne == 0 && cardTwo == 1 && this.humanStatus.Text.Contains("Fold") == false)
+        //    {
+        //        #region Variables
+        //        bool done = false, vf = false;
+        //        int[] Straight1 = new int[5];
+
+        //        //TODO: Should Straight be an Enum?
+        //        int[] Straight = new int[7];
+        //        Straight[0] = this.reservedGameCardsIndeces[cardOne];
+        //        Straight[1] = this.reservedGameCardsIndeces[cardTwo];
+        //        Straight1[0] = Straight[2] = this.reservedGameCardsIndeces[12];
+        //        Straight1[1] = Straight[3] = this.reservedGameCardsIndeces[13];
+        //        Straight1[2] = Straight[4] = this.reservedGameCardsIndeces[14];
+        //        Straight1[3] = Straight[5] = this.reservedGameCardsIndeces[15];
+        //        Straight1[4] = Straight[6] = this.reservedGameCardsIndeces[16];
+        //        var a = Straight.Where(o => o % 4 == 0).ToArray();
+        //        var b = Straight.Where(o => o % 4 == 1).ToArray();
+        //        var c = Straight.Where(o => o % 4 == 2).ToArray();
+        //        var d = Straight.Where(o => o % 4 == 3).ToArray();
+        //        var st1 = a.Select(o => o / 4).Distinct().ToArray();
+        //        var st2 = b.Select(o => o / 4).Distinct().ToArray();
+        //        var st3 = c.Select(o => o / 4).Distinct().ToArray();
+        //        var st4 = d.Select(o => o / 4).Distinct().ToArray();
+        //        Array.Sort(Straight);
+        //        Array.Sort(st1);
+        //        Array.Sort(st2);
+        //        Array.Sort(st3);
+        //        Array.Sort(st4);
+        //        #endregion
+
+        //        for (i = 0; i < 16; i++)
+        //        {
+        //            if (this.reservedGameCardsIndeces[i] == int.Parse(this.cardsPictureBoxList[cardOne].Tag.ToString()) &&
+        //                this.reservedGameCardsIndeces[i + 1] == int.Parse(this.cardsPictureBoxList[cardTwo].Tag.ToString()))
+        //            {
+        //                this.assertHandType.rPairFromHand(pokerPlayer, index, ref this.Win, ref this.sorted, ref reserve);
+
+        //                this.assertHandType.rPairTwoPair(pokerPlayer, index, ref this.Win, ref this.sorted, ref reserve);
+
+        //                this.assertHandType.rTwoPair(pokerPlayer, index, ref this.Win, ref this.sorted, ref this.reserve);
+
+        //                this.assertHandType.rThreeOfAKind(pokerPlayer, Straight, index, ref this.Win, ref this.sorted);
+
+        //                this.assertHandType.rStraight(pokerPlayer, Straight, index, ref this.Win, ref this.sorted);
+
+        //                this.assertHandType.rFlush(pokerPlayer, ref vf, cardsOnBoard, ref index, ref this.Win, ref this.sorted, ref this.reserve);
+
+        //                this.assertHandType.rFullHouse(pokerPlayer, ref done, Straight, ref this.Win, ref this.sorted, ref this.type);
+
+        //                this.assertHandType.rFourOfAKind(pokerPlayer, Straight, ref this.Win, ref this.sorted);
+
+        //                this.assertHandType.rStraightFlush(pokerPlayer, clubes, diamonds, hearts, spades, ref this.Win, ref this.sorted);
+
+        //                this.assertHandType.rHighCard(player, index, ref this.Win, ref this.sorted, ref this.reserve);
+
+        //            }
+        //        }
+        //    }
+        //}
+
+        void Rules(int card1, int card2, string currentText, IPlayer player)
         {
-            if (cardOne == 0 && cardTwo == 1)
+            if (card1 == 0 && card2 == 1)
             {
             }
 
-            if (!foldedTurn || cardOne == 0 && cardTwo == 1 && this.humanStatus.Text.Contains("Fold") == false)
+            if (!player.OutOfChips || card1 == 0 && card2 == 1 && this.humanStatus.Text.Contains("Fold") == false)
             {
                 #region Variables
-                bool done = false, vf = false;
-                int[] Straight1 = new int[5];
-
-                //TODO: Should Straight be an Enum?
+                bool done = false;
+                bool vf = false;
+                int[] cardsOnBoard = new int[5];
                 int[] Straight = new int[7];
-                Straight[0] = this.reservedGameCardsIndeces[cardOne];
-                Straight[1] = this.reservedGameCardsIndeces[cardTwo];
-                Straight1[0] = Straight[2] = this.reservedGameCardsIndeces[12];
-                Straight1[1] = Straight[3] = this.reservedGameCardsIndeces[13];
-                Straight1[2] = Straight[4] = this.reservedGameCardsIndeces[14];
-                Straight1[3] = Straight[5] = this.reservedGameCardsIndeces[15];
-                Straight1[4] = Straight[6] = this.reservedGameCardsIndeces[16];
-                var a = Straight.Where(o => o % 4 == 0).ToArray();
-                var b = Straight.Where(o => o % 4 == 1).ToArray();
-                var c = Straight.Where(o => o % 4 == 2).ToArray();
-                var d = Straight.Where(o => o % 4 == 3).ToArray();
-                var st1 = a.Select(o => o / 4).Distinct().ToArray();
-                var st2 = b.Select(o => o / 4).Distinct().ToArray();
-                var st3 = c.Select(o => o / 4).Distinct().ToArray();
-                var st4 = d.Select(o => o / 4).Distinct().ToArray();
+                Straight[0] = this.reservedGameCardsIndeces[card1];
+                Straight[1] = this.reservedGameCardsIndeces[card2];
+                cardsOnBoard[0] = Straight[2] = this.reservedGameCardsIndeces[12];
+                cardsOnBoard[1] = Straight[3] = this.reservedGameCardsIndeces[13];
+                cardsOnBoard[2] = Straight[4] = this.reservedGameCardsIndeces[14];
+                cardsOnBoard[3] = Straight[5] = this.reservedGameCardsIndeces[15];
+                cardsOnBoard[4] = Straight[6] = this.reservedGameCardsIndeces[16];
+                int[] getClubes = Straight.Where(o => o % 4 == 0).ToArray();
+                int[] getDimonds = Straight.Where(o => o % 4 == 1).ToArray();
+                int[] getHearts = Straight.Where(o => o % 4 == 2).ToArray();
+                int[] getSpades = Straight.Where(o => o % 4 == 3).ToArray();
+                int[] clubes = getClubes.Select(o => o / 4).Distinct().ToArray();
+                int[] diamonds = getDimonds.Select(o => o / 4).Distinct().ToArray();
+                int[] hearts = getHearts.Select(o => o / 4).Distinct().ToArray();
+                int[] spades = getSpades.Select(o => o / 4).Distinct().ToArray();
                 Array.Sort(Straight);
-                Array.Sort(st1);
-                Array.Sort(st2);
-                Array.Sort(st3);
-                Array.Sort(st4);
+                Array.Sort(clubes);
+                Array.Sort(diamonds);
+                Array.Sort(hearts);
+                Array.Sort(spades);
                 #endregion
-
-                for (i = 0; i < 16; i++)
+                for (int index = 0; index < 16; index++)
                 {
-                    if (this.reservedGameCardsIndeces[i] == int.Parse(this.cardsPictureBoxList[cardOne].Tag.ToString()) &&
-                        this.reservedGameCardsIndeces[i + 1] == int.Parse(this.cardsPictureBoxList[cardTwo].Tag.ToString()))
+                    if (this.reservedGameCardsIndeces[index] == int.Parse(this.cardsPictureBoxList[card1].Tag.ToString()) &&
+                        this.reservedGameCardsIndeces[index + 1] == int.Parse(this.cardsPictureBoxList[card2].Tag.ToString()))
                     {
-                        //Pair from Hand current = 1
+                        ////Pair from Hand current = 1
+                        //this.rPairFromHand(pokerPlayer, index);
 
-                        rPairFromHand(ref current, ref Power);
+                        //this.rPairTwoPair(pokerPlayer, index);
 
-                        #region Pair or Two Pair from Table current = 2 || 0
-                        rPairTwoPair(ref current, ref Power);
-                        #endregion
+                        //this.rTwoPair(pokerPlayer, index);
 
-                        #region Two Pair current = 2
-                        rTwoPair(ref current, ref Power);
-                        #endregion
+                        //this.rThreeOfAKind(pokerPlayer, Straight, index);
 
-                        #region Three of a kind current = 3
-                        rThreeOfAKind(ref current, ref Power, Straight);
-                        #endregion
+                        //this.RStraight(pokerPlayer, Straight, index);
 
-                        #region Straight current = 4
-                        rStraight(ref current, ref Power, Straight);
-                        #endregion
+                        //this.RFlush(pokerPlayer, ref vf, Straight1, index);
 
-                        #region Flush current = 5 || 5.5
-                        rFlush(ref current, ref Power, ref vf, Straight1);
-                        #endregion
+                        //this.rFullHouse(pokerPlayer, ref done, Straight);
 
-                        #region Full House current = 6
-                        rFullHouse(ref current, ref Power, ref done, Straight);
-                        #endregion
+                        //this.rFourOfAKind(pokerPlayer, Straight);
 
-                        #region Four of a Kind current = 7
-                        rFourOfAKind(ref current, ref Power, Straight);
-                        #endregion
+                        //this.rStraightFlush(pokerPlayer, st1, st2, st3, st4);
 
-                        #region Straight Flush current = 8 || 9
-                        rStraightFlush(ref current, ref Power, st1, st2, st3, st4);
-                        #endregion
+                        //this.rHighCard(pokerPlayer, index);
 
-                        #region High Card current = -1
-                        rHighCard(ref current, ref Power);
-                        #endregion
+                        this.assertHandType.rPairFromHand(player, index, ref this.Win, ref this.sorted, ref reservedGameCardsIndeces);
+
+                        this.assertHandType.rPairTwoPair(player, index, ref this.Win, ref this.sorted, ref reservedGameCardsIndeces);
+
+                        this.assertHandType.rTwoPair(player, index, ref this.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
+
+                        this.assertHandType.rThreeOfAKind(player, Straight, index, ref this.Win, ref this.sorted);
+
+                        this.assertHandType.rStraight(player, Straight, index, ref this.Win, ref this.sorted);
+
+                        this.assertHandType.rFlush(player, ref vf, cardsOnBoard, ref index, ref this.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
+
+                        this.assertHandType.rFullHouse(player, ref done, Straight, ref this.Win, ref this.sorted, ref this.type);
+
+                        this.assertHandType.rFourOfAKind(player, Straight, ref this.Win, ref this.sorted);
+
+                        this.assertHandType.rStraightFlush(player, clubes, diamonds, hearts, spades, ref this.Win, ref this.sorted);
+
+                        this.assertHandType.rHighCard(player, index, ref this.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
                     }
                 }
             }
         }
+
 
         private void rStraightFlush(ref double current, ref double Power, int[] st1, int[] st2, int[] st3, int[] st4)
         {
@@ -2230,32 +2301,32 @@ namespace Poker.UserInterface
                 if (!this.humanStatus.Text.Contains("Fold"))
                 {
                     fixedLast = "Player";
-                    Rules(0, 1, "Player", this.human.Type, this.human.Power, this.human.OutOfChips);
+                    Rules(0, 1, "Player", this.human);
                 }
                 if (!this.firstBotStatus.Text.Contains("Fold"))
                 {
                     fixedLast = "Bot 1";
-                    Rules(2, 3, "Bot 1", this.firstBot.Type, this.firstBot.Power, this.firstBot.OutOfChips);
+                    Rules(2, 3, "Bot 1", this.firstBot);
                 }
                 if (!this.secondBotStatus.Text.Contains("Fold"))
                 {
                     fixedLast = "Bot 2";
-                    Rules(4, 5, "Bot 2", this.thirdBot.Type, this.secondBot.Power, this.secondBot.OutOfChips);
+                    Rules(4, 5, "Bot 2", this.thirdBot);
                 }
                 if (!this.thirdBotStatus.Text.Contains("Fold"))
                 {
                     fixedLast = "Bot 3";
-                    Rules(6, 7, "Bot 3", this.thirdBot.Type, this.thirdBot.Power, this.thirdBot.OutOfChips);
+                    Rules(6, 7, "Bot 3", this.thirdBot);
                 }
                 if (!this.fourthBotStatus.Text.Contains("Fold"))
                 {
                     fixedLast = "Bot 4";
-                    Rules(8, 9, "Bot 4", this.fourthBot.Type, this.fourthBot.Power, this.fourthBot.OutOfChips);
+                    Rules(8, 9, "Bot 4", this.fourthBot);
                 }
                 if (!this.fifthBotStatus.Text.Contains("Fold"))
                 {
                     fixedLast = "Bot 5";
-                    Rules(10, 11, "Bot 5", this.fifthBot.Type, this.fourthBot.Power, this.fifthBot.OutOfChips);
+                    Rules(10, 11, "Bot 5", this.fifthBot);
                 }
 
                 //TODO: COnsider passing the entire player object
@@ -2291,7 +2362,7 @@ namespace Poker.UserInterface
                         bRaise.Enabled = true;
                         bFold.Enabled = true;
                         bCheck.Enabled = true;
-                        bRaise.Text = "raise";
+                        bRaise.Text = "Raise";
                     }
                 }
                 this.human.Panel.Visible = false;
@@ -2360,7 +2431,7 @@ namespace Poker.UserInterface
             {
                 if (options == 1)
                 {
-                    if (status.Text.Contains("raise"))
+                    if (status.Text.Contains("Raise"))
                     {
                         var changeRaise = status.Text.Substring(6);
                         cRaise = int.Parse(changeRaise);
@@ -2401,7 +2472,7 @@ namespace Poker.UserInterface
             #region All in
             if (this.human.Chips <= 0 && !intsadded)
             {
-                if (this.humanStatus.Text.Contains("raise"))
+                if (this.humanStatus.Text.Contains("Raise"))
                 {
                     this.chips.Add(this.human.Chips);
                     intsadded = true;
@@ -2618,7 +2689,7 @@ namespace Poker.UserInterface
             this.sorted.Current = 0;
             this.sorted.Power = 0;
             this.potStatus.Text = "0";
-            this.t = 60;
+            this.secondsLeft = 60;
             this.up = 10000000;
             this.turnCount = 0;
             this.humanStatus.Text = string.Empty;
@@ -2645,7 +2716,7 @@ namespace Poker.UserInterface
                     this.bRaise.Enabled = true;
                     this.bFold.Enabled = true;
                     this.bCheck.Enabled = true;
-                    this.bRaise.Text = "raise";
+                    this.bRaise.Text = "Raise";
                 }
             }
             this.cardsImageLocation = Directory.GetFiles("..\\..\\Resources\\Assets\\Cards", "*.png", SearchOption.TopDirectoryOnly);
@@ -2668,37 +2739,37 @@ namespace Poker.UserInterface
             if (!this.humanStatus.Text.Contains("Fold"))
             {
                 fixedLast = "Player";
-                Rules(0, 1, "Player", this.human.Type, this.human.Power, this.human.OutOfChips);
+                Rules(0, 1, "Player", this.human);
             }
 
             if (!this.firstBotStatus.Text.Contains("Fold"))
             {
                 fixedLast = "Bot 1";
-                Rules(2, 3, "Bot 1", this.firstBot.Type, this.firstBot.Power, this.firstBot.OutOfChips);
+                Rules(2, 3, "Bot 1", this.firstBot);
             }
 
             if (!this.secondBotStatus.Text.Contains("Fold"))
             {
                 fixedLast = "Bot 2";
-                Rules(4, 5, "Bot 2", this.secondBot.Type, this.secondBot.Power, this.secondBot.OutOfChips);
+                Rules(4, 5, "Bot 2", this.secondBot);
             }
 
             if (!this.thirdBotStatus.Text.Contains("Fold"))
             {
                 fixedLast = "Bot 3";
-                Rules(6, 7, "Bot 3", this.thirdBot.Type, this.thirdBot.Power, this.thirdBot.OutOfChips);
+                Rules(6, 7, "Bot 3", this.thirdBot);
             }
 
             if (!this.fourthBotStatus.Text.Contains("Fold"))
             {
                 fixedLast = "Bot 4";
-                Rules(8, 9, "Bot 4", this.fourthBot.Type, this.fourthBot.Power, this.fourthBot.OutOfChips);
+                Rules(8, 9, "Bot 4", this.fourthBot);
             }
 
             if (!this.fifthBotStatus.Text.Contains("Fold"))
             {
                 fixedLast = "Bot 5";
-                Rules(10, 11, "Bot 5", this.fifthBot.Type, this.fifthBot.Power, this.fifthBot.OutOfChips);
+                Rules(10, 11, "Bot 5", this.fifthBot);
             }
 
             //TODO: code repetition
@@ -2709,60 +2780,6 @@ namespace Poker.UserInterface
             this.Winner(this.fourthBot.Type, this.fourthBot.Power, "Bot 4", this.fourthBot.Chips, fixedLast);
             this.Winner(this.fifthBot.Type, this.fifthBot.Power, "Bot 5", this.fifthBot.Chips, fixedLast);
         }
-
-        //void AI(int c1, int c2, int sChips, bool sTurn, bool sFTurn,
-        //    Label sStatus, int name, double botPower, double botType)
-        //{
-        //    if (!sFTurn)
-        //    {
-        //        //TODO: consider switch case here
-        //        if (botType == -1)
-        //        {
-        //            HighCard(ref sChips, ref sTurn, ref sFTurn, sStatus, botPower);
-        //        }
-        //        if (botType == 0)
-        //        {
-        //            PairTable(ref sChips, ref sTurn, ref sFTurn, sStatus, botPower);
-        //        }
-        //        if (botType == 1)
-        //        {
-        //            PairHand(ref sChips, ref sTurn, ref sFTurn, sStatus, botPower);
-        //        }
-        //        if (botType == 2)
-        //        {
-        //            TwoPair(ref sChips, ref sTurn, ref sFTurn, sStatus, botPower);
-        //        }
-        //        if (botType == 3)
-        //        {
-        //            ThreeOfAKind(ref sChips, ref sTurn, ref sFTurn, sStatus, name, botPower);
-        //        }
-        //        if (botType == 4)
-        //        {
-        //            Straight(ref sChips, ref sTurn, ref sFTurn, sStatus, name, botPower);
-        //        }
-        //        if (botType == 5 || botType == 5.5)
-        //        {
-        //            Flush(ref sChips, ref sTurn, ref sFTurn, sStatus, name, botPower);
-        //        }
-        //        if (botType == 6)
-        //        {
-        //            FullHouse(ref sChips, ref sTurn, ref sFTurn, sStatus, name, botPower);
-        //        }
-        //        if (botType == 7)
-        //        {
-        //            FourOfAKind(ref sChips, ref sTurn, ref sFTurn, sStatus, name, botPower);
-        //        }
-        //        if (botType == 8 || botType == 9)
-        //        {
-        //            StraightFlush(ref sChips, ref sTurn, ref sFTurn, sStatus, name, botPower);
-        //        }
-        //    }
-        //    if (sFTurn)
-        //    {
-        //        this.cardsPictureBoxList[c1].Visible = false;
-        //        this.cardsPictureBoxList[c2].Visible = false;
-        //    }
-        //}
 
         void AI(int c1, int c2, Label sStatus, int name, IPlayer player)
         {
@@ -3318,10 +3335,10 @@ namespace Poker.UserInterface
                 await this.Turns();
             }
 
-            if (t > 0)
+            if (this.secondsLeft > 0)
             {
-                t--;
-                pbTimer.Value = (t / 6) * 100;
+                this.secondsLeft--;
+                pbTimer.Value = (this.secondsLeft / 6) * 100;
             }
         }
 
@@ -3417,7 +3434,7 @@ namespace Poker.UserInterface
                 }
                 else
                 {
-                    bRaise.Text = "raise";
+                    bRaise.Text = "Raise";
                 }
             }
 
@@ -3453,7 +3470,7 @@ namespace Poker.UserInterface
 
         private async void ButtonCall_Click(object sender, EventArgs e)
         {
-            Rules(0, 1, "Player", this.human.Type, this.human.Power, this.human.OutOfChips);
+            Rules(0, 1, "Player", this.human);
             if (this.human.Chips >= this.neededChipsToCall)
             {
                 this.human.Chips -= this.neededChipsToCall;
@@ -3481,12 +3498,12 @@ namespace Poker.UserInterface
                 this.human.Call = this.human.Chips;
             }
 
-            await Turns();
+            await this.Turns();
         }
 
         private async void ButtonRaise_Click(object sender, EventArgs e)
         {
-            Rules(0, 1, "Player", this.human.Type, this.human.Power, this.human.OutOfChips);
+            Rules(0, 1, "Player", this.human);
             int parsedValue;
             if (tbRaise.Text != "" && int.TryParse(tbRaise.Text, out parsedValue))
             {
@@ -3504,7 +3521,7 @@ namespace Poker.UserInterface
                         {
                             this.neededChipsToCall = int.Parse(tbRaise.Text);
                             this.raise = int.Parse(tbRaise.Text);
-                            this.humanStatus.Text = "raise " + this.neededChipsToCall.ToString();
+                            this.humanStatus.Text = "Raise " + this.neededChipsToCall.ToString();
                             this.potStatus.Text = (int.Parse(this.potStatus.Text) + this.neededChipsToCall).ToString();
                             bCall.Text = "Call";
                             this.human.Chips -= int.Parse(tbRaise.Text);
@@ -3537,7 +3554,7 @@ namespace Poker.UserInterface
         }
 
         //TODO: validate chips are integer
-        private void ButtonAddChipsClick(object sender, EventArgs e)
+        private void ButtonAddChips_Click(object sender, EventArgs e)
         {
             if (tbAdd.Text == "")
             {

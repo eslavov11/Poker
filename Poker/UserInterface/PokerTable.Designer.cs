@@ -30,33 +30,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.bFold = new System.Windows.Forms.Button();
-            this.bCheck = new System.Windows.Forms.Button();
-            this.bCall = new System.Windows.Forms.Button();
-            this.bRaise = new System.Windows.Forms.Button();
-            this.pbTimer = new System.Windows.Forms.ProgressBar();
-            this.tbChips = new System.Windows.Forms.TextBox();
-            this.bAdd = new System.Windows.Forms.Button();
-            this.tbAdd = new System.Windows.Forms.TextBox();
-            this.tbBotChips5 = new System.Windows.Forms.TextBox();
-            this.tbBotChips4 = new System.Windows.Forms.TextBox();
-            this.tbBotChips3 = new System.Windows.Forms.TextBox();
-            this.tbBotChips2 = new System.Windows.Forms.TextBox();
-            this.tbBotChips1 = new System.Windows.Forms.TextBox();
-            this.potStatus = new System.Windows.Forms.TextBox();
-            this.buttonOptions = new System.Windows.Forms.Button();
-            this.buttonBigBlind = new System.Windows.Forms.Button();
-            this.tbSmallBlind = new System.Windows.Forms.TextBox();
-            this.buttonSmallBlind = new System.Windows.Forms.Button();
-            this.tbBigBlind = new System.Windows.Forms.TextBox();
-            this.fifthBotStatus = new System.Windows.Forms.Label();
-            this.fourthBotStatus = new System.Windows.Forms.Label();
-            this.thirdBotStatus = new System.Windows.Forms.Label();
-            this.firstBotStatus = new System.Windows.Forms.Label();
-            this.humanStatus = new System.Windows.Forms.Label();
-            this.secondBotStatus = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.tbRaise = new System.Windows.Forms.TextBox();
+            this.bFold = new Button();
+            this.bCheck = new Button();
+            this.bCall = new Button();
+            this.bRaise = new Button();
+            this.pbTimer = new ProgressBar();
+            this.tbChips = new TextBox();
+            this.bAdd = new Button();
+            this.tbAdd = new TextBox();
+            this.tbBotChips5 = new TextBox();
+            this.tbBotChips4 = new TextBox();
+            this.tbBotChips3 = new TextBox();
+            this.tbBotChips2 = new TextBox();
+            this.tbBotChips1 = new TextBox();
+            this.potStatus = new TextBox();
+            this.buttonOptions = new Button();
+            this.buttonBigBlind = new Button();
+            this.tbSmallBlind = new TextBox();
+            this.buttonSmallBlind = new Button();
+            this.tbBigBlind = new TextBox();
+            this.fifthBotStatus = new Label();
+            this.fourthBotStatus = new Label();
+            this.thirdBotStatus = new Label();
+            this.firstBotStatus = new Label();
+            this.humanStatus = new Label();
+            this.secondBotStatus = new Label();
+            this.label1 = new Label();
+            this.tbRaise = new TextBox();
             this.SuspendLayout();
             // 
             // bFold
@@ -137,7 +137,7 @@
             this.bAdd.TabIndex = 7;
             this.bAdd.Text = "AddChips";
             this.bAdd.UseVisualStyleBackColor = true;
-            this.bAdd.Click += new System.EventHandler(this.ButtonAddChipsClick);
+            this.bAdd.Click += new System.EventHandler(this.ButtonAddChips_Click);
             // 
             // tbAdd
             // 

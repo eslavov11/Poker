@@ -45,8 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\GameStage.cs" />
+    <Compile Include="Interfaces\IAssertHandType.cs" />
     <Compile Include="Interfaces\IHandType.cs" />
     <Compile Include="Interfaces\IPlayerMove.cs" />
+    <Compile Include="Models\AssertHandType.cs" />
     <Compile Include="Models\HandType.cs" />
     <Compile Include="Models\PlayerMove.cs" />
     <Compile Include="UserInterface\AddChips.cs">
