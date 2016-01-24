@@ -84,14 +84,15 @@
             {
                 //Straight Flush
                 player.Type = 8;
+                Win.Add(new Type() { Power = player.Power, Current = player.Type });
             }
 
             if (colour[0] == 0 && colour[1] == 9 && colour[2] == 10 && colour[3] == 11 && colour[4] == 12)
             {
                 //Royal Straight Flush
                 player.Type = 9;
+                Win.Add(new Type() { Power = player.Power, Current = player.Type });
             }
-            Win.Add(new Type() { Power = player.Power, Current = player.Type });
             sorted = Win.OrderByDescending(op1 => op1.Current).ThenByDescending(op1 => op1.Power).First();
         }
 

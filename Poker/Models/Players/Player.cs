@@ -13,10 +13,10 @@
 
         private int chips;
 
-        protected Player()
+        protected Player(string name)
         {
             //TODO: Is name needed
-            this.Name = "";
+            this.Name = name;
             this.Chips = DefaultStartChips;
             this.Panel = new Panel();
             this.Type = -1;

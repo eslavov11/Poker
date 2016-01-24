@@ -4,8 +4,8 @@
 
     public class Human : Player, IHuman
     {
-        public Human()
-            : base()
+        public Human(string name)
+            : base(name)
         {
             this.CanMakeTurn = true;
         }
