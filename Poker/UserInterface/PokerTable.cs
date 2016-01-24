@@ -28,6 +28,7 @@ namespace Poker.UserInterface
 
         private int call = 500;
         private int foldedPlayers = 5;
+
         private int Chips = 10000;
         private int bot1Chips = 10000;
         private int bot2Chips = 10000;
@@ -37,12 +38,14 @@ namespace Poker.UserInterface
 
         private double type;
         private double rounds;
+
         private double b1Power;
         private double b2Power;
         private double b3Power;
         private double b4Power;
         private double b5Power;
         private double pPower;
+
         private double pType = -1;
         private double raise;
         private double b1Type = -1;
@@ -56,17 +59,24 @@ namespace Poker.UserInterface
         private bool B3turn;
         private bool B4turn;
         private bool B5turn;
-        private bool B1Fturn;
-        private bool B2Fturn;
-        private bool B3Fturn;
-        private bool B4Fturn;
-        private bool B5Fturn;
+        private bool Pturn = true;
+
+
+        //B1Fturn
+        private bool Bot1OutOfChips;
+        private bool Bot2OutOfChips;
+        private bool Bot3OutOfChips;
+        private bool Bot4OutOfChips;
+        private bool Bot5OutOfChips;
+        private bool PlayerOutOfChips = false;
+
         private bool pFolded;
         private bool b1Folded;
         private bool b2Folded;
         private bool b3Folded;
         private bool b4Folded;
         private bool b5Folded;
+
         private bool intsadded;
         private bool changed;
 
@@ -76,6 +86,7 @@ namespace Poker.UserInterface
         private int b3Call;
         private int b4Call;
         private int b5Call;
+
         private int pRaise;
         private int b1Raise;
         private int b2Raise;
@@ -87,10 +98,13 @@ namespace Poker.UserInterface
         private int width;
 
         private int winners = 0;
+
+
         private int Flop = 1;
         private int Turn = 2;
         private int River = 3;
         private int End = 4;
+
         private int maxLeft = 6;
         private int last = 123;
         private int raisedTurn = 1;
@@ -102,8 +116,6 @@ namespace Poker.UserInterface
         //TODO: PlayerCheck if name is proper, previous name - chips
         private List<int> chips = new List<int>();
 
-        private bool PFturn = false;
-        private bool Pturn = true;
         private bool restart = false;
         private bool raising = false;
         private Type sorted;
@@ -146,7 +158,7 @@ namespace Poker.UserInterface
 
         public PokerTable()
         {
-            //playersGameStatus.Add(PFturn); playersGameStatus.Add(B1Fturn); playersGameStatus.Add(B2Fturn); playersGameStatus.Add(B3Fturn); playersGameStatus.Add(B4Fturn); playersGameStatus.Add(B5Fturn);
+            //playersGameStatus.Add(PlayerOutOfChips); playersGameStatus.Add(Bot1OutOfChips); playersGameStatus.Add(Bot2OutOfChips); playersGameStatus.Add(Bot3OutOfChips); playersGameStatus.Add(Bot4OutOfChips); playersGameStatus.Add(Bot5OutOfChips);
             this.call = this.bigBlindValue;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -189,12 +201,12 @@ namespace Poker.UserInterface
 
         async Task Shuffle()
         {
-            this.playersGameStatus.Add(this.PFturn);
-            this.playersGameStatus.Add(this.B1Fturn);
-            this.playersGameStatus.Add(this.B2Fturn);
-            this.playersGameStatus.Add(this.B3Fturn);
-            this.playersGameStatus.Add(this.B4Fturn);
-            this.playersGameStatus.Add(this.B5Fturn);
+            this.playersGameStatus.Add(this.PlayerOutOfChips);
+            this.playersGameStatus.Add(this.Bot1OutOfChips);
+            this.playersGameStatus.Add(this.Bot2OutOfChips);
+            this.playersGameStatus.Add(this.Bot3OutOfChips);
+            this.playersGameStatus.Add(this.Bot4OutOfChips);
+            this.playersGameStatus.Add(this.Bot5OutOfChips);
             this.bCall.Enabled = false;
             this.bRaise.Enabled = false;
             this.bFold.Enabled = false;
@@ -494,13 +506,13 @@ namespace Poker.UserInterface
                 #region CheckForDefeatedBots
                 if (bot1Chips <= 0)
                 {
-                    B1Fturn = true;
+                    this.Bot1OutOfChips = true;
                     this.cardsPictureBoxList[2].Visible = false;
                     this.cardsPictureBoxList[3].Visible = false;
                 }
                 else
                 {
-                    B1Fturn = false;
+                    this.Bot1OutOfChips = false;
                     if (i == 3)
                     {
                         if (this.cardsPictureBoxList[3] != null)
@@ -514,13 +526,13 @@ namespace Poker.UserInterface
 
                 if (bot2Chips <= 0)
                 {
-                    B2Fturn = true;
+                    this.Bot2OutOfChips = true;
                     this.cardsPictureBoxList[4].Visible = false;
                     this.cardsPictureBoxList[5].Visible = false;
                 }
                 else
                 {
-                    B2Fturn = false;
+                    this.Bot2OutOfChips = false;
                     if (i == 5)
                     {
                         if (this.cardsPictureBoxList[5] != null)
@@ -533,13 +545,13 @@ namespace Poker.UserInterface
 
                 if (bot3Chips <= 0)
                 {
-                    B3Fturn = true;
+                    this.Bot3OutOfChips = true;
                     this.cardsPictureBoxList[6].Visible = false;
                     this.cardsPictureBoxList[7].Visible = false;
                 }
                 else
                 {
-                    B3Fturn = false;
+                    this.Bot3OutOfChips = false;
                     if (i == 7)
                     {
                         if (this.cardsPictureBoxList[7] != null)
@@ -552,13 +564,13 @@ namespace Poker.UserInterface
 
                 if (bot4Chips <= 0)
                 {
-                    B4Fturn = true;
+                    this.Bot4OutOfChips = true;
                     this.cardsPictureBoxList[8].Visible = false;
                     this.cardsPictureBoxList[9].Visible = false;
                 }
                 else
                 {
-                    B4Fturn = false;
+                    this.Bot4OutOfChips = false;
                     if (i == 9)
                     {
                         if (this.cardsPictureBoxList[9] != null)
@@ -571,13 +583,13 @@ namespace Poker.UserInterface
 
                 if (bot5Chips <= 0)
                 {
-                    B5Fturn = true;
+                    this.Bot5OutOfChips = true;
                     this.cardsPictureBoxList[10].Visible = false;
                     this.cardsPictureBoxList[11].Visible = false;
                 }
                 else
                 {
-                    B5Fturn = false;
+                    this.Bot5OutOfChips = false;
                     if (i == 11)
                     {
                         if (this.cardsPictureBoxList[11] != null)
@@ -638,7 +650,7 @@ namespace Poker.UserInterface
         async Task Turns()
         {
             #region Rotating
-            if (!PFturn)
+            if (!this.PlayerOutOfChips)
             {
                 if (Pturn)
                 {
@@ -659,10 +671,10 @@ namespace Poker.UserInterface
                 }
             }
 
-            if (PFturn || !Pturn)
+            if (this.PlayerOutOfChips || !Pturn)
             {
                 await AllIn();
-                if (PFturn && !pFolded)
+                if (this.PlayerOutOfChips && !pFolded)
                 {
                     if (bCall.Text.Contains("All in") == false || bRaise.Text.Contains("All in") == false)
                     {
@@ -682,15 +694,15 @@ namespace Poker.UserInterface
                 bFold.Enabled = false;
                 timer.Stop();
                 B1turn = true;
-                if (!B1Fturn)
+                if (!this.Bot1OutOfChips)
                 {
                     if (B1turn)
                     {
                         FixCall(b1Status, ref b1Call, ref b1Raise, 1);
                         FixCall(b1Status, ref b1Call, ref b1Raise, 2);
-                        Rules(2, 3, "Bot 1", ref b1Type, ref b1Power, B1Fturn);
+                        Rules(2, 3, "Bot 1", ref b1Type, ref b1Power, this.Bot1OutOfChips);
                         MessageBox.Show("Bot 1's Turn");
-                        AI(2, 3, ref bot1Chips, ref B1turn, ref B1Fturn, b1Status, 0, b1Power, b1Type);
+                        AI(2, 3, ref bot1Chips, ref B1turn, ref this.Bot1OutOfChips, b1Status, 0, b1Power, b1Type);
                         turnCount++;
                         last = 1;
                         B1turn = false;
@@ -698,7 +710,7 @@ namespace Poker.UserInterface
                     }
                 }
 
-                if (B1Fturn && !b1Folded)
+                if (this.Bot1OutOfChips && !b1Folded)
                 {
                     this.playersGameStatus.RemoveAt(1);
                     this.playersGameStatus.Insert(1, null);
@@ -706,21 +718,21 @@ namespace Poker.UserInterface
                     b1Folded = true;
                 }
 
-                if (B1Fturn || !B1turn)
+                if (this.Bot1OutOfChips || !B1turn)
                 {
                     await CheckRaise(1, 1);
                     B2turn = true;
                 }
 
-                if (!B2Fturn)
+                if (!this.Bot2OutOfChips)
                 {
                     if (B2turn)
                     {
                         FixCall(b2Status, ref b2Call, ref b2Raise, 1);
                         FixCall(b2Status, ref b2Call, ref b2Raise, 2);
-                        Rules(4, 5, "Bot 2", ref b2Type, ref b2Power, B2Fturn);
+                        Rules(4, 5, "Bot 2", ref b2Type, ref b2Power, this.Bot2OutOfChips);
                         MessageBox.Show("Bot 2's Turn");
-                        AI(4, 5, ref bot2Chips, ref B2turn, ref B2Fturn, b2Status, 1, b2Power, b2Type);
+                        AI(4, 5, ref bot2Chips, ref B2turn, ref this.Bot2OutOfChips, b2Status, 1, b2Power, b2Type);
                         turnCount++;
                         last = 2;
                         B2turn = false;
@@ -728,7 +740,7 @@ namespace Poker.UserInterface
                     }
                 }
 
-                if (B2Fturn && !b2Folded)
+                if (this.Bot2OutOfChips && !b2Folded)
                 {
                     this.playersGameStatus.RemoveAt(2);
                     this.playersGameStatus.Insert(2, null);
@@ -736,21 +748,21 @@ namespace Poker.UserInterface
                     b2Folded = true;
                 }
 
-                if (B2Fturn || !B2turn)
+                if (this.Bot2OutOfChips || !B2turn)
                 {
                     await CheckRaise(2, 2);
                     B3turn = true;
                 }
 
-                if (!B3Fturn)
+                if (!this.Bot3OutOfChips)
                 {
                     if (B3turn)
                     {
                         FixCall(b3Status, ref b3Call, ref b3Raise, 1);
                         FixCall(b3Status, ref b3Call, ref b3Raise, 2);
-                        Rules(6, 7, "Bot 3", ref b3Type, ref b3Power, B3Fturn);
+                        Rules(6, 7, "Bot 3", ref b3Type, ref b3Power, this.Bot3OutOfChips);
                         MessageBox.Show("Bot 3's Turn");
-                        AI(6, 7, ref bot3Chips, ref B3turn, ref B3Fturn, b3Status, 2, b3Power, b3Type);
+                        AI(6, 7, ref bot3Chips, ref B3turn, ref this.Bot3OutOfChips, b3Status, 2, b3Power, b3Type);
                         turnCount++;
                         last = 3;
                         B3turn = false;
@@ -758,7 +770,7 @@ namespace Poker.UserInterface
                     }
                 }
 
-                if (B3Fturn && !b3Folded)
+                if (this.Bot3OutOfChips && !b3Folded)
                 {
                     this.playersGameStatus.RemoveAt(3);
                     this.playersGameStatus.Insert(3, null);
@@ -766,21 +778,21 @@ namespace Poker.UserInterface
                     b3Folded = true;
                 }
 
-                if (B3Fturn || !B3turn)
+                if (this.Bot3OutOfChips || !B3turn)
                 {
                     await CheckRaise(3, 3);
                     B4turn = true;
                 }
 
-                if (!B4Fturn)
+                if (!this.Bot4OutOfChips)
                 {
                     if (B4turn)
                     {
                         FixCall(b4Status, ref b4Call, ref b4Raise, 1);
                         FixCall(b4Status, ref b4Call, ref b4Raise, 2);
-                        Rules(8, 9, "Bot 4", ref b4Type, ref b4Power, B4Fturn);
+                        Rules(8, 9, "Bot 4", ref b4Type, ref b4Power, this.Bot4OutOfChips);
                         MessageBox.Show("Bot 4's Turn");
-                        AI(8, 9, ref bot4Chips, ref B4turn, ref B4Fturn, b4Status, 3, b4Power, b4Type);
+                        AI(8, 9, ref bot4Chips, ref B4turn, ref this.Bot4OutOfChips, b4Status, 3, b4Power, b4Type);
                         turnCount++;
                         last = 4;
                         B4turn = false;
@@ -788,7 +800,7 @@ namespace Poker.UserInterface
                     }
                 }
 
-                if (B4Fturn && !b4Folded)
+                if (this.Bot4OutOfChips && !b4Folded)
                 {
                     this.playersGameStatus.RemoveAt(4);
                     this.playersGameStatus.Insert(4, null);
@@ -796,28 +808,28 @@ namespace Poker.UserInterface
                     b4Folded = true;
                 }
 
-                if (B4Fturn || !B4turn)
+                if (this.Bot4OutOfChips || !B4turn)
                 {
                     await CheckRaise(4, 4);
                     B5turn = true;
                 }
 
-                if (!B5Fturn)
+                if (!this.Bot5OutOfChips)
                 {
                     if (B5turn)
                     {
                         FixCall(b5Status, ref b5Call, ref b5Raise, 1);
                         FixCall(b5Status, ref b5Call, ref b5Raise, 2);
-                        Rules(10, 11, "Bot 5", ref b5Type, ref b5Power, B5Fturn);
+                        Rules(10, 11, "Bot 5", ref b5Type, ref b5Power, this.Bot5OutOfChips);
                         MessageBox.Show("Bot 5's Turn");
-                        AI(10, 11, ref bot5Chips, ref B5turn, ref B5Fturn, b5Status, 4, b5Power, b5Type);
+                        AI(10, 11, ref bot5Chips, ref B5turn, ref this.Bot5OutOfChips, b5Status, 4, b5Power, b5Type);
                         turnCount++;
                         last = 5;
                         B5turn = false;
                     }
                 }
 
-                if (B5Fturn && !b5Folded)
+                if (this.Bot5OutOfChips && !b5Folded)
                 {
                     this.playersGameStatus.RemoveAt(5);
                     this.playersGameStatus.Insert(5, null);
@@ -825,13 +837,13 @@ namespace Poker.UserInterface
                     b5Folded = true;
                 }
 
-                if (B5Fturn || !B5turn)
+                if (this.Bot5OutOfChips || !B5turn)
                 {
                     await CheckRaise(5, 5);
                     Pturn = true;
                 }
 
-                if (PFturn && !pFolded)
+                if (this.PlayerOutOfChips && !pFolded)
                 {
                     if (bCall.Text.Contains("All in") == false || bRaise.Text.Contains("All in") == false)
                     {
@@ -2134,17 +2146,17 @@ namespace Poker.UserInterface
                         call = 0;
                         raisedTurn = 123;
                         rounds++;
-                        if (!PFturn)
+                        if (!this.PlayerOutOfChips)
                             this.playerStatus.Text = "";
-                        if (!B1Fturn)
+                        if (!this.Bot1OutOfChips)
                             b1Status.Text = "";
-                        if (!B2Fturn)
+                        if (!this.Bot2OutOfChips)
                             b2Status.Text = "";
-                        if (!B3Fturn)
+                        if (!this.Bot3OutOfChips)
                             b3Status.Text = "";
-                        if (!B4Fturn)
+                        if (!this.Bot4OutOfChips)
                             b4Status.Text = "";
-                        if (!B5Fturn)
+                        if (!this.Bot5OutOfChips)
                             b5Status.Text = "";
                     }
                 }
@@ -2203,32 +2215,32 @@ namespace Poker.UserInterface
                 if (!this.playerStatus.Text.Contains("Fold"))
                 {
                     fixedLast = "Player";
-                    Rules(0, 1, "Player", ref pType, ref pPower, PFturn);
+                    Rules(0, 1, "Player", ref pType, ref pPower, this.PlayerOutOfChips);
                 }
                 if (!b1Status.Text.Contains("Fold"))
                 {
                     fixedLast = "Bot 1";
-                    Rules(2, 3, "Bot 1", ref b1Type, ref b1Power, B1Fturn);
+                    Rules(2, 3, "Bot 1", ref b1Type, ref b1Power, this.Bot1OutOfChips);
                 }
                 if (!b2Status.Text.Contains("Fold"))
                 {
                     fixedLast = "Bot 2";
-                    Rules(4, 5, "Bot 2", ref b2Type, ref b2Power, B2Fturn);
+                    Rules(4, 5, "Bot 2", ref b2Type, ref b2Power, this.Bot2OutOfChips);
                 }
                 if (!b3Status.Text.Contains("Fold"))
                 {
                     fixedLast = "Bot 3";
-                    Rules(6, 7, "Bot 3", ref b3Type, ref b3Power, B3Fturn);
+                    Rules(6, 7, "Bot 3", ref b3Type, ref b3Power, this.Bot3OutOfChips);
                 }
                 if (!b4Status.Text.Contains("Fold"))
                 {
                     fixedLast = "Bot 4";
-                    Rules(8, 9, "Bot 4", ref b4Type, ref b4Power, B4Fturn);
+                    Rules(8, 9, "Bot 4", ref b4Type, ref b4Power, this.Bot4OutOfChips);
                 }
                 if (!b5Status.Text.Contains("Fold"))
                 {
                     fixedLast = "Bot 5";
-                    Rules(10, 11, "Bot 5", ref b5Type, ref b5Power, B5Fturn);
+                    Rules(10, 11, "Bot 5", ref b5Type, ref b5Power, this.Bot5OutOfChips);
                 }
                 Winner(pType, pPower, "Player", Chips, fixedLast);
                 Winner(b1Type, b1Power, "Bot 1", bot1Chips, fixedLast);
@@ -2238,12 +2250,12 @@ namespace Poker.UserInterface
                 Winner(b5Type, b5Power, "Bot 5", bot5Chips, fixedLast);
                 restart = true;
                 Pturn = true;
-                PFturn = false;
-                B1Fturn = false;
-                B2Fturn = false;
-                B3Fturn = false;
-                B4Fturn = false;
-                B5Fturn = false;
+                this.PlayerOutOfChips = false;
+                this.Bot1OutOfChips = false;
+                this.Bot2OutOfChips = false;
+                this.Bot3OutOfChips = false;
+                this.Bot4OutOfChips = false;
+                this.Bot5OutOfChips = false;
                 if (Chips <= 0)
                 {
                     AddChips f2 = new AddChips();
@@ -2256,7 +2268,7 @@ namespace Poker.UserInterface
                         bot3Chips += f2.a;
                         bot4Chips += f2.a;
                         bot5Chips += f2.a;
-                        PFturn = false;
+                        this.PlayerOutOfChips = false;
                         Pturn = true;
                         bRaise.Enabled = true;
                         bFold.Enabled = true;
@@ -2378,7 +2390,7 @@ namespace Poker.UserInterface
                 }
             }
             intsadded = false;
-            if (bot1Chips <= 0 && !B1Fturn)
+            if (bot1Chips <= 0 && !this.Bot1OutOfChips)
             {
                 if (!intsadded)
                 {
@@ -2387,7 +2399,7 @@ namespace Poker.UserInterface
                 }
                 intsadded = false;
             }
-            if (bot2Chips <= 0 && !B2Fturn)
+            if (bot2Chips <= 0 && !this.Bot2OutOfChips)
             {
                 if (!intsadded)
                 {
@@ -2396,7 +2408,7 @@ namespace Poker.UserInterface
                 }
                 intsadded = false;
             }
-            if (bot3Chips <= 0 && !B3Fturn)
+            if (bot3Chips <= 0 && !this.Bot3OutOfChips)
             {
                 if (!intsadded)
                 {
@@ -2405,7 +2417,7 @@ namespace Poker.UserInterface
                 }
                 intsadded = false;
             }
-            if (bot4Chips <= 0 && !B4Fturn)
+            if (bot4Chips <= 0 && !this.Bot4OutOfChips)
             {
                 if (!intsadded)
                 {
@@ -2414,7 +2426,7 @@ namespace Poker.UserInterface
                 }
                 intsadded = false;
             }
-            if (bot5Chips <= 0 && !B5Fturn)
+            if (bot5Chips <= 0 && !this.Bot5OutOfChips)
             {
                 if (!intsadded)
                 {
@@ -2533,18 +2545,18 @@ namespace Poker.UserInterface
             this.B3turn = false;
             this.B4turn = false;
             this.B5turn = false;
-            this.B1Fturn = false;
-            this.B2Fturn = false;
-            this.B3Fturn = false;
-            this.B4Fturn = false;
-            this.B5Fturn = false;
+            this.Bot1OutOfChips = false;
+            this.Bot2OutOfChips = false;
+            this.Bot3OutOfChips = false;
+            this.Bot4OutOfChips = false;
+            this.Bot5OutOfChips = false;
             this.pFolded = false;
             this.b1Folded = false;
             this.b2Folded = false;
             this.b3Folded = false;
             this.b4Folded = false;
             this.b5Folded = false;
-            this.PFturn = false;
+            this.PlayerOutOfChips = false;
             this.Pturn = true;
             this.restart = false;
             this.raising = false;
@@ -2599,7 +2611,7 @@ namespace Poker.UserInterface
                     this.bot3Chips += f2.a;
                     this.bot4Chips += f2.a;
                     this.bot5Chips += f2.a;
-                    this.PFturn = false;
+                    this.PlayerOutOfChips = false;
                     this.Pturn = true;
                     this.bRaise.Enabled = true;
                     this.bFold.Enabled = true;
@@ -2627,37 +2639,37 @@ namespace Poker.UserInterface
             if (!this.playerStatus.Text.Contains("Fold"))
             {
                 fixedLast = "Player";
-                Rules(0, 1, "Player", ref pType, ref pPower, PFturn);
+                Rules(0, 1, "Player", ref pType, ref pPower, this.PlayerOutOfChips);
             }
 
             if (!b1Status.Text.Contains("Fold"))
             {
                 fixedLast = "Bot 1";
-                Rules(2, 3, "Bot 1", ref b1Type, ref b1Power, B1Fturn);
+                Rules(2, 3, "Bot 1", ref b1Type, ref b1Power, this.Bot1OutOfChips);
             }
 
             if (!b2Status.Text.Contains("Fold"))
             {
                 fixedLast = "Bot 2";
-                Rules(4, 5, "Bot 2", ref b2Type, ref b2Power, B2Fturn);
+                Rules(4, 5, "Bot 2", ref b2Type, ref b2Power, this.Bot2OutOfChips);
             }
 
             if (!b3Status.Text.Contains("Fold"))
             {
                 fixedLast = "Bot 3";
-                Rules(6, 7, "Bot 3", ref b3Type, ref b3Power, B3Fturn);
+                Rules(6, 7, "Bot 3", ref b3Type, ref b3Power, this.Bot3OutOfChips);
             }
 
             if (!b4Status.Text.Contains("Fold"))
             {
                 fixedLast = "Bot 4";
-                Rules(8, 9, "Bot 4", ref b4Type, ref b4Power, B4Fturn);
+                Rules(8, 9, "Bot 4", ref b4Type, ref b4Power, this.Bot4OutOfChips);
             }
 
             if (!b5Status.Text.Contains("Fold"))
             {
                 fixedLast = "Bot 5";
-                Rules(10, 11, "Bot 5", ref b5Type, ref b5Power, B5Fturn);
+                Rules(10, 11, "Bot 5", ref b5Type, ref b5Power, this.Bot5OutOfChips);
             }
 
             this.Winner(this.pType, this.pPower, "Player", this.Chips, fixedLast);
@@ -3188,7 +3200,7 @@ namespace Poker.UserInterface
         {
             if (pbTimer.Value <= 0)
             {
-                PFturn = true;
+                this.PlayerOutOfChips = true;
                 await this.Turns();
             }
 
@@ -3241,7 +3253,7 @@ namespace Poker.UserInterface
             if (Chips <= 0)
             {
                 Pturn = false;
-                PFturn = true;
+                this.PlayerOutOfChips = true;
                 bCall.Enabled = false;
                 bRaise.Enabled = false;
                 bFold.Enabled = false;
@@ -3304,7 +3316,7 @@ namespace Poker.UserInterface
         {
             this.playerStatus.Text = "Fold";
             Pturn = false;
-            PFturn = true;
+            this.PlayerOutOfChips = true;
             await Turns();
         }
 
@@ -3326,7 +3338,7 @@ namespace Poker.UserInterface
 
         private async void ButtonCall_Click(object sender, EventArgs e)
         {
-            Rules(0, 1, "Player", ref pType, ref pPower, PFturn);
+            Rules(0, 1, "Player", ref pType, ref pPower, this.PlayerOutOfChips);
             if (Chips >= call)
             {
                 Chips -= call;
@@ -3359,7 +3371,7 @@ namespace Poker.UserInterface
 
         private async void ButtonRaise_Click(object sender, EventArgs e)
         {
-            Rules(0, 1, "Player", ref pType, ref pPower, PFturn);
+            Rules(0, 1, "Player", ref pType, ref pPower, this.PlayerOutOfChips);
             int parsedValue;
             if (tbRaise.Text != "" && int.TryParse(tbRaise.Text, out parsedValue))
             {

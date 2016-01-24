@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\GameStage.cs" />
     <Compile Include="UserInterface\AddChips.cs">
       <SubType>Form</SubType>
     </Compile>
