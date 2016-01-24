@@ -78,7 +78,7 @@
 
         public IList<ICard> Cards { get; private set; }
 
-        public Panel Panel { get; }
+        public Panel Panel { get; set; }
 
         public double Type { get; set; }
     }
