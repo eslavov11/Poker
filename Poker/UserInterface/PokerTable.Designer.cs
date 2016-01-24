@@ -1,5 +1,7 @@
 ﻿namespace Poker.UserInterface
 {
+    using System.Windows.Forms;
+
     partial class PokerTable
     {
         /// <summary>
@@ -41,18 +43,18 @@
             this.tbBotChips3 = new System.Windows.Forms.TextBox();
             this.tbBotChips2 = new System.Windows.Forms.TextBox();
             this.tbBotChips1 = new System.Windows.Forms.TextBox();
-            this.tbPot = new System.Windows.Forms.TextBox();
-            this.bOptions = new System.Windows.Forms.Button();
-            this.bBB = new System.Windows.Forms.Button();
+            this.potStatus = new System.Windows.Forms.TextBox();
+            this.buttonOptions = new System.Windows.Forms.Button();
+            this.buttonBigBlind = new System.Windows.Forms.Button();
             this.tbSmallBlind = new System.Windows.Forms.TextBox();
-            this.bSB = new System.Windows.Forms.Button();
+            this.buttonSmallBlind = new System.Windows.Forms.Button();
             this.tbBigBlind = new System.Windows.Forms.TextBox();
-            this.b5Status = new System.Windows.Forms.Label();
-            this.b4Status = new System.Windows.Forms.Label();
-            this.b3Status = new System.Windows.Forms.Label();
-            this.b1Status = new System.Windows.Forms.Label();
-            this.playerStatus = new System.Windows.Forms.Label();
-            this.b2Status = new System.Windows.Forms.Label();
+            this.fifthBotStatus = new System.Windows.Forms.Label();
+            this.fourthBotStatus = new System.Windows.Forms.Label();
+            this.thirdBotStatus = new System.Windows.Forms.Label();
+            this.firstBotStatus = new System.Windows.Forms.Label();
+            this.humanStatus = new System.Windows.Forms.Label();
+            this.secondBotStatus = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tbRaise = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
@@ -77,7 +79,7 @@
             this.bCheck.Name = "bCheck";
             this.bCheck.Size = new System.Drawing.Size(134, 62);
             this.bCheck.TabIndex = 2;
-            this.bCheck.Text = "PlayerCheck";
+            this.bCheck.Text = "Check";
             this.bCheck.UseVisualStyleBackColor = true;
             this.bCheck.Click += new System.EventHandler(this.ButtonCheck_Click);
             // 
@@ -101,7 +103,7 @@
             this.bRaise.Name = "bRaise";
             this.bRaise.Size = new System.Drawing.Size(124, 62);
             this.bRaise.TabIndex = 4;
-            this.bRaise.Text = "raise";
+            this.bRaise.Text = "Raise";
             this.bRaise.UseVisualStyleBackColor = true;
             this.bRaise.Click += new System.EventHandler(this.ButtonRaise_Click);
             // 
@@ -196,34 +198,34 @@
             // 
             // txtPot
             // 
-            this.tbPot.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.tbPot.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tbPot.Location = new System.Drawing.Point(606, 212);
-            this.tbPot.Name = "txtPot";
-            this.tbPot.Size = new System.Drawing.Size(125, 23);
-            this.tbPot.TabIndex = 14;
-            this.tbPot.Text = "0";
+            this.potStatus.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.potStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.potStatus.Location = new System.Drawing.Point(606, 212);
+            this.potStatus.Name = "txtPot";
+            this.potStatus.Size = new System.Drawing.Size(125, 23);
+            this.potStatus.TabIndex = 14;
+            this.potStatus.Text = "0";
             // 
-            // bOptions
+            // buttonOptions
             // 
-            this.bOptions.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bOptions.Location = new System.Drawing.Point(12, 12);
-            this.bOptions.Name = "bOptions";
-            this.bOptions.Size = new System.Drawing.Size(75, 36);
-            this.bOptions.TabIndex = 15;
-            this.bOptions.Text = "BB/SB";
-            this.bOptions.UseVisualStyleBackColor = true;
-            this.bOptions.Click += new System.EventHandler(this.ButtonOptions_Click);
+            this.buttonOptions.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonOptions.Location = new System.Drawing.Point(12, 12);
+            this.buttonOptions.Name = "buttonOptions";
+            this.buttonOptions.Size = new System.Drawing.Size(75, 36);
+            this.buttonOptions.TabIndex = 15;
+            this.buttonOptions.Text = "BB/SB";
+            this.buttonOptions.UseVisualStyleBackColor = true;
+            this.buttonOptions.Click += new System.EventHandler(this.ButtonOptions_Click);
             // 
-            // bBB
+            // buttonBigBlind
             // 
-            this.bBB.Location = new System.Drawing.Point(12, 254);
-            this.bBB.Name = "bBB";
-            this.bBB.Size = new System.Drawing.Size(75, 23);
-            this.bBB.TabIndex = 16;
-            this.bBB.Text = "Big Blind";
-            this.bBB.UseVisualStyleBackColor = true;
-            this.bBB.Click += new System.EventHandler(this.ButtonBigBlind_Click);
+            this.buttonBigBlind.Location = new System.Drawing.Point(12, 254);
+            this.buttonBigBlind.Name = "buttonBigBlind";
+            this.buttonBigBlind.Size = new System.Drawing.Size(75, 23);
+            this.buttonBigBlind.TabIndex = 16;
+            this.buttonBigBlind.Text = "Big Blind";
+            this.buttonBigBlind.UseVisualStyleBackColor = true;
+            this.buttonBigBlind.Click += new System.EventHandler(this.ButtonBigBlind_Click);
             // 
             // tbSmallBlind
             // 
@@ -235,13 +237,13 @@
             // 
             // bSB
             // 
-            this.bSB.Location = new System.Drawing.Point(12, 199);
-            this.bSB.Name = "bSB";
-            this.bSB.Size = new System.Drawing.Size(75, 23);
-            this.bSB.TabIndex = 18;
-            this.bSB.Text = "Small Blind";
-            this.bSB.UseVisualStyleBackColor = true;
-            this.bSB.Click += new System.EventHandler(this.ButtonSmallBlind_Click);
+            this.buttonSmallBlind.Location = new System.Drawing.Point(12, 199);
+            this.buttonSmallBlind.Name = "bSB";
+            this.buttonSmallBlind.Size = new System.Drawing.Size(75, 23);
+            this.buttonSmallBlind.TabIndex = 18;
+            this.buttonSmallBlind.Text = "Small Blind";
+            this.buttonSmallBlind.UseVisualStyleBackColor = true;
+            this.buttonSmallBlind.Click += new System.EventHandler(this.ButtonSmallBlind_Click);
             // 
             // tbBigBlind
             // 
@@ -251,52 +253,52 @@
             this.tbBigBlind.TabIndex = 19;
             this.tbBigBlind.Text = "500";
             // 
-            // b5Status
+            // fifthBotStatus
             // 
-            this.b5Status.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.b5Status.Location = new System.Drawing.Point(1012, 579);
-            this.b5Status.Name = "b5Status";
-            this.b5Status.Size = new System.Drawing.Size(152, 32);
-            this.b5Status.TabIndex = 26;
+            this.fifthBotStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.fifthBotStatus.Location = new System.Drawing.Point(1012, 579);
+            this.fifthBotStatus.Name = "fifthBotStatus";
+            this.fifthBotStatus.Size = new System.Drawing.Size(152, 32);
+            this.fifthBotStatus.TabIndex = 26;
             // 
-            // b4Status
+            // fourthBotStatus
             // 
-            this.b4Status.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.b4Status.Location = new System.Drawing.Point(970, 107);
-            this.b4Status.Name = "b4Status";
-            this.b4Status.Size = new System.Drawing.Size(123, 32);
-            this.b4Status.TabIndex = 27;
+            this.fourthBotStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.fourthBotStatus.Location = new System.Drawing.Point(970, 107);
+            this.fourthBotStatus.Name = "fourthBotStatus";
+            this.fourthBotStatus.Size = new System.Drawing.Size(123, 32);
+            this.fourthBotStatus.TabIndex = 27;
             // 
-            // b3Status
+            // thirdBotStatus
             // 
-            this.b3Status.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.b3Status.Location = new System.Drawing.Point(755, 107);
-            this.b3Status.Name = "b3Status";
-            this.b3Status.Size = new System.Drawing.Size(125, 32);
-            this.b3Status.TabIndex = 28;
+            this.thirdBotStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.thirdBotStatus.Location = new System.Drawing.Point(755, 107);
+            this.thirdBotStatus.Name = "thirdBotStatus";
+            this.thirdBotStatus.Size = new System.Drawing.Size(125, 32);
+            this.thirdBotStatus.TabIndex = 28;
             // 
-            // b1Status
+            // firstBotStatus
             // 
-            this.b1Status.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.b1Status.Location = new System.Drawing.Point(181, 579);
-            this.b1Status.Name = "b1Status";
-            this.b1Status.Size = new System.Drawing.Size(142, 32);
-            this.b1Status.TabIndex = 29;
+            this.firstBotStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.firstBotStatus.Location = new System.Drawing.Point(181, 579);
+            this.firstBotStatus.Name = "firstBotStatus";
+            this.firstBotStatus.Size = new System.Drawing.Size(142, 32);
+            this.firstBotStatus.TabIndex = 29;
             // 
-            // playerStatus
+            // humanStatus
             // 
-            this.playerStatus.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.playerStatus.Location = new System.Drawing.Point(755, 579);
-            this.playerStatus.Name = "playerStatus";
-            this.playerStatus.Size = new System.Drawing.Size(163, 32);
-            this.playerStatus.TabIndex = 30;
+            this.humanStatus.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.humanStatus.Location = new System.Drawing.Point(755, 579);
+            this.humanStatus.Name = "humanStatus";
+            this.humanStatus.Size = new System.Drawing.Size(163, 32);
+            this.humanStatus.TabIndex = 30;
             // 
-            // b2Status
+            // secondBotStatus
             // 
-            this.b2Status.Location = new System.Drawing.Point(276, 107);
-            this.b2Status.Name = "b2Status";
-            this.b2Status.Size = new System.Drawing.Size(133, 32);
-            this.b2Status.TabIndex = 31;
+            this.secondBotStatus.Location = new System.Drawing.Point(276, 107);
+            this.secondBotStatus.Name = "secondBotStatus";
+            this.secondBotStatus.Size = new System.Drawing.Size(133, 32);
+            this.secondBotStatus.TabIndex = 31;
             // 
             // label1
             // 
@@ -325,18 +327,18 @@
             this.ClientSize = new System.Drawing.Size(1350, 729);
             this.Controls.Add(this.tbRaise);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.b2Status);
-            this.Controls.Add(this.playerStatus);
-            this.Controls.Add(this.b1Status);
-            this.Controls.Add(this.b3Status);
-            this.Controls.Add(this.b4Status);
-            this.Controls.Add(this.b5Status);
+            this.Controls.Add(this.secondBotStatus);
+            this.Controls.Add(this.humanStatus);
+            this.Controls.Add(this.firstBotStatus);
+            this.Controls.Add(this.thirdBotStatus);
+            this.Controls.Add(this.fourthBotStatus);
+            this.Controls.Add(this.fifthBotStatus);
             this.Controls.Add(this.tbBigBlind);
-            this.Controls.Add(this.bSB);
+            this.Controls.Add(this.buttonSmallBlind);
             this.Controls.Add(this.tbSmallBlind);
-            this.Controls.Add(this.bBB);
-            this.Controls.Add(this.bOptions);
-            this.Controls.Add(this.tbPot);
+            this.Controls.Add(this.buttonBigBlind);
+            this.Controls.Add(this.buttonOptions);
+            this.Controls.Add(this.potStatus);
             this.Controls.Add(this.tbBotChips1);
             this.Controls.Add(this.tbBotChips2);
             this.Controls.Add(this.tbBotChips3);
@@ -361,33 +363,33 @@
 
         #endregion
 
-        private System.Windows.Forms.Button bFold;
-        private System.Windows.Forms.Button bCheck;
-        private System.Windows.Forms.Button bCall;
-        private System.Windows.Forms.Button bRaise;
-        private System.Windows.Forms.ProgressBar pbTimer;
-        private System.Windows.Forms.TextBox tbChips;
-        private System.Windows.Forms.Button bAdd;
-        private System.Windows.Forms.TextBox tbAdd;
-        private System.Windows.Forms.TextBox tbBotChips5;
-        private System.Windows.Forms.TextBox tbBotChips4;
-        private System.Windows.Forms.TextBox tbBotChips3;
-        private System.Windows.Forms.TextBox tbBotChips2;
-        private System.Windows.Forms.TextBox tbBotChips1;
-        private System.Windows.Forms.TextBox tbPot;
-        private System.Windows.Forms.Button bOptions;
-        private System.Windows.Forms.Button bBB;
-        private System.Windows.Forms.TextBox tbSmallBlind;
-        private System.Windows.Forms.Button bSB;
-        private System.Windows.Forms.TextBox tbBigBlind;
-        private System.Windows.Forms.Label b5Status;
-        private System.Windows.Forms.Label b4Status;
-        private System.Windows.Forms.Label b3Status;
-        private System.Windows.Forms.Label b1Status;
-        private System.Windows.Forms.Label playerStatus;
-        private System.Windows.Forms.Label b2Status;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox tbRaise;
+        private Button bFold;
+        private Button bCheck;
+        private Button bCall;
+        private Button bRaise;
+        private ProgressBar pbTimer;
+        private TextBox tbChips;
+        private Button bAdd;
+        private TextBox tbAdd;
+        private TextBox tbBotChips5;
+        private TextBox tbBotChips4;
+        private TextBox tbBotChips3;
+        private TextBox tbBotChips2;
+        private TextBox tbBotChips1;
+        private TextBox potStatus;
+        private Button buttonOptions;
+        private Button buttonBigBlind;
+        private TextBox tbSmallBlind;
+        private Button buttonSmallBlind;
+        private TextBox tbBigBlind;
+        private Label firstBotStatus;
+        private Label secondBotStatus;
+        private Label thirdBotStatus;
+        private Label fourthBotStatus;
+        private Label fifthBotStatus;
+        private Label humanStatus;
+        private Label label1;
+        private TextBox tbRaise;
 
 
 

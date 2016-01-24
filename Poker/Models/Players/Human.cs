@@ -7,6 +7,7 @@
         public Human()
             : base()
         {
+            this.CanMakeTurn = true;
         }
     }
 }
