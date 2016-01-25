@@ -90,7 +90,7 @@ namespace Poker.UserInterface
         private Timer updates = new Timer();
 
         private int secondsLeft = 60;
-        private int i;
+        private int cardNumber;
         private int bigBlindValue = 500;
         private int smallBlindValue = 250;
         private int up = 10000000;
@@ -183,7 +183,7 @@ namespace Poker.UserInterface
             }
 
             
-            for (int cardNumber = 0; cardNumber < NumberOfDeskCards; cardNumber++)
+            for (this.cardNumber = 0; this.cardNumber < NumberOfDeskCards; this.cardNumber++)
             {
                 this.deskCardsAsImages[cardNumber] = Image.FromFile(this.cardsImageLocation[cardNumber]);
                 var partsToRemove = new[] { "..\\..\\Resources\\Assets\\Cards\\", ".png" };
@@ -556,7 +556,7 @@ namespace Poker.UserInterface
                 //    }
                 //}
 
-                if (cardNumber == 16)
+                if (this.cardNumber == 16)
                 {
                     if (!restart)
                     {
@@ -592,7 +592,7 @@ namespace Poker.UserInterface
                 foldedPlayers = 5;
             }
 
-            if (i == 17)
+            if (this.cardNumber == 17)
             {
                 this.buttonRaise.Enabled = true;
                 this.buttonCall.Enabled = true;
@@ -603,7 +603,6 @@ namespace Poker.UserInterface
             #endregion
         }
 
-        // TODO: put the appropriate methods/properties in the IBot interface and change from Bot to IBot
         private void DealCardsForBots(IBot bot, int cardNumber, Bitmap backImage, 
             ref bool check, ref int horizontal, ref int vertical)
         {
