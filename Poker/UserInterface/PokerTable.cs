@@ -669,6 +669,7 @@ namespace Poker.UserInterface
         private async Task Turns()
         {
             #region Rotating
+            // TODO: avoid code repetition in this region
             if (!this.human.OutOfChips)
             {
                 if (this.human.CanMakeTurn)
