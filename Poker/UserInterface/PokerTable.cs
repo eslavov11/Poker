@@ -455,101 +455,106 @@ namespace Poker.UserInterface
 
                 //TODO: extract methods logic below is completely identical
                 #region CheckForDefeatedBots
-                if (this.firstBot.Chips <= 0)
-                {
-                    this.firstBot.OutOfChips = true;
-                    this.cardsPictureBoxList[2].Visible = false;
-                    this.cardsPictureBoxList[3].Visible = false;
-                }
-                else
-                {
-                    this.firstBot.OutOfChips = false;
-                    if (cardNumber == 3)
-                    {
-                        if (this.cardsPictureBoxList[3] != null)
-                        {
-                            //TODO: Is this working properly?
-                            this.cardsPictureBoxList[2].Visible = true;
-                            this.cardsPictureBoxList[3].Visible = true;
-                        }
-                    }
-                }
+                CheckForDefeatedBots(this.firstBot, cardNumber);
+                CheckForDefeatedBots(this.secondBot, cardNumber);
+                CheckForDefeatedBots(this.thirdBot, cardNumber);
+                CheckForDefeatedBots(this.fourthBot, cardNumber);
+                CheckForDefeatedBots(this.fifthBot, cardNumber);
+                //if (this.firstBot.Chips <= 0)
+                //{
+                //    this.firstBot.OutOfChips = true;
+                //    this.cardsPictureBoxList[2].Visible = false;
+                //    this.cardsPictureBoxList[3].Visible = false;
+                //}
+                //else
+                //{
+                //    this.firstBot.OutOfChips = false;
+                //    if (cardNumber == 3)
+                //    {
+                //        if (this.cardsPictureBoxList[3] != null)
+                //        {
+                //            //TODO: Is this working properly?
+                //            this.cardsPictureBoxList[2].Visible = true;
+                //            this.cardsPictureBoxList[3].Visible = true;
+                //        }
+                //    }
+                //}
 
-                if (this.secondBot.Chips <= 0)
-                {
-                    this.secondBot.OutOfChips = true;
-                    this.cardsPictureBoxList[4].Visible = false;
-                    this.cardsPictureBoxList[5].Visible = false;
-                }
-                else
-                {
-                    this.secondBot.OutOfChips = false;
-                    if (cardNumber == 5)
-                    {
-                        if (this.cardsPictureBoxList[5] != null)
-                        {
-                            this.cardsPictureBoxList[4].Visible = true;
-                            this.cardsPictureBoxList[5].Visible = true;
-                        }
-                    }
-                }
+                //if (this.secondBot.Chips <= 0)
+                //{
+                //    this.secondBot.OutOfChips = true;
+                //    this.cardsPictureBoxList[4].Visible = false;
+                //    this.cardsPictureBoxList[5].Visible = false;
+                //}
+                //else
+                //{
+                //    this.secondBot.OutOfChips = false;
+                //    if (cardNumber == 5)
+                //    {
+                //        if (this.cardsPictureBoxList[5] != null)
+                //        {
+                //            this.cardsPictureBoxList[4].Visible = true;
+                //            this.cardsPictureBoxList[5].Visible = true;
+                //        }
+                //    }
+                //}
 
-                if (this.thirdBot.Chips <= 0)
-                {
-                    this.thirdBot.OutOfChips = true;
-                    this.cardsPictureBoxList[6].Visible = false;
-                    this.cardsPictureBoxList[7].Visible = false;
-                }
-                else
-                {
-                    this.thirdBot.OutOfChips = false;
-                    if (cardNumber == 7)
-                    {
-                        if (this.cardsPictureBoxList[7] != null)
-                        {
-                            this.cardsPictureBoxList[6].Visible = true;
-                            this.cardsPictureBoxList[7].Visible = true;
-                        }
-                    }
-                }
+                //if (this.thirdBot.Chips <= 0)
+                //{
+                //    this.thirdBot.OutOfChips = true;
+                //    this.cardsPictureBoxList[6].Visible = false;
+                //    this.cardsPictureBoxList[7].Visible = false;
+                //}
+                //else
+                //{
+                //    this.thirdBot.OutOfChips = false;
+                //    if (cardNumber == 7)
+                //    {
+                //        if (this.cardsPictureBoxList[7] != null)
+                //        {
+                //            this.cardsPictureBoxList[6].Visible = true;
+                //            this.cardsPictureBoxList[7].Visible = true;
+                //        }
+                //    }
+                //}
 
-                if (this.fourthBot.Chips <= 0)
-                {
-                    this.fourthBot.OutOfChips = true;
-                    this.cardsPictureBoxList[8].Visible = false;
-                    this.cardsPictureBoxList[9].Visible = false;
-                }
-                else
-                {
-                    this.fourthBot.OutOfChips = false;
-                    if (cardNumber == 9)
-                    {
-                        if (this.cardsPictureBoxList[9] != null)
-                        {
-                            this.cardsPictureBoxList[8].Visible = true;
-                            this.cardsPictureBoxList[9].Visible = true;
-                        }
-                    }
-                }
+                //if (this.fourthBot.Chips <= 0)
+                //{
+                //    this.fourthBot.OutOfChips = true;
+                //    this.cardsPictureBoxList[8].Visible = false;
+                //    this.cardsPictureBoxList[9].Visible = false;
+                //}
+                //else
+                //{
+                //    this.fourthBot.OutOfChips = false;
+                //    if (cardNumber == 9)
+                //    {
+                //        if (this.cardsPictureBoxList[9] != null)
+                //        {
+                //            this.cardsPictureBoxList[8].Visible = true;
+                //            this.cardsPictureBoxList[9].Visible = true;
+                //        }
+                //    }
+                //}
 
-                if (this.fifthBot.Chips <= 0)
-                {
-                    this.fifthBot.OutOfChips = true;
-                    this.cardsPictureBoxList[10].Visible = false;
-                    this.cardsPictureBoxList[11].Visible = false;
-                }
-                else
-                {
-                    this.fifthBot.OutOfChips = false;
-                    if (cardNumber == 11)
-                    {
-                        if (this.cardsPictureBoxList[11] != null)
-                        {
-                            this.cardsPictureBoxList[10].Visible = true;
-                            this.cardsPictureBoxList[11].Visible = true;
-                        }
-                    }
-                }
+                //if (this.fifthBot.Chips <= 0)
+                //{
+                //    this.fifthBot.OutOfChips = true;
+                //    this.cardsPictureBoxList[10].Visible = false;
+                //    this.cardsPictureBoxList[11].Visible = false;
+                //}
+                //else
+                //{
+                //    this.fifthBot.OutOfChips = false;
+                //    if (cardNumber == 11)
+                //    {
+                //        if (this.cardsPictureBoxList[11] != null)
+                //        {
+                //            this.cardsPictureBoxList[10].Visible = true;
+                //            this.cardsPictureBoxList[11].Visible = true;
+                //        }
+                //    }
+                //}
 
                 if (cardNumber == 16)
                 {
@@ -634,6 +639,29 @@ namespace Poker.UserInterface
                     if (cardNumber == bot.StartCard + 1)
                     {
                         check = false;
+                    }
+                }
+            }
+        }
+
+        private void CheckForDefeatedBots(IBot bot, int cardNumber)
+        {
+            if (bot.Chips <= 0)
+            {
+                bot.OutOfChips = true;
+                this.cardsPictureBoxList[bot.StartCard].Visible = false;
+                this.cardsPictureBoxList[bot.StartCard + 1].Visible = false;
+            }
+            else
+            {
+                bot.OutOfChips = false;
+                if (cardNumber == bot.StartCard + 1)
+                {
+                    if (this.cardsPictureBoxList[bot.StartCard + 1] != null)
+                    {
+                        //TODO: Is this working properly?
+                        this.cardsPictureBoxList[bot.StartCard].Visible = true;
+                        this.cardsPictureBoxList[bot.StartCard + 1].Visible = true;
                     }
                 }
             }
