@@ -28,11 +28,11 @@ namespace Poker.UserInterface
         private readonly IPlayer human;
         // TODO: put all bots in one list!
         // TODO: get all bots back to IPlayer!!!
-        private readonly Bot firstBot;
-        private readonly Bot secondBot;
-        private readonly Bot thirdBot;
-        private readonly Bot fourthBot;
-        private readonly Bot fifthBot;
+        private readonly IBot firstBot;
+        private readonly IBot secondBot;
+        private readonly IBot thirdBot;
+        private readonly IBot fourthBot;
+        private readonly IBot fifthBot;
         private readonly IDatabase pokerDatabase;
 
         //private ProgressBar asd = new ProgressBar();
@@ -599,7 +599,7 @@ namespace Poker.UserInterface
         }
 
         // TODO: put the appropriate methods/properties in the IBot interface and change from Bot to IBot
-        private void DealCardsForBots(Bot bot, int cardNumber, Bitmap backImage, 
+        private void DealCardsForBots(IBot bot, int cardNumber, Bitmap backImage, 
             ref bool check, ref int horizontal, ref int vertical)
         {
             if (bot.Chips > 0)
