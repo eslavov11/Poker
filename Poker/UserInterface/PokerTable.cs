@@ -638,10 +638,58 @@ namespace Poker.UserInterface
                 {
                     await this.Turns();
                 }
-
                 this.restart = false;
             }
         }
+
+        // TODO: in progress, create a method to proceed the bots' turns
+        /*
+        private async void ProceedWithBotsTurns()
+        {
+            for (int botNumber = 0; botNumber < this.bots.Count; botNumber++)
+            {
+                if (!this.bots[botNumber].OutOfChips)
+                {
+                    if (this.bots[botNumber].CanMakeTurn)
+                    {
+                        this.FixCall(this.firstBotStatus, this.bots[botNumber].Call, this.bots[botNumber].Raise, 1);
+                        this.FixCall(this.firstBotStatus, this.bots[botNumber].Call, this.bots[botNumber].Raise, 2);
+                        this.Rules(this.bots[botNumber].StartCard, this.bots[botNumber].StartCard + 1, "Bot " + (botNumber + 1), this.bots[botNumber]);
+                        MessageBox.Show("Bot "+ (botNumber + 1) +"'s turn");
+                        this.AI(this.bots[botNumber].StartCard, this.bots[botNumber].StartCard + 1, this.firstBotStatus, botNumber, this.bots[botNumber]);
+                        this.turnCount++;
+                        this.last = botNumber + 1;
+                        this.bots[botNumber].CanMakeTurn = false;
+                        if (botNumber < this.bots.Count - 1)
+                        {
+                            this.bots[botNumber].CanMakeTurn = true;
+                        }
+                    }
+                }
+
+                if (this.bots[botNumber].OutOfChips && !this.bots[botNumber].Folded)
+                {
+                    this.pokerDatabase.PlayersGameStatus.RemoveAt(botNumber + 1);
+                    this.pokerDatabase.PlayersGameStatus.Insert(botNumber + 1, null);
+                    this.maxLeft--;
+                    this.bots[botNumber].Folded = true;
+                }
+
+                if (this.bots[botNumber].OutOfChips || !this.bots[botNumber].CanMakeTurn)
+                {
+                    await this.CheckRaise(botNumber + 1, botNumber + 1);
+                    if (botNumber < this.bots.Count - 1)
+                    {
+                        this.bots[botNumber + 1].CanMakeTurn = true;
+                    }
+                    else
+                    {
+                        this.human.CanMakeTurn = true;
+                    }
+                }
+            }
+        }
+         */
 
         private void Rules(int card1, int card2, string currentText, IPlayer player)
         {
