@@ -844,52 +844,70 @@ namespace Poker.UserInterface
                     this.Rules(0, 1, this.human);
                 }
 
-                if (!this.bots[0].Status.Text.Contains("Fold"))
+                foreach (var bot in this.bots)
                 {
-                    fixedLast = "Bot 1";
-                    this.Rules(2, 3, this.bots[0]);
+                    if (!bot.Status.Text.Contains("Fold"))
+                    {
+                        fixedLast = bot.Name;
+                        this.Rules(bot.StartCard, bot.StartCard + 1, bot);
+                    }
                 }
+                //if (!this.bots[0].Status.Text.Contains("Fold"))
+                //{
+                //    fixedLast = "Bot 1";
+                //    this.Rules(2, 3, this.bots[0]);
+                //}
 
-                if (!this.bots[1].Status.Text.Contains("Fold"))
-                {
-                    fixedLast = "Bot 2";
-                    this.Rules(4, 5, this.bots[1]);
-                }
+                //if (!this.bots[1].Status.Text.Contains("Fold"))
+                //{
+                //    fixedLast = "Bot 2";
+                //    this.Rules(4, 5, this.bots[1]);
+                //}
 
-                if (!this.bots[2].Status.Text.Contains("Fold"))
-                {
-                    fixedLast = "Bot 3";
-                    this.Rules(6, 7, this.bots[2]);
-                }
+                //if (!this.bots[2].Status.Text.Contains("Fold"))
+                //{
+                //    fixedLast = "Bot 3";
+                //    this.Rules(6, 7, this.bots[2]);
+                //}
 
-                if (!this.bots[3].Status.Text.Contains("Fold"))
-                {
-                    fixedLast = "Bot 4";
-                    this.Rules(8, 9, this.bots[3]);
-                }
+                //if (!this.bots[3].Status.Text.Contains("Fold"))
+                //{
+                //    fixedLast = "Bot 4";
+                //    this.Rules(8, 9, this.bots[3]);
+                //}
 
-                if (!this.bots[4].Status.Text.Contains("Fold"))
-                {
-                    fixedLast = "Bot 5";
-                    this.Rules(10, 11, this.bots[4]);
-                }
+                //if (!this.bots[4].Status.Text.Contains("Fold"))
+                //{
+                //    fixedLast = "Bot 5";
+                //    this.Rules(10, 11, this.bots[4]);
+                //}
                 
                 this.Winner(this.human, fixedLast);
-                this.Winner(this.bots[0], fixedLast);
-                this.Winner(this.bots[1], fixedLast);
-                this.Winner(this.bots[2], fixedLast);
-                this.Winner(this.bots[3], fixedLast);
-                this.Winner(this.bots[4], fixedLast);
+
+                foreach (var bot in this.bots)
+                {
+                    this.Winner(bot, fixedLast);
+                }
+                //this.Winner(this.bots[0], fixedLast);
+                //this.Winner(this.bots[1], fixedLast);
+                //this.Winner(this.bots[2], fixedLast);
+                //this.Winner(this.bots[3], fixedLast);
+                //this.Winner(this.bots[4], fixedLast);
 
                 this.restart = true;
 
                 this.human.CanMakeTurn = true;
                 this.human.OutOfChips = false;
-                this.bots[0].OutOfChips = false;
-                this.bots[1].OutOfChips = false;
-                this.bots[2].OutOfChips = false;
-                this.bots[3].OutOfChips = false;
-                this.bots[4].OutOfChips = false;
+
+                foreach (var bot in this.bots)
+                {
+                    bot.OutOfChips = false;
+                }
+                //this.bots[0].OutOfChips = false;
+                //this.bots[1].OutOfChips = false;
+                //this.bots[2].OutOfChips = false;
+                //this.bots[3].OutOfChips = false;
+                //this.bots[4].OutOfChips = false;
                 if (this.human.Chips <= 0)
                 {
                     AddChips chipAdder = new AddChips();
@@ -897,11 +915,16 @@ namespace Poker.UserInterface
                     if (chipAdder.ChipsAmount != 0)
                     {
                         this.human.Chips = chipAdder.ChipsAmount;
-                        this.bots[0].Chips += chipAdder.ChipsAmount;
-                        this.bots[1].Chips += chipAdder.ChipsAmount;
-                        this.bots[2].Chips += chipAdder.ChipsAmount;
-                        this.bots[3].Chips += chipAdder.ChipsAmount;
-                        this.bots[4].Chips += chipAdder.ChipsAmount;
+
+                        foreach (var bot in this.bots)
+                        {
+                            bot.Chips += chipAdder.ChipsAmount;
+                        }
+                        //this.bots[0].Chips += chipAdder.ChipsAmount;
+                        //this.bots[1].Chips += chipAdder.ChipsAmount;
+                        //this.bots[2].Chips += chipAdder.ChipsAmount;
+                        //this.bots[3].Chips += chipAdder.ChipsAmount;
+                        //this.bots[4].Chips += chipAdder.ChipsAmount;
                         this.human.OutOfChips = false;
                         this.human.CanMakeTurn = true;
                         this.buttonRaise.Enabled = true;
@@ -912,24 +935,34 @@ namespace Poker.UserInterface
                 }
 
                 this.human.Panel.Visible = false;
-                this.bots[0].Panel.Visible = false;
-                this.bots[1].Panel.Visible = false;
-                this.bots[2].Panel.Visible = false;
-                this.bots[3].Panel.Visible = false;
-                this.bots[4].Panel.Visible = false;
-                this.human.Call = 0;
 
+                foreach (var bot in this.bots)
+                {
+                    bot.Panel.Visible = false;
+                }
+                //this.bots[0].Panel.Visible = false;
+                //this.bots[1].Panel.Visible = false;
+                //this.bots[2].Panel.Visible = false;
+                //this.bots[3].Panel.Visible = false;
+                //this.bots[4].Panel.Visible = false;
+                this.human.Call = 0;
                 this.human.Raise = 0;
-                this.bots[0].Call = 0;
-                this.bots[0].Raise = 0;
-                this.bots[1].Call = 0;
-                this.bots[1].Raise = 0;
-                this.bots[2].Call = 0;
-                this.bots[2].Raise = 0;
-                this.bots[3].Call = 0;
-                this.bots[3].Raise = 0;
-                this.bots[4].Call = 0;
-                this.bots[4].Raise = 0;
+
+                foreach (var bot in this.bots)
+                {
+                    bot.Call = 0;
+                    bot.Raise = 0;
+                }
+                //this.bots[0].Call = 0;
+                //this.bots[0].Raise = 0;
+                //this.bots[1].Call = 0;
+                //this.bots[1].Raise = 0;
+                //this.bots[2].Call = 0;
+                //this.bots[2].Raise = 0;
+                //this.bots[3].Call = 0;
+                //this.bots[3].Raise = 0;
+                //this.bots[4].Call = 0;
+                //this.bots[4].Raise = 0;
                 this.last = 0;
                 this.neededChipsToCall = this.bigBlindValue;
                 this.raise = 0;
@@ -939,17 +972,23 @@ namespace Poker.UserInterface
                 this.type = 0;
 
                 this.human.Power = 0;
-                this.bots[0].Power = 0;
-                this.bots[1].Power = 0;
-                this.bots[2].Power = 0;
-                this.bots[3].Power = 0;
-                this.bots[4].Power = 0;
 
-                this.bots[0].Type = -1;
-                this.bots[1].Type = -1;
-                this.bots[2].Type = -1;
-                this.bots[3].Type = -1;
-                this.bots[4].Type = -1;
+                foreach (var bot in this.bots)
+                {
+                    bot.Power = 0;
+                    bot.Type = -1;
+                }
+                //this.bots[0].Power = 0;
+                //this.bots[1].Power = 0;
+                //this.bots[2].Power = 0;
+                //this.bots[3].Power = 0;
+                //this.bots[4].Power = 0;
+
+                //this.bots[0].Type = -1;
+                //this.bots[1].Type = -1;
+                //this.bots[2].Type = -1;
+                //this.bots[3].Type = -1;
+                //this.bots[4].Type = -1;
                 this.human.Type = -1;
 
                 this.pokerDatabase.Chips.Clear();
