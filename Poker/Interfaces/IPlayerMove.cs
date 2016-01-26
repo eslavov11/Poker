@@ -4,11 +4,11 @@
 
     public interface IPlayerMove
     {
-        void Fold(IPlayer pokerPlayer, Label sStatus, ref bool rising);
+        void Fold(IPlayer pokerPlayer, Label playerStatus, ref bool rising);
 
-        void Check(IPlayer pokerPlayer, Label cStatus, ref bool raising);
+        void Check(IPlayer pokerPlayer, Label playerStatus, ref bool raising);
 
-        void Call(IPlayer pokerPlayer, Label sStatus, ref bool raising, ref int neededChipsToCall, TextBox potStatus);
+        void Call(IPlayer pokerPlayer, Label playerStatus, ref bool raising, ref int neededChipsToCall, TextBox potStatus);
 
         void Raised(IPlayer pokerPlayer, Label sStatus, ref bool raising, ref int raise, ref int neededChipsToCall, TextBox potStatus);
 

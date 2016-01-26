@@ -6,17 +6,17 @@
 
     public class PlayerMove : IPlayerMove
     {
-        public void Fold(IPlayer player, Label sStatus, ref bool rising)
+        public void Fold(IPlayer player, Label playerStatus, ref bool rising)
         {
             rising = false;
-            sStatus.Text = "Fold";
+            playerStatus.Text = "Fold";
             player.CanMakeTurn = false;
             player.OutOfChips = true;
         }
 
-        public void Check(IPlayer player, Label cStatus, ref bool raising)
+        public void Check(IPlayer player, Label playerStatus, ref bool raising)
         {
-            cStatus.Text = "Check";
+            playerStatus.Text = "Check";
             player.CanMakeTurn = false;
             raising = false;
         }
@@ -53,14 +53,13 @@
             int rnd = rand.Next(1, 4);
             if (neededChipsToCall <= 0)
             {
-                Check(player, sStatus, ref raising);
+                this.Check(player, sStatus, ref raising);
             }
 
             if (neededChipsToCall > 0)
             {
-                if (rnd == 1)
-                {
-                    if (neededChipsToCall <= RoundN(player.Chips, n))
+                if (rnd == 1 || rnd == 2)
+                    if (neededChipsToCall <= RoundN(player.Chips, n1))
                     {
                         this.Call(player, sStatus, ref raising, ref neededChipsToCall, potStatus);
                     }
@@ -68,19 +67,6 @@
                     {
                         this.Fold(player, sStatus, ref raising);
                     }
-                }
-
-                if (rnd == 2)
-                {
-                    if (neededChipsToCall <= RoundN(player.Chips, n1))
-                    {
-                        Call(player, sStatus, ref raising, ref neededChipsToCall, potStatus);
-                    }
-                    else
-                    {
-                        this.Fold(player, sStatus, ref raising);
-                    }
-                }
             }
 
             if (rnd == 3)
