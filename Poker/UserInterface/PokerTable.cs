@@ -302,7 +302,7 @@ namespace Poker.UserInterface
 
             //TODO: GameOver state
             #region GameOverState?
-            if (this.foldedBotsCount == 5)
+            if (this.foldedBotsCount == Constants.DefaultBotsCount)
             {
                 DialogResult dialogResult =
                     MessageBox.Show(
@@ -321,10 +321,10 @@ namespace Poker.UserInterface
             }
             else
             {
-                this.foldedBotsCount = 5;
+                this.foldedBotsCount = Constants.DefaultBotsCount;
             }
 
-            if (this.cardNumber == 17)
+            if (this.cardNumber == Constants.NeededCardsFromDeck)
             {
                 this.buttonRaise.Enabled = true;
                 this.buttonCall.Enabled = true;
