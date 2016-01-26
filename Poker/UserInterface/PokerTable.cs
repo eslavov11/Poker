@@ -684,46 +684,53 @@ namespace Poker.UserInterface
                 }
                 if (this.winners == 1)
                 {
-                    if (this.pokerDatabase.CheckWinners.Contains("Player"))
-                    {
-                        this.human.Chips += int.Parse(this.potStatus.Text);
-                        //await Finish(1);
-                        //playerPanel.Visible = true;
-                    }
+                    //if (this.pokerDatabase.CheckWinners.Contains("Player"))
+                    //{
+                    //    this.human.Chips += int.Parse(this.potStatus.Text);
+                    //    //await Finish(1);
+                    //    //playerPanel.Visible = true;
+                    //}
 
-                    if (this.pokerDatabase.CheckWinners.Contains("Bot 1"))
-                    {
-                        this.bots[0].Chips += int.Parse(this.potStatus.Text);
-                        //await Finish(1);
-                        //bot1Panel.Visible = true;
-                    }
+                    //if (this.pokerDatabase.CheckWinners.Contains("Bot 1"))
+                    //{
+                    //    this.bots[0].Chips += int.Parse(this.potStatus.Text);
+                    //    //await Finish(1);
+                    //    //bot1Panel.Visible = true;
+                    //}
 
-                    if (this.pokerDatabase.CheckWinners.Contains("Bot 2"))
-                    {
-                        this.bots[1].Chips += int.Parse(this.potStatus.Text);
-                        //await Finish(1);
-                        //bot2Panel.Visible = true;
-                    }
+                    //if (this.pokerDatabase.CheckWinners.Contains("Bot 2"))
+                    //{
+                    //    this.bots[1].Chips += int.Parse(this.potStatus.Text);
+                    //    //await Finish(1);
+                    //    //bot2Panel.Visible = true;
+                    //}
 
-                    if (this.pokerDatabase.CheckWinners.Contains("Bot 3"))
-                    {
-                        this.bots[2].Chips += int.Parse(this.potStatus.Text);
-                        //await Finish(1);
-                        //bot3Panel.Visible = true;
-                    }
+                    //if (this.pokerDatabase.CheckWinners.Contains("Bot 3"))
+                    //{
+                    //    this.bots[2].Chips += int.Parse(this.potStatus.Text);
+                    //    //await Finish(1);
+                    //    //bot3Panel.Visible = true;
+                    //}
 
-                    if (this.pokerDatabase.CheckWinners.Contains("Bot 4"))
-                    {
-                        this.bots[3].Chips += int.Parse(this.potStatus.Text);
-                        //await Finish(1);
-                        //bot4Panel.Visible = true;
-                    }
+                    //if (this.pokerDatabase.CheckWinners.Contains("Bot 4"))
+                    //{
+                    //    this.bots[3].Chips += int.Parse(this.potStatus.Text);
+                    //    //await Finish(1);
+                    //    //bot4Panel.Visible = true;
+                    //}
 
-                    if (this.pokerDatabase.CheckWinners.Contains("Bot 5"))
+                    //if (this.pokerDatabase.CheckWinners.Contains("Bot 5"))
+                    //{
+                    //    this.bots[4].Chips += int.Parse(this.potStatus.Text);
+                    //    //await Finish(1);
+                    //    //bot5Panel.Visible = true;
+                    //}
+                    foreach (var bot in this.bots)
                     {
-                        this.bots[4].Chips += int.Parse(this.potStatus.Text);
-                        //await Finish(1);
-                        //bot5Panel.Visible = true;
+                        if (this.pokerDatabase.CheckWinners.Contains(bot.Name))
+                        {
+                            bot.Chips += int.Parse(this.potStatus.Text);
+                        }
                     }
                 }
             }
