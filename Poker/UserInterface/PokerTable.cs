@@ -776,7 +776,15 @@ namespace Poker.UserInterface
                         {
                             this.humanStatus.Text = string.Empty;
                         }
-                        // TODO: avoid code repetition!
+                        // TODO: avoid code repetition! --> 
+                        for (int i = 0; i < this.bots.Count; i++) //avoiding repetitions
+                        {
+                            if (!this.bots[i].OutOfChips)
+                            {
+                                this.bots[i].Status.Text = string.Empty;
+                            }
+                        }
+                        /*
                         if (!this.bots[0].OutOfChips)
                         {
                             this.bots[0].Status.Text = string.Empty;
@@ -800,7 +808,7 @@ namespace Poker.UserInterface
                         if (!this.bots[4].OutOfChips)
                         {
                             this.bots[4].Status.Text = string.Empty;
-                        }
+                        }*/
 
                     }
                 }
@@ -1060,8 +1068,20 @@ namespace Poker.UserInterface
             }
 
             this.chipsAreAdded = false;
+            for (int botCount = 0; botCount < this.bots.Count; botCount++) //removed some repetitions
+            {
+                if (this.bots[botCount].Chips <= 0 && !this.bots[botCount].OutOfChips)
+                {
+                    if (!this.chipsAreAdded)
+                    {
+                        this.pokerDatabase.Chips.Add(this.bots[botCount].Chips);
+                        this.chipsAreAdded = true;
+                    }
 
-            if (this.bots[0].Chips <= 0 && !this.bots[0].OutOfChips)
+                    this.chipsAreAdded = false;
+                }
+            }
+            /*if (this.bots[0].Chips <= 0 && !this.bots[0].OutOfChips)
             {
                 if (!this.chipsAreAdded)
                 {
@@ -1112,7 +1132,7 @@ namespace Poker.UserInterface
                     this.pokerDatabase.Chips.Add(this.bots[4].Chips);
                     this.chipsAreAdded = true;
                 }
-            }
+            }*/
 
             if (this.pokerDatabase.Chips.ToArray().Length == this.maxLeft)
             {
@@ -1130,7 +1150,28 @@ namespace Poker.UserInterface
             if (leftPlayers == 1)
             {
                 int index = this.pokerDatabase.PlayersGameStatus.IndexOf(false);
-                if (index == 0)
+                switch (index) //removing repetitions
+                {
+                    case 0:
+                        this.human.Chips += int.Parse(this.potStatus.Text);
+                        this.txtBoxHumanChips.Text = this.human.Chips.ToString();
+                        this.human.Panel.Visible = true;
+                        MessageBox.Show("Player Wins");
+                        break;
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 5:
+                        this.bots[index - 1].Chips += int.Parse(this.potStatus.Text);
+                        this.txtBoxHumanChips.Text = this.bots[index - 1].Chips.ToString();
+                        this.bots[index - 1].Panel.Visible = true;
+                        MessageBox.Show("Bot " + index + " Wins");
+                        break;
+                    default:
+                        break;
+                }
+                /*if (index == 0)
                 {
                     this.human.Chips += int.Parse(this.potStatus.Text);
                     this.txtBoxHumanChips.Text = this.human.Chips.ToString();
@@ -1176,7 +1217,7 @@ namespace Poker.UserInterface
                     this.txtBoxHumanChips.Text = this.bots[4].Chips.ToString();
                     this.bots[4].Panel.Visible = true;
                     MessageBox.Show("Bot 5 Wins");
-                }
+                }*/
 
                 for (int j = 0; j <= 16; j++)
                 {
