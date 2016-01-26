@@ -13,22 +13,16 @@ namespace Poker.UserInterface
     using Poker.Models;
     using Poker.Models.Players;
     using Poker.Utility;
-    using Type = Poker.Type;
+    using Type = Poker.Models.Type;
 
     public partial class PokerTable : Form
     {
         #region Variables
-
         private readonly IAssertHandType assertHandType;
         private readonly IHandType handType;
         private readonly IPlayer human;
         // TODO: put all bots in one list!
         private readonly IList<IBot> bots;
-        //private readonly IBot firstBot;
-        //private readonly IBot secondBot;
-        //private readonly IBot thirdBot;
-        //private readonly IBot fourthBot;
-        //private readonly IBot fifthBot;
         private readonly IDatabase pokerDatabase;
         private readonly Image[] deckImages;
         private readonly PictureBox[] cardsPictureBoxList;
@@ -36,9 +30,6 @@ namespace Poker.UserInterface
         private readonly Timer updates = new Timer();
         private string[] cardsImageLocation;
         private int[] reservedGameCardsIndeces;
-
-        //private ProgressBar asd = new ProgressBar();
-        //private int nm;
         private int neededChipsToCall;
         private int foldedBotsCount;
         private double type;
@@ -964,9 +955,9 @@ namespace Poker.UserInterface
             }
         }
 
-        private void ResetPlayersStats(int j)
+        private void ResetPlayersStats(int cardIndex)
         {
-            this.cardsPictureBoxList[j].Image = this.deckImages[j];
+            this.cardsPictureBoxList[cardIndex].Image = this.deckImages[cardIndex];
             this.human.Call = 0;
             this.human.Raise = 0;
             this.bots[0].Call = 0;
@@ -1221,6 +1212,7 @@ namespace Poker.UserInterface
             {
                 this.FixWinners();
             }
+
             this.neededChipsToCall = this.bigBlindValue;
             this.raise = 0;
             this.foldedBotsCount = 5;
@@ -1273,99 +1265,6 @@ namespace Poker.UserInterface
                 this.bots[botCount].Raise = 0;
                 this.bots[botCount].Status.Text = string.Empty;
             }
-            
-
-
-            /*
-            this.human.Panel.Visible = false;
-            this.bots[0].Panel.Visible = false;
-            this.bots[1].Panel.Visible = false;
-            this.bots[2].Panel.Visible = false;
-            this.bots[3].Panel.Visible = false;
-            this.bots[4].Panel.Visible = false;
-
-            this.neededChipsToCall = this.bigBlindValue;
-            this.raise = 0;
-            this.foldedBotsCount = 5;
-            this.type = 0;
-            this.rounds = 0;
-
-            this.bots[0].Power = 0;
-            this.bots[1].Power = 0;
-            this.bots[2].Power = 0;
-            this.bots[3].Power = 0;
-            this.bots[4].Power = 0;
-            this.human.Power = 0;
-
-            this.raise = 0;
-
-            this.human.Type = -1;
-            this.bots[0].Type = -1;
-            this.bots[1].Type = -1;
-            this.bots[2].Type = -1;
-            this.bots[3].Type = -1;
-            this.bots[4].Type = -1;
-
-            this.bots[0].CanMakeTurn = false;
-            this.bots[1].CanMakeTurn = false;
-            this.bots[2].CanMakeTurn = false;
-            this.bots[3].CanMakeTurn = false;
-            this.bots[4].CanMakeTurn = false;
-            this.bots[0].OutOfChips = false;
-            this.bots[1].OutOfChips = false;
-            this.bots[2].OutOfChips = false;
-            this.bots[3].OutOfChips = false;
-            this.bots[4].OutOfChips = false;
-            this.human.Folded = false;
-            this.bots[0].Folded = false;
-            this.bots[1].Folded = false;
-            this.bots[2].Folded = false;
-            this.bots[3].Folded = false;
-            this.bots[4].Folded = false;
-            this.human.OutOfChips = false;
-            this.human.CanMakeTurn = true;
-            this.restart = false;
-            this.raising = false;
-            this.human.Call = 0;
-            this.bots[0].Call = 0;
-            this.bots[1].Call = 0;
-            this.bots[2].Call = 0;
-            this.bots[3].Call = 0;
-            this.bots[4].Call = 0;
-            this.human.Raise = 0;
-            this.bots[0].Raise = 0;
-            this.bots[1].Raise = 0;
-            this.bots[2].Raise = 0;
-            this.bots[3].Raise = 0;
-            this.bots[4].Raise = 0;
-            this.height = 0;
-            this.width = 0;
-            this.winners = 0;
-            this.flop = 1;
-            this.turn = 2;
-            this.river = 3;
-            this.end = 4;
-            this.maxLeft = 6;
-            this.last = 123;
-            this.raisedTurn = 1;
-            this.pokerDatabase.PlayersGameStatus.Clear();
-            this.pokerDatabase.CheckWinners.Clear();
-            this.pokerDatabase.Chips.Clear();
-            this.pokerDatabase.Win.Clear();
-            this.sorted.Current = 0;
-            this.sorted.Power = 0;
-            this.potStatus.Text = "0";
-            this.secondsToMakeTurn = 60;
-            this.up = 10000000;
-            this.turnCount = 0;
-            this.humanStatus.Text = string.Empty;
-            this.bots[0].Status.Text = string.Empty;
-            this.bots[1].Status.Text = string.Empty;
-            this.bots[2].Status.Text = string.Empty;
-            this.bots[3].Status.Text = string.Empty;
-            this.bots[4].Status.Text = string.Empty;
-            */
-
 
             if (this.human.Chips <= 0)
             {
@@ -1452,58 +1351,58 @@ namespace Poker.UserInterface
         }
 
         //TODO: Prevous name AI
-        private void AI(int c1, int c2, Label sStatus, int name, IPlayer player)
+        private void AI(int c1, int c2, Label playerStatus, int name, IPlayer player)
         {
             if (!player.OutOfChips)
             {
                 if (player.Type == -1)
                 {
-                    this.handType.HighCard(player, sStatus, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising);
+                    this.handType.HighCard(player, playerStatus, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising);
                 }
 
                 if (player.Type == 0)
                 {
-                    this.handType.PairTable(player, sStatus, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising);
+                    this.handType.PairTable(player, playerStatus, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising);
                 }
 
                 if (player.Type == 1)
                 {
-                    this.handType.PairHand(player, sStatus, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
+                    this.handType.PairHand(player, playerStatus, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
                 }
 
                 if (player.Type == 2)
                 {
-                    this.handType.TwoPair(player, sStatus, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
+                    this.handType.TwoPair(player, playerStatus, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
                 }
 
                 if (player.Type == 3)
                 {
-                    this.handType.ThreeOfAKind(player, sStatus, name, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
+                    this.handType.ThreeOfAKind(player, playerStatus, name, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
                 }
 
                 if (player.Type == 4)
                 {
-                    this.handType.Straight(player, sStatus, name, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
+                    this.handType.Straight(player, playerStatus, name, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
                 }
 
                 if (player.Type == 5 || player.Type == 5.5)
                 {
-                    this.handType.Flush(player, sStatus, name, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
+                    this.handType.Flush(player, playerStatus, name, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
                 }
 
                 if (player.Type == 6)
                 {
-                    this.handType.FullHouse(player, sStatus, name, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
+                    this.handType.FullHouse(player, playerStatus, name, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
                 }
 
                 if (player.Type == 7)
                 {
-                    this.handType.FourOfAKind(player, sStatus, name, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
+                    this.handType.FourOfAKind(player, playerStatus, name, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
                 }
 
                 if (player.Type == 8 || player.Type == 9)
                 {
-                    this.handType.StraightFlush(player, sStatus, name, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
+                    this.handType.StraightFlush(player, playerStatus, name, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
                 }
             }
 
@@ -1740,8 +1639,7 @@ namespace Poker.UserInterface
             this.human.CanMakeTurn = false;
             await this.Turns();
         }
-
-        //TODO: validate pokerDatabaseChips are integer
+        
         private void ButtonAddChips_Click(object sender, EventArgs e)
         {
             if (tbAdd.Text == "")

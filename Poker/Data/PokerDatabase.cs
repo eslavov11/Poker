@@ -2,12 +2,16 @@
 {
     using System.Collections.Generic;
     using Interfaces;
+    using Models;
 
     public class PokerDatabase : IDatabase
     {
         private List<bool?> playersGameStatus;
+
         private List<Type> win;
+
         private List<string> checkWinners;
+
         private List<int> chips;
 
         public PokerDatabase()
