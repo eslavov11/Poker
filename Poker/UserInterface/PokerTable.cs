@@ -472,6 +472,7 @@ namespace Poker.UserInterface
         {
             for (int botNumber = 0; botNumber < this.bots.Count; botNumber++)
             {
+                //TODO: FIX BUG, Dealer doesnot deal cards to bot 2 and 4
                 if (!this.bots[botNumber].OutOfChips)
                 {
                     if (this.bots[botNumber].CanMakeTurn)
@@ -486,7 +487,7 @@ namespace Poker.UserInterface
                         this.bots[botNumber].CanMakeTurn = false;
                         if (botNumber < this.bots.Count - 1)
                         {
-                            this.bots[botNumber].CanMakeTurn = true;
+                            this.bots[botNumber + 1].CanMakeTurn = true;
                         }
                     }
                 }
