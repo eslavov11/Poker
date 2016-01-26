@@ -1243,7 +1243,62 @@ namespace Poker.UserInterface
             {
                 this.FixWinners();
             }
+            this.neededChipsToCall = this.bigBlindValue;
+            this.raise = 0;
+            this.foldedBotsCount = 5;
+            this.type = 0;
+            this.rounds = 0;
+            this.raise = 0;
+            this.restart = false;
+            this.raising = false;
+            this.height = 0;
+            this.width = 0;
+            this.winners = 0;
+            this.flop = 1;
+            this.turn = 2;
+            this.river = 3;
+            this.end = 4;
+            this.maxLeft = 6;
+            this.last = 123;
+            this.raisedTurn = 1;
+            this.pokerDatabase.PlayersGameStatus.Clear();
+            this.pokerDatabase.CheckWinners.Clear();
+            this.pokerDatabase.Chips.Clear();
+            this.pokerDatabase.Win.Clear();
+            this.sorted.Current = 0;
+            this.sorted.Power = 0;
+            this.potStatus.Text = "0";
+            this.secondsToMakeTurn = 60;
+            this.up = 10000000;
+            this.turnCount = 0;
 
+            this.human.Panel.Visible = false;
+            this.human.Power = 0;
+            this.human.Type = -1;
+            this.human.Folded = false;
+            this.human.OutOfChips = false;
+            this.human.CanMakeTurn = true;
+            this.human.Call = 0;
+            this.human.Raise = 0;
+            this.humanStatus.Text = string.Empty;
+
+            // some repetitions removed
+            for (int botCount = 0; botCount < this.bots.Count; botCount++)
+            {
+                this.bots[botCount].Panel.Visible = false;
+                this.bots[botCount].Power = 0;
+                this.bots[botCount].Type = -1;
+                this.bots[botCount].CanMakeTurn = false;
+                this.bots[botCount].OutOfChips = false;
+                this.bots[botCount].Folded = false;
+                this.bots[botCount].Call = 0;
+                this.bots[botCount].Raise = 0;
+                this.bots[botCount].Status.Text = string.Empty;
+            }
+            
+
+
+            /*
             this.human.Panel.Visible = false;
             this.bots[0].Panel.Visible = false;
             this.bots[1].Panel.Visible = false;
@@ -1331,6 +1386,8 @@ namespace Poker.UserInterface
             this.bots[2].Status.Text = string.Empty;
             this.bots[3].Status.Text = string.Empty;
             this.bots[4].Status.Text = string.Empty;
+            */
+
 
             if (this.human.Chips <= 0)
             {
