@@ -18,7 +18,6 @@ namespace Poker.UserInterface
     public partial class PokerTable : Form
     {
         #region Variables
-        public const int NumberOfDeskCards = 17;
 
         private readonly IAssertHandType assertHandType;
         private readonly IHandType handType;
@@ -41,7 +40,7 @@ namespace Poker.UserInterface
         //private ProgressBar asd = new ProgressBar();
         //private int nm;
         private int neededChipsToCall;
-        private int foldedBotsCount = 5;
+        private int foldedBotsCount;
         private double type;
         private int rounds;
         private int raise;
@@ -49,7 +48,7 @@ namespace Poker.UserInterface
         private bool changed;
         private int height;
         private int width;
-        private int winners = 0;
+        private int winners;
 
         private int flop = 1;
         private int turn = 2;
@@ -63,10 +62,10 @@ namespace Poker.UserInterface
         private bool raising;
         private Type sorted;
 
-        private int secondsLeft = 60;
+        private int secondsToMakeTurn;
         private int cardNumber;
-        private int bigBlindValue = 500;
-        private int smallBlindValue = 250;
+        private int bigBlindValue;
+        private int smallBlindValue;
         private int up = 10000000;
         private int turnCount;
         #endregion
@@ -77,7 +76,7 @@ namespace Poker.UserInterface
             this.assertHandType = new AssertHandType();
             this.pokerDatabase = new PokerDatabase();
             this.human = new Human("Player");
-
+            this.bots = new List<IBot>(5);
             this.cardsImageLocation = Directory.GetFiles(
                 "..\\..\\Resources\\Assets\\Cards",
                 "*.png",
@@ -89,6 +88,8 @@ namespace Poker.UserInterface
             this.bigBlindValue = Constants.MinBigBlindValue;
             this.smallBlindValue = Constants.MinSmallBlindValue;
             this.neededChipsToCall = this.bigBlindValue;
+            this.secondsToMakeTurn = Constants.DefaultSecondsToMakeTurn;
+            this.foldedBotsCount = Constants.DefaultBotsCount;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.updates.Start();
@@ -198,7 +199,7 @@ namespace Poker.UserInterface
                 this.cardsImageLocation[cardLocationIndex - 1] = oldCardLocation;
             }
 
-            for (this.cardNumber = 0; this.cardNumber < NumberOfDeskCards; this.cardNumber++)
+            for (this.cardNumber = 0; this.cardNumber < Constants.NeededCardsFromDeck; this.cardNumber++)
             {
                 //PERFORMANCE: Unnecessary loop for removing parts of the image location
                 this.deckImages[cardNumber] = Image.FromFile(this.cardsImageLocation[cardNumber]);
@@ -418,7 +419,7 @@ namespace Poker.UserInterface
                     //MessageBox.Show("Player's turn");
                     this.pbTimer.Visible = true;
                     this.pbTimer.Value = 1000;
-                    this.secondsLeft = 60;
+                    this.secondsToMakeTurn = 60;
                     this.up = 10000000;
                     this.timer.Start();
                     this.buttonRaise.Enabled = true;
@@ -1279,7 +1280,7 @@ namespace Poker.UserInterface
             this.sorted.Current = 0;
             this.sorted.Power = 0;
             this.potStatus.Text = "0";
-            this.secondsLeft = 60;
+            this.secondsToMakeTurn = 60;
             this.up = 10000000;
             this.turnCount = 0;
             this.humanStatus.Text = string.Empty;
@@ -1445,10 +1446,10 @@ namespace Poker.UserInterface
                 await this.Turns();
             }
 
-            if (this.secondsLeft > 0)
+            if (this.secondsToMakeTurn > 0)
             {
-                this.secondsLeft--;
-                pbTimer.Value = (this.secondsLeft / 6) * 100;
+                this.secondsToMakeTurn--;
+                pbTimer.Value = (this.secondsToMakeTurn / 6) * 100;
             }
         }
 

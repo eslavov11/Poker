@@ -9,5 +9,7 @@
         public const int MinSmallBlindValue = 250;
         public const int MaxBigBlindValue = 200000;
         public const int MinBigBlindValue = 500;
+        public const int DefaultSecondsToMakeTurn = 60;
+        public const int DefaultBotsCount = 5;
     }
 }
