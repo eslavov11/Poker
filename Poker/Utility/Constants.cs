@@ -3,6 +3,7 @@
     public static class Constants
     {
         public const int CardsInADeck = 52;
+        public const int NeededCardsFromDeskForPlayersOnly = 12; // Calculate 6 platers * 2 cards
         public const int NeededCardsFromDeck = 17; // Calculate 6 players * 2 card + 5 cards on the table
         public const int MaxChipsToAdd = 100000000;
         public const int MaxSmallBlindValue = 100000;

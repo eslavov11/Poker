@@ -239,27 +239,27 @@ namespace Poker.UserInterface
                     this.DealCardsForBots(bot, this.cardNumber, backImage, ref check, ref horizontal, ref vertical);
                 }
 
-                if (this.cardNumber >= 12)
+                if (this.cardNumber >= Constants.NeededCardsFromDeskForPlayersOnly)
                 {
                     this.cardsPictureBoxList[12].Tag = this.reservedGameCardsIndeces[12];
-                    if (this.cardNumber > 12)
+                    if (this.cardNumber > Constants.NeededCardsFromDeskForPlayersOnly)
                     {
-                        this.cardsPictureBoxList[13].Tag = this.reservedGameCardsIndeces[13];
+                        this.cardsPictureBoxList[Constants.NeededCardsFromDeskForPlayersOnly + 1].Tag = this.reservedGameCardsIndeces[Constants.NeededCardsFromDeskForPlayersOnly + 1];
                     }
 
-                    if (this.cardNumber > 13)
+                    if (this.cardNumber > Constants.NeededCardsFromDeskForPlayersOnly + 1)
                     {
-                        this.cardsPictureBoxList[14].Tag = this.reservedGameCardsIndeces[14];
+                        this.cardsPictureBoxList[Constants.NeededCardsFromDeskForPlayersOnly + 2].Tag = this.reservedGameCardsIndeces[Constants.NeededCardsFromDeskForPlayersOnly + 2];
                     }
 
-                    if (this.cardNumber > 14)
+                    if (this.cardNumber > Constants.NeededCardsFromDeskForPlayersOnly + 2)
                     {
-                        this.cardsPictureBoxList[15].Tag = this.reservedGameCardsIndeces[15];
+                        this.cardsPictureBoxList[Constants.NeededCardsFromDeskForPlayersOnly + 3].Tag = this.reservedGameCardsIndeces[Constants.NeededCardsFromDeskForPlayersOnly + 3];
                     }
 
-                    if (this.cardNumber > 15)
+                    if (this.cardNumber > Constants.NeededCardsFromDeskForPlayersOnly + 3)
                     {
-                        this.cardsPictureBoxList[16].Tag = this.reservedGameCardsIndeces[16];
+                        this.cardsPictureBoxList[Constants.NeededCardsFromDeskForPlayersOnly + 4].Tag = this.reservedGameCardsIndeces[Constants.NeededCardsFromDeskForPlayersOnly + 4];
 
                     }
 
