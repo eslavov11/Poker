@@ -470,7 +470,7 @@ namespace Poker.UserInterface
                     {
                         this.FixCall(this.bots[botNumber].Status, this.bots[botNumber].Call, this.bots[botNumber].Raise, 1);
                         this.FixCall(this.bots[botNumber].Status, this.bots[botNumber].Call, this.bots[botNumber].Raise, 2);
-                        this.Rules(this.bots[botNumber].StartCard, this.bots[botNumber].StartCard + 1, "Bot " + (botNumber + 1), this.bots[botNumber]);
+                        this.Rules(this.bots[botNumber].StartCard, this.bots[botNumber].StartCard + 1, this.bots[botNumber]);
                         MessageBox.Show("Bot "+ (botNumber + 1) +"'s turn");
                         this.AI(this.bots[botNumber].StartCard, this.bots[botNumber].StartCard + 1, this.bots[botNumber].Status, botNumber, this.bots[botNumber]);
                         this.turnCount++;
@@ -506,7 +506,7 @@ namespace Poker.UserInterface
             }
         }
 
-        private void Rules(int card1, int card2, string currentText, IPlayer player)
+        private void Rules(int card1, int card2, IPlayer player)
         {
             if (card1 == 0 && card2 == 1)
             {
@@ -520,23 +520,23 @@ namespace Poker.UserInterface
                 bool done = false;
                 bool vf = false;
                 int[] cardsOnBoard = new int[5];
-                int[] Straight = new int[7];
-                Straight[0] = this.reservedGameCardsIndeces[card1];
-                Straight[1] = this.reservedGameCardsIndeces[card2];
-                cardsOnBoard[0] = Straight[2] = this.reservedGameCardsIndeces[12];
-                cardsOnBoard[1] = Straight[3] = this.reservedGameCardsIndeces[13];
-                cardsOnBoard[2] = Straight[4] = this.reservedGameCardsIndeces[14];
-                cardsOnBoard[3] = Straight[5] = this.reservedGameCardsIndeces[15];
-                cardsOnBoard[4] = Straight[6] = this.reservedGameCardsIndeces[16];
-                int[] getClubes = Straight.Where(o => o % 4 == 0).ToArray();
-                int[] getDimonds = Straight.Where(o => o % 4 == 1).ToArray();
-                int[] getHearts = Straight.Where(o => o % 4 == 2).ToArray();
-                int[] getSpades = Straight.Where(o => o % 4 == 3).ToArray();
+                int[] straight = new int[7];
+                straight[0] = this.reservedGameCardsIndeces[card1];
+                straight[1] = this.reservedGameCardsIndeces[card2];
+                cardsOnBoard[0] = straight[2] = this.reservedGameCardsIndeces[12];
+                cardsOnBoard[1] = straight[3] = this.reservedGameCardsIndeces[13];
+                cardsOnBoard[2] = straight[4] = this.reservedGameCardsIndeces[14];
+                cardsOnBoard[3] = straight[5] = this.reservedGameCardsIndeces[15];
+                cardsOnBoard[4] = straight[6] = this.reservedGameCardsIndeces[16];
+                int[] getClubes = straight.Where(o => o % 4 == 0).ToArray();
+                int[] getDimonds = straight.Where(o => o % 4 == 1).ToArray();
+                int[] getHearts = straight.Where(o => o % 4 == 2).ToArray();
+                int[] getSpades = straight.Where(o => o % 4 == 3).ToArray();
                 int[] clubes = getClubes.Select(o => o / 4).Distinct().ToArray();
                 int[] diamonds = getDimonds.Select(o => o / 4).Distinct().ToArray();
                 int[] hearts = getHearts.Select(o => o / 4).Distinct().ToArray();
                 int[] spades = getSpades.Select(o => o / 4).Distinct().ToArray();
-                Array.Sort(Straight);
+                Array.Sort(straight);
                 Array.Sort(clubes);
                 Array.Sort(diamonds);
                 Array.Sort(hearts);
@@ -550,11 +550,11 @@ namespace Poker.UserInterface
                         this.assertHandType.PairFromHand(player, index, this.pokerDatabase.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
                         this.assertHandType.PairTwoPair(player, index, this.pokerDatabase.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
                         this.assertHandType.TwoPair(player, index, this.pokerDatabase.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
-                        this.assertHandType.ThreeOfAKind(player, Straight, index, this.pokerDatabase.Win, ref this.sorted);
-                        this.assertHandType.Straight(player, Straight, index, this.pokerDatabase.Win, ref this.sorted);
+                        this.assertHandType.ThreeOfAKind(player, straight, index, this.pokerDatabase.Win, ref this.sorted);
+                        this.assertHandType.Straight(player, straight, index, this.pokerDatabase.Win, ref this.sorted);
                         this.assertHandType.Flush(player, ref vf, cardsOnBoard, ref index, this.pokerDatabase.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
-                        this.assertHandType.FullHouse(player, ref done, Straight, this.pokerDatabase.Win, ref this.sorted, ref this.type);
-                        this.assertHandType.FourOfAKind(player, Straight, this.pokerDatabase.Win, ref this.sorted);
+                        this.assertHandType.FullHouse(player, ref done, straight, this.pokerDatabase.Win, ref this.sorted, ref this.type);
+                        this.assertHandType.FourOfAKind(player, straight, this.pokerDatabase.Win, ref this.sorted);
                         this.assertHandType.StraightFlush(player, clubes, diamonds, hearts, spades, this.pokerDatabase.Win, ref this.sorted);
                         this.assertHandType.HighCard(player, index, this.pokerDatabase.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
                     }
@@ -822,41 +822,39 @@ namespace Poker.UserInterface
                 if (!this.humanStatus.Text.Contains("Fold"))
                 {
                     fixedLast = "Player";
-                    this.Rules(0, 1, "Player", this.human);
+                    this.Rules(0, 1, this.human);
                 }
 
                 if (!this.bots[0].Status.Text.Contains("Fold"))
                 {
                     fixedLast = "Bot 1";
-                    this.Rules(2, 3, "Bot 1", this.bots[0]);
+                    this.Rules(2, 3, this.bots[0]);
                 }
 
                 if (!this.bots[1].Status.Text.Contains("Fold"))
                 {
                     fixedLast = "Bot 2";
-                    this.Rules(4, 5, "Bot 2", this.bots[1]);
+                    this.Rules(4, 5, this.bots[1]);
                 }
 
                 if (!this.bots[2].Status.Text.Contains("Fold"))
                 {
                     fixedLast = "Bot 3";
-                    this.Rules(6, 7, "Bot 3", this.bots[2]);
+                    this.Rules(6, 7, this.bots[2]);
                 }
 
                 if (!this.bots[3].Status.Text.Contains("Fold"))
                 {
                     fixedLast = "Bot 4";
-                    this.Rules(8, 9, "Bot 4", this.bots[3]);
+                    this.Rules(8, 9, this.bots[3]);
                 }
 
                 if (!this.bots[4].Status.Text.Contains("Fold"))
                 {
                     fixedLast = "Bot 5";
-                    this.Rules(10, 11, "Bot 5", this.bots[4]);
+                    this.Rules(10, 11, this.bots[4]);
                 }
-
-                //TODO: COnsider passing the entire player object
-                //TODO: COde repetition
+                
                 this.Winner(this.human, fixedLast);
                 this.Winner(this.bots[0], fixedLast);
                 this.Winner(this.bots[1], fixedLast);
@@ -877,14 +875,14 @@ namespace Poker.UserInterface
                 {
                     AddChips chipAdder = new AddChips();
                     chipAdder.ShowDialog();
-                    if (chipAdder.chipsAmount != 0)
+                    if (chipAdder.ChipsAmount != 0)
                     {
-                        this.human.Chips = chipAdder.chipsAmount;
-                        this.bots[0].Chips += chipAdder.chipsAmount;
-                        this.bots[1].Chips += chipAdder.chipsAmount;
-                        this.bots[2].Chips += chipAdder.chipsAmount;
-                        this.bots[3].Chips += chipAdder.chipsAmount;
-                        this.bots[4].Chips += chipAdder.chipsAmount;
+                        this.human.Chips = chipAdder.ChipsAmount;
+                        this.bots[0].Chips += chipAdder.ChipsAmount;
+                        this.bots[1].Chips += chipAdder.ChipsAmount;
+                        this.bots[2].Chips += chipAdder.ChipsAmount;
+                        this.bots[3].Chips += chipAdder.ChipsAmount;
+                        this.bots[4].Chips += chipAdder.ChipsAmount;
                         this.human.OutOfChips = false;
                         this.human.CanMakeTurn = true;
                         this.buttonRaise.Enabled = true;
@@ -972,7 +970,7 @@ namespace Poker.UserInterface
             this.bots[4].Raise = 0;
         }
 
-        private void FixCall(Label status, int cCall, int cRaise, int options)
+        private void FixCall(Label status, int call, int raiseCall, int options)
         {
             if (this.rounds != 4)
             {
@@ -981,34 +979,34 @@ namespace Poker.UserInterface
                     if (status.Text.Contains("Raise"))
                     {
                         var changeRaise = status.Text.Substring(6);
-                        cRaise = int.Parse(changeRaise);
+                        raiseCall = int.Parse(changeRaise);
                     }
 
                     if (status.Text.Contains("Call"))
                     {
                         var changeCall = status.Text.Substring(5);
-                        cCall = int.Parse(changeCall);
+                        call = int.Parse(changeCall);
                     }
 
                     if (status.Text.Contains("PlayerCheck"))
                     {
-                        cRaise = 0;
-                        cCall = 0;
+                        raiseCall = 0;
+                        call = 0;
                     }
                 }
                 if (options == 2)
                 {
-                    if (cRaise != this.raise && cRaise <= this.raise)
+                    if (raiseCall != this.raise && raiseCall <= this.raise)
                     {
-                        this.neededChipsToCall = Convert.ToInt32(this.raise) - cRaise;
+                        this.neededChipsToCall = Convert.ToInt32(this.raise) - raiseCall;
                     }
 
-                    if (cCall != this.neededChipsToCall || cCall <= this.neededChipsToCall)
+                    if (call != this.neededChipsToCall || call <= this.neededChipsToCall)
                     {
-                        this.neededChipsToCall = this.neededChipsToCall - cCall;
+                        this.neededChipsToCall = this.neededChipsToCall - call;
                     }
 
-                    if (cRaise == this.raise && this.raise > 0)
+                    if (raiseCall == this.raise && this.raise > 0)
                     {
                         this.neededChipsToCall = 0;
                         this.buttonCall.Enabled = false;
@@ -1270,14 +1268,14 @@ namespace Poker.UserInterface
             {
                 AddChips f2 = new AddChips();
                 f2.ShowDialog();
-                if (f2.chipsAmount != 0)
+                if (f2.ChipsAmount != 0)
                 {
-                    this.human.Chips = f2.chipsAmount;
-                    this.bots[4].Chips += f2.chipsAmount;
-                    this.bots[1].Chips += f2.chipsAmount;
-                    this.bots[2].Chips += f2.chipsAmount;
-                    this.bots[3].Chips += f2.chipsAmount;
-                    this.bots[4].Chips += f2.chipsAmount;
+                    this.human.Chips = f2.ChipsAmount;
+                    this.bots[4].Chips += f2.ChipsAmount;
+                    this.bots[1].Chips += f2.ChipsAmount;
+                    this.bots[2].Chips += f2.ChipsAmount;
+                    this.bots[3].Chips += f2.ChipsAmount;
+                    this.bots[4].Chips += f2.ChipsAmount;
                     this.human.OutOfChips = false;
                     this.human.CanMakeTurn = true;
                     this.buttonRaise.Enabled = true;
@@ -1308,37 +1306,37 @@ namespace Poker.UserInterface
             if (!this.humanStatus.Text.Contains("Fold"))
             {
                 fixedLast = "Player";
-                this.Rules(0, 1, "Player", this.human);
+                this.Rules(0, 1, this.human);
             }
 
             if (!this.bots[0].Status.Text.Contains("Fold"))
             {
                 fixedLast = "Bot 1";
-                this.Rules(2, 3, "Bot 1", this.bots[0]);
+                this.Rules(2, 3, this.bots[0]);
             }
 
             if (!this.bots[1].Status.Text.Contains("Fold"))
             {
                 fixedLast = "Bot 2";
-                this.Rules(4, 5, "Bot 2", this.bots[1]);
+                this.Rules(4, 5, this.bots[1]);
             }
 
             if (!this.bots[2].Status.Text.Contains("Fold"))
             {
                 fixedLast = "Bot 3";
-                this.Rules(6, 7, "Bot 3", this.bots[2]);
+                this.Rules(6, 7, this.bots[2]);
             }
 
             if (!this.bots[3].Status.Text.Contains("Fold"))
             {
                 fixedLast = "Bot 4";
-                this.Rules(8, 9, "Bot 4", this.bots[3]);
+                this.Rules(8, 9,  this.bots[3]);
             }
 
             if (!this.bots[4].Status.Text.Contains("Fold"))
             {
                 fixedLast = "Bot 5";
-                this.Rules(10, 11, "Bot 5", this.bots[4]);
+                this.Rules(10, 11, this.bots[4]);
             }
 
             //TODO: code repetition
@@ -1355,54 +1353,39 @@ namespace Poker.UserInterface
         {
             if (!player.OutOfChips)
             {
-                if (player.Type == -1)
+                switch ((int)player.Type)
                 {
-                    this.handType.HighCard(player, playerStatus, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising);
-                }
-
-                if (player.Type == 0)
-                {
-                    this.handType.PairTable(player, playerStatus, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising);
-                }
-
-                if (player.Type == 1)
-                {
-                    this.handType.PairHand(player, playerStatus, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
-                }
-
-                if (player.Type == 2)
-                {
-                    this.handType.TwoPair(player, playerStatus, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
-                }
-
-                if (player.Type == 3)
-                {
-                    this.handType.ThreeOfAKind(player, playerStatus, name, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
-                }
-
-                if (player.Type == 4)
-                {
-                    this.handType.Straight(player, playerStatus, name, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
-                }
-
-                if (player.Type == 5 || player.Type == 5.5)
-                {
-                    this.handType.Flush(player, playerStatus, name, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
-                }
-
-                if (player.Type == 6)
-                {
-                    this.handType.FullHouse(player, playerStatus, name, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
-                }
-
-                if (player.Type == 7)
-                {
-                    this.handType.FourOfAKind(player, playerStatus, name, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
-                }
-
-                if (player.Type == 8 || player.Type == 9)
-                {
-                    this.handType.StraightFlush(player, playerStatus, name, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
+                    case -1:
+                        this.handType.HighCard(player, playerStatus, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising);
+                        break;
+                    case 0:
+                        this.handType.PairTable(player, playerStatus, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising);
+                        break;
+                    case 1:
+                        this.handType.PairHand(player, playerStatus, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
+                        break;
+                    case 2:
+                        this.handType.TwoPair(player, playerStatus, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
+                        break;
+                    case 3:
+                        this.handType.ThreeOfAKind(player, playerStatus, name, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
+                        break;
+                    case 4:
+                        this.handType.Straight(player, playerStatus, name, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
+                        break;
+                    case 5:
+                        this.handType.Flush(player, playerStatus, name, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
+                        break;
+                    case 6:
+                        this.handType.FullHouse(player, playerStatus, name, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
+                        break;
+                    case 7:
+                        this.handType.FourOfAKind(player, playerStatus, name, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
+                        break;
+                    case 8:
+                    case 9:
+                        this.handType.StraightFlush(player, playerStatus, name, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising, ref this.rounds);
+                        break;
                 }
             }
 
@@ -1486,7 +1469,7 @@ namespace Poker.UserInterface
 
             if (this.human.Chips >= this.neededChipsToCall)
             {
-                this.buttonCall.Text = "Call " + this.neededChipsToCall.ToString();
+                this.buttonCall.Text = "Call " + this.neededChipsToCall;
             }
             else
             {
@@ -1556,7 +1539,7 @@ namespace Poker.UserInterface
 
         private async void ButtonCall_Click(object sender, EventArgs e)
         {
-            this.Rules(0, 1, "Player", this.human);
+            this.Rules(0, 1, this.human);
             if (this.human.Chips >= this.neededChipsToCall)
             {
                 this.human.Chips -= this.neededChipsToCall;
@@ -1590,7 +1573,7 @@ namespace Poker.UserInterface
 
         private async void ButtonRaise_Click(object sender, EventArgs e)
         {
-            this.Rules(0, 1, "Player", this.human);
+            this.Rules(0, 1, this.human);
             int parsedValue;
             if (tbRaise.Text != "" && int.TryParse(tbRaise.Text, out parsedValue))
             {

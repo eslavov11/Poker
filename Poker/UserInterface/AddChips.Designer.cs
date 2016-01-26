@@ -4,6 +4,11 @@
 
     partial class AddChips
     {
+        private Label label1;
+        private Button button1;
+        private Button button2;
+        private TextBox textBox1;
+
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -22,8 +27,6 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -31,10 +34,10 @@
         private void InitializeComponent()
         {
             this.SuspendLayout();
+
             // 
             // label1
             // 
-
             this.label1 = new Label()
             {
                 Font = new System.Drawing.Font(
@@ -50,10 +53,10 @@
                 Text = "You ran out of chips !",
                 TextAlign = System.Drawing.ContentAlignment.MiddleCenter
             };
+
             // 
             // button1
             // 
-
             this.button1 = new Button()
             {
                 Font = new System.Drawing.Font(
@@ -69,13 +72,11 @@
                 Text = "Add Chips",
                 UseVisualStyleBackColor = true
             };
-
-
             this.button1.Click += new System.EventHandler(this.ButtonAddChips_Click);
+           
             // 
             // button2
             // 
-
             this.button2 = new Button()
             {
                 Font = new System.Drawing.Font(
@@ -96,7 +97,6 @@
             // 
             // textBox1
             // 
-
             this.textBox1 = new TextBox()
             {
                 Location = new System.Drawing.Point(91, 229),
@@ -104,6 +104,7 @@
                 Size = new System.Drawing.Size(100, 20),
                 TabIndex = 3
             };
+
             // 
             // AddChips
             // 
@@ -118,14 +119,6 @@
             this.Text = "You Ran Out Of Chips";
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
-
-        #endregion
-
-        private Label label1;
-        private Button button1;
-        private Button button2;
-        private TextBox textBox1;
     }
 }
