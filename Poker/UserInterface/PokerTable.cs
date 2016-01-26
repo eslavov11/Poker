@@ -1016,16 +1016,22 @@ namespace Poker.UserInterface
             this.cardsPictureBoxList[cardIndex].Image = this.deckImages[cardIndex];
             this.human.Call = 0;
             this.human.Raise = 0;
-            this.bots[0].Call = 0;
-            this.bots[0].Raise = 0;
-            this.bots[1].Call = 0;
-            this.bots[1].Raise = 0;
-            this.bots[2].Call = 0;
-            this.bots[2].Raise = 0;
-            this.bots[3].Call = 0;
-            this.bots[3].Raise = 0;
-            this.bots[4].Call = 0;
-            this.bots[4].Raise = 0;
+
+            foreach (var bot in this.bots)
+            {
+                bot.Call = 0;
+                bot.Raise = 0;
+            }
+            //this.bots[0].Call = 0;
+            //this.bots[0].Raise = 0;
+            //this.bots[1].Call = 0;
+            //this.bots[1].Raise = 0;
+            //this.bots[2].Call = 0;
+            //this.bots[2].Raise = 0;
+            //this.bots[3].Call = 0;
+            //this.bots[3].Raise = 0;
+            //this.bots[4].Call = 0;
+            //this.bots[4].Raise = 0;
         }
 
         private void FixCall(Label status, int call, int raiseCall, int options)
@@ -1329,11 +1335,16 @@ namespace Poker.UserInterface
                 if (f2.ChipsAmount != 0)
                 {
                     this.human.Chips = f2.ChipsAmount;
-                    this.bots[4].Chips += f2.ChipsAmount;
-                    this.bots[1].Chips += f2.ChipsAmount;
-                    this.bots[2].Chips += f2.ChipsAmount;
-                    this.bots[3].Chips += f2.ChipsAmount;
-                    this.bots[4].Chips += f2.ChipsAmount;
+
+                    foreach (var bot in this.bots)
+                    {
+                        bot.Chips += f2.ChipsAmount;
+                    }
+                    //this.bots[4].Chips += f2.ChipsAmount;
+                    //this.bots[1].Chips += f2.ChipsAmount;
+                    //this.bots[2].Chips += f2.ChipsAmount;
+                    //this.bots[3].Chips += f2.ChipsAmount;
+                    //this.bots[4].Chips += f2.ChipsAmount;
                     this.human.OutOfChips = false;
                     this.human.CanMakeTurn = true;
                     this.buttonRaise.Enabled = true;
@@ -1367,43 +1378,57 @@ namespace Poker.UserInterface
                 this.Rules(0, 1, this.human);
             }
 
-            if (!this.bots[0].Status.Text.Contains("Fold"))
-            {
-                fixedLast = "Bot 1";
-                this.Rules(2, 3, this.bots[0]);
-            }
+            //if (!this.bots[0].Status.Text.Contains("Fold"))
+            //{
+            //    fixedLast = "Bot 1";
+            //    this.Rules(2, 3, this.bots[0]);
+            //}
 
-            if (!this.bots[1].Status.Text.Contains("Fold"))
-            {
-                fixedLast = "Bot 2";
-                this.Rules(4, 5, this.bots[1]);
-            }
+            //if (!this.bots[1].Status.Text.Contains("Fold"))
+            //{
+            //    fixedLast = "Bot 2";
+            //    this.Rules(4, 5, this.bots[1]);
+            //}
 
-            if (!this.bots[2].Status.Text.Contains("Fold"))
-            {
-                fixedLast = "Bot 3";
-                this.Rules(6, 7, this.bots[2]);
-            }
+            //if (!this.bots[2].Status.Text.Contains("Fold"))
+            //{
+            //    fixedLast = "Bot 3";
+            //    this.Rules(6, 7, this.bots[2]);
+            //}
 
-            if (!this.bots[3].Status.Text.Contains("Fold"))
-            {
-                fixedLast = "Bot 4";
-                this.Rules(8, 9,  this.bots[3]);
-            }
+            //if (!this.bots[3].Status.Text.Contains("Fold"))
+            //{
+            //    fixedLast = "Bot 4";
+            //    this.Rules(8, 9,  this.bots[3]);
+            //}
 
-            if (!this.bots[4].Status.Text.Contains("Fold"))
+            //if (!this.bots[4].Status.Text.Contains("Fold"))
+            //{
+            //    fixedLast = "Bot 5";
+            //    this.Rules(10, 11, this.bots[4]);
+            //}
+
+            foreach (var bot in this.bots)
             {
-                fixedLast = "Bot 5";
-                this.Rules(10, 11, this.bots[4]);
+                if (!bot.Status.Text.Contains("Fold"))
+                {
+                    fixedLast = bot.Name;
+                    this.Rules(bot.StartCard, bot.StartCard + 1, bot);
+                }
             }
 
             //TODO: code repetition
             this.Winner(this.human, fixedLast);
-            this.Winner(this.bots[0], fixedLast);
-            this.Winner(this.bots[1], fixedLast);
-            this.Winner(this.bots[2], fixedLast);
-            this.Winner(this.bots[3], fixedLast);
-            this.Winner(this.bots[4], fixedLast);
+
+            foreach (var bot in this.bots)
+            {
+                this.Winner(bot, fixedLast);
+            }
+            //this.Winner(this.bots[0], fixedLast);
+            //this.Winner(this.bots[1], fixedLast);
+            //this.Winner(this.bots[2], fixedLast);
+            //this.Winner(this.bots[3], fixedLast);
+            //this.Winner(this.bots[4], fixedLast);
         }
 
         //TODO: Prevous name AI
@@ -1703,11 +1728,16 @@ namespace Poker.UserInterface
             else
             {
                 this.human.Chips += int.Parse(tbAdd.Text);
-                this.bots[0].Chips += int.Parse(tbAdd.Text);
-                this.bots[1].Chips += int.Parse(tbAdd.Text);
-                this.bots[2].Chips += int.Parse(tbAdd.Text);
-                this.bots[3].Chips += int.Parse(tbAdd.Text);
-                this.bots[4].Chips += int.Parse(tbAdd.Text);
+
+                foreach (var bot in this.bots)
+                {
+                    bot.Chips += int.Parse(tbAdd.Text);
+                }
+                //this.bots[0].Chips += int.Parse(tbAdd.Text);
+                //this.bots[1].Chips += int.Parse(tbAdd.Text);
+                //this.bots[2].Chips += int.Parse(tbAdd.Text);
+                //this.bots[3].Chips += int.Parse(tbAdd.Text);
+                //this.bots[4].Chips += int.Parse(tbAdd.Text);
             }
 
             this.txtBoxHumanChips.Text = "Chips : " + this.human.Chips;
