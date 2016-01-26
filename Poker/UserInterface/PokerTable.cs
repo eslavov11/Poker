@@ -556,25 +556,16 @@ namespace Poker.UserInterface
                     if (this.reservedGameCardsIndeces[index] == int.Parse(this.cardsPictureBoxList[card1].Tag.ToString()) &&
                         this.reservedGameCardsIndeces[index + 1] == int.Parse(this.cardsPictureBoxList[card2].Tag.ToString()))
                     {
-                        this.assertHandType.rPairFromHand(player, index, this.pokerDatabase.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
-
-                        this.assertHandType.rPairTwoPair(player, index, this.pokerDatabase.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
-
-                        this.assertHandType.rTwoPair(player, index, this.pokerDatabase.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
-
-                        this.assertHandType.rThreeOfAKind(player, Straight, index, this.pokerDatabase.Win, ref this.sorted);
-
-                        this.assertHandType.rStraight(player, Straight, index, this.pokerDatabase.Win, ref this.sorted);
-
-                        this.assertHandType.rFlush(player, ref vf, cardsOnBoard, ref index, this.pokerDatabase.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
-
-                        this.assertHandType.rFullHouse(player, ref done, Straight, this.pokerDatabase.Win, ref this.sorted, ref this.type);
-
-                        this.assertHandType.rFourOfAKind(player, Straight, this.pokerDatabase.Win, ref this.sorted);
-
-                        this.assertHandType.rStraightFlush(player, clubes, diamonds, hearts, spades, this.pokerDatabase.Win, ref this.sorted);
-
-                        this.assertHandType.rHighCard(player, index, this.pokerDatabase.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
+                        this.assertHandType.PairFromHand(player, index, this.pokerDatabase.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
+                        this.assertHandType.PairTwoPair(player, index, this.pokerDatabase.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
+                        this.assertHandType.TwoPair(player, index, this.pokerDatabase.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
+                        this.assertHandType.ThreeOfAKind(player, Straight, index, this.pokerDatabase.Win, ref this.sorted);
+                        this.assertHandType.Straight(player, Straight, index, this.pokerDatabase.Win, ref this.sorted);
+                        this.assertHandType.Flush(player, ref vf, cardsOnBoard, ref index, this.pokerDatabase.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
+                        this.assertHandType.FullHouse(player, ref done, Straight, this.pokerDatabase.Win, ref this.sorted, ref this.type);
+                        this.assertHandType.FourOfAKind(player, Straight, this.pokerDatabase.Win, ref this.sorted);
+                        this.assertHandType.StraightFlush(player, clubes, diamonds, hearts, spades, this.pokerDatabase.Win, ref this.sorted);
+                        this.assertHandType.HighCard(player, index, this.pokerDatabase.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
                     }
                 }
             }
@@ -602,54 +593,41 @@ namespace Poker.UserInterface
                 {
                     this.winners++;
                     this.pokerDatabase.CheckWinners.Add(player.Name);
-                    if (player.Type == -1)
-                    {
-                        MessageBox.Show(player.Type + " High Card ");
-                    }
 
-                    if (player.Type == 1 || player.Type == 0)
+                    //Converted to switch case because 5.5 Player type was converted to 5 in the if statement as well
+                    switch ((int)player.Type)
                     {
-                        MessageBox.Show(player.Type + " Pair ");
-                    }
-
-                    if (player.Type == 2)
-                    {
-                        MessageBox.Show(player.Type + " Two Pair ");
-                    }
-
-                    if (player.Type == 3)
-                    {
-                        MessageBox.Show(player.Type + " Three of a Kind ");
-                    }
-
-                    if (player.Type == 4)
-                    {
-                        MessageBox.Show(player.Type + " Straight ");
-                    }
-
-                    if (player.Type == 5 || player.Type == 5.5)
-                    {
-                        MessageBox.Show(player.Type + " Flush ");
-                    }
-
-                    if (player.Type == 6)
-                    {
-                        MessageBox.Show(player.Type + " Full House ");
-                    }
-
-                    if (player.Type == 7)
-                    {
-                        MessageBox.Show(player.Type + " Four of a Kind ");
-                    }
-
-                    if (player.Type == 8)
-                    {
-                        MessageBox.Show(player.Type + " Straight Flush ");
-                    }
-
-                    if (player.Type == 9)
-                    {
-                        MessageBox.Show(player.Type + " Royal Flush ! ");
+                        case -1:
+                            MessageBox.Show(player.Type + " High Card ");
+                            break;
+                        case 0:
+                        case 1:
+                            MessageBox.Show(player.Type + " Pair ");
+                            break;
+                        case 2:
+                            MessageBox.Show(player.Type + " Two Pair ");
+                            break;
+                        case 3:
+                            MessageBox.Show(player.Type + " Three of a Kind ");
+                            break;
+                        case 4:
+                            MessageBox.Show(player.Type + " Straight ");
+                            break;
+                        case 5:
+                            MessageBox.Show(player.Type + " Flush ");
+                            break;
+                        case 6:
+                            MessageBox.Show(player.Type + " Full House ");
+                            break;
+                        case 7:
+                            MessageBox.Show(player.Type + " Four of a Kind ");
+                            break;
+                        case 8:
+                            MessageBox.Show(player.Type + " Straight Flush ");
+                            break;
+                        case 9:
+                            MessageBox.Show(player.Type + " Royal Flush ! ");
+                            break;
                     }
                 }
             }

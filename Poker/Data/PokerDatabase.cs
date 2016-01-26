@@ -5,11 +5,9 @@
 
     public class PokerDatabase : IDatabase
     {
-        //TODO: Check if name is proper, previous name - bools
         private List<bool?> playersGameStatus;
         private List<Type> win;
         private List<string> checkWinners;
-        //TODO: Check if name is proper, previous name - chips
         private List<int> chips;
 
         public PokerDatabase()
