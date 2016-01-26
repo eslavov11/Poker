@@ -1,22 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Runtime.InteropServices;
-
 namespace Poker.UserInterface
 {
-    using Interfaces;
-    using Models.Players;
-    using Models;
-    using Data;
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.IO;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Windows.Forms;
+    using Poker.Data;
+    using Poker.Interfaces;
+    using Poker.Models;
+    using Poker.Models.Players;
+    using Poker.Utility;
+    using Type = Poker.Type;
 
     public partial class PokerTable : Form
     {
@@ -34,11 +31,16 @@ namespace Poker.UserInterface
         //private readonly IBot fourthBot;
         //private readonly IBot fifthBot;
         private readonly IDatabase pokerDatabase;
+        private readonly Image[] deckImages;
+        private readonly PictureBox[] cardsPictureBoxList;
+        private readonly Timer timer = new Timer();
+        private readonly Timer updates = new Timer();
+        private string[] cardsImageLocation;
+        private int[] reservedGameCardsIndeces;
 
         //private ProgressBar asd = new ProgressBar();
         //private int nm;
-
-        private int neededChipsToCall = 500;
+        private int neededChipsToCall;
         private int foldedBotsCount = 5;
         private double type;
         private int rounds;
@@ -61,40 +63,12 @@ namespace Poker.UserInterface
         private bool raising;
         private Type sorted;
 
-        //TODO: previous name ImgLocation
-        private string[] cardsImageLocation = Directory.GetFiles("..\\..\\Resources\\Assets\\Cards", "*.png", SearchOption.TopDirectoryOnly);
-
-        /*string[] cardsImageLocation ={
-                   "Assets\\Cards\\33.png","Assets\\Cards\\22.png",
-                    "Assets\\Cards\\29.png","Assets\\Cards\\21.png",
-                    "Assets\\Cards\\36.png","Assets\\Cards\\17.png",
-                    "Assets\\Cards\\40.png","Assets\\Cards\\16.png",
-                    "Assets\\Cards\\5.png","Assets\\Cards\\47.png",
-                    "Assets\\Cards\\37.png","Assets\\Cards\\13.png",
-                    
-                    "Assets\\Cards\\12.png",
-                    "Assets\\Cards\\8.png","Assets\\Cards\\18.png",
-                    "Assets\\Cards\\15.png","Assets\\Cards\\27.png"};*/
-
-        //TODO: previous name Reserved
-        private int[] reservedGameCardsIndeces = new int[17];
-
-        private const int DefaultCardsInDesk = 52;
-
-        //TODO: previous name Desk
-        private readonly Image[] deckImages = new Image[DefaultCardsInDesk];
-
-        //TODO: previous name Holder
-        private readonly PictureBox[] cardsPictureBoxList = new PictureBox[DefaultCardsInDesk];
-        private Timer timer = new Timer();
-        private Timer updates = new Timer();
-
         private int secondsLeft = 60;
         private int cardNumber;
         private int bigBlindValue = 500;
         private int smallBlindValue = 250;
         private int up = 10000000;
-        private int turnCount = 0;
+        private int turnCount;
         #endregion
 
         public PokerTable()
@@ -104,7 +78,16 @@ namespace Poker.UserInterface
             this.pokerDatabase = new PokerDatabase();
             this.human = new Human("Player");
 
+            this.cardsImageLocation = Directory.GetFiles(
+                "..\\..\\Resources\\Assets\\Cards",
+                "*.png",
+                SearchOption.TopDirectoryOnly);
+            this.reservedGameCardsIndeces = new int[Constants.NeededCardsFromDeck];
+            this.deckImages = new Image[Constants.CardsInADeck];
+            this.cardsPictureBoxList = new PictureBox[Constants.CardsInADeck];
             //pokerDatabasePlayersGameStatus.Add(humanOutOfChips); pokerDatabasePlayersGameStatus.Add(firstBotOutOfChips); pokerDatabasePlayersGameStatus.Add(secondBotOutOfChips); pokerDatabasePlayersGameStatus.Add(thirdBotOutOfChips); pokerDatabasePlayersGameStatus.Add(fourthBotOutOfChips); pokerDatabasePlayersGameStatus.Add(fifthBotOutOfChips);
+            this.bigBlindValue = Constants.MinBigBlindValue;
+            this.smallBlindValue = Constants.MinSmallBlindValue;
             this.neededChipsToCall = this.bigBlindValue;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -205,7 +188,7 @@ namespace Poker.UserInterface
             var randomCardLocation = new Random();
 
             //Shuffle cards location
-            for (int cardLocationIndex = DefaultCardsInDesk; cardLocationIndex > 0; cardLocationIndex--)
+            for (int cardLocationIndex = Constants.CardsInADeck; cardLocationIndex > 0; cardLocationIndex--)
             {
                 //Swaps two cards locations from the desk, taking one random and replacing it with the 
                 //card location from the loop index
@@ -306,12 +289,11 @@ namespace Poker.UserInterface
                 }
 
                 #endregion
-
-                //TODO: extract methods logic below is completely identical
+                
                 #region CheckForDefeatedBots
                 foreach (var bot in this.bots)
                 {
-                    this.CheckForDefeatedBots(bot, this.cardNumber);
+                    this.CheckForDefeatedBot(bot, this.cardNumber);
                 }
 
                 if (this.cardNumber == 16)
@@ -401,7 +383,7 @@ namespace Poker.UserInterface
             }
         }
 
-        private void CheckForDefeatedBots(IBot bot, int cardNumber)
+        private void CheckForDefeatedBot(IBot bot, int cardNumber)
         {
             if (bot.Chips <= 0)
             {
