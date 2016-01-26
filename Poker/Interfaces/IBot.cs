@@ -16,5 +16,7 @@ namespace Poker.Interfaces
         AnchorStyles GetAnchorStyles();
 
         Label Status { get; set; }
+
+        TextBox TextBoxBotChips { get; set; }
     }
 }

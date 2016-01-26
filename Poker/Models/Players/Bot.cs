@@ -16,6 +16,7 @@
             this.HorizontalLocation = horizontalLocation;
             this.VerticalLocation = verticalLocation;
             this.Status = new Label();
+            this.TextBoxBotChips = new TextBox();
         }
 
         // TODO: validate
@@ -30,6 +31,8 @@
         public AnchorStyles HorizontalLocation { get; set; }
 
         public Label Status { get; set; }
+
+        public TextBox TextBoxBotChips { get; set; }
 
         public AnchorStyles GetAnchorStyles()
         {

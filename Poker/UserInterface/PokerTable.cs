@@ -92,11 +92,11 @@ namespace Poker.UserInterface
             this.Shuffle();
             this.potStatus.Enabled = false;
             this.txtBoxHumanChips.Enabled = false;
-            this.txtBoxFirstBotChips.Enabled = false;
-            this.txtBoxSecondBotChips.Enabled = false;
-            this.txtBoxThirdBotChips.Enabled = false;
-            this.txtBoxFourthBotChips.Enabled = false;
-            this.txtBoxFifthBotChips.Enabled = false;
+            //this.txtBoxFirstBotChips.Enabled = false;
+            //this.txtBoxSecondBotChips.Enabled = false;
+            //this.txtBoxThirdBotChips.Enabled = false;
+            //this.txtBoxFourthBotChips.Enabled = false;
+            //this.txtBoxFifthBotChips.Enabled = false;
             this.txtBoxHumanChips.Text = "Chips : " + this.human.Chips;
             this.PopulateBotChips();
             this.timer.Interval = (1 * 1 * 1000);
@@ -129,28 +129,33 @@ namespace Poker.UserInterface
 
         private void PopulateBotChips()
         {
-            for (int bot = 0; bot < this.bots.Count; bot++)
+            //for (int bot = 0; bot < this.bots.Count; bot++)
+            //{
+            //    switch (bot)
+            //    {
+            //        case 0:
+            //            this.txtBoxFirstBotChips.Text = "Chips : " + this.bots[bot].Chips;
+            //            break;
+            //        case 1:
+            //            this.txtBoxSecondBotChips.Text = "Chips : " + this.bots[bot].Chips;
+            //            break;
+            //        case 2:
+            //            this.txtBoxThirdBotChips.Text = "Chips : " + this.bots[bot].Chips;
+            //            break;
+            //        case 3:
+            //            this.txtBoxFourthBotChips.Text = "Chips : " + this.bots[bot].Chips;
+            //            break;
+            //        case 4:
+            //            this.txtBoxFifthBotChips.Text = "Chips : " + this.bots[bot].Chips;
+            //            break;
+            //        default:
+            //            throw new ArgumentOutOfRangeException("No such bot found!");
+            //    }
+            //}
+            foreach (var bot in this.bots)
             {
-                switch (bot)
-                {
-                    case 0:
-                        this.txtBoxFirstBotChips.Text = "Chips : " + this.bots[bot].Chips;
-                        break;
-                    case 1:
-                        this.txtBoxSecondBotChips.Text = "Chips : " + this.bots[bot].Chips;
-                        break;
-                    case 2:
-                        this.txtBoxThirdBotChips.Text = "Chips : " + this.bots[bot].Chips;
-                        break;
-                    case 3:
-                        this.txtBoxFourthBotChips.Text = "Chips : " + this.bots[bot].Chips;
-                        break;
-                    case 4:
-                        this.txtBoxFifthBotChips.Text = "Chips : " + this.bots[bot].Chips;
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException("No such bot found!");
-                }
+                bot.TextBoxBotChips.Enabled = false;
+                bot.TextBoxBotChips.Text = "Chips : " + bot.Chips;
             }
         }
 
@@ -446,6 +451,7 @@ namespace Poker.UserInterface
                 this.buttonFold.Enabled = false;
                 this.timer.Stop();
                 this.bots[0].CanMakeTurn = true;
+
                 this.ProceedWithBotsTurns();
                 #endregion
 
@@ -458,7 +464,6 @@ namespace Poker.UserInterface
             }
         }
 
-        // TODO: in progress, create a method to proceed the bots' turns
         private async void ProceedWithBotsTurns()
         {
             for (int botNumber = 0; botNumber < this.bots.Count; botNumber++)
@@ -506,15 +511,14 @@ namespace Poker.UserInterface
             }
         }
 
+        // TODO: need to improve method's code quality
         private void Rules(int card1, int card2, IPlayer player)
         {
             if (card1 == 0 && card2 == 1)
             {
             }
 
-            if (!player.OutOfChips || 
-                card1 == 0 && card2 == 1 &&
-                !this.humanStatus.Text.Contains("Fold"))
+            if (((!player.OutOfChips || card1 == 0) && card2 == 1) && !this.humanStatus.Text.Contains("Fold"))
             {
                 #region Variables
                 bool done = false;
@@ -562,11 +566,11 @@ namespace Poker.UserInterface
             }
         }
 
-        private void Winner(IPlayer player, string lastly)
+        private void Winner(IPlayer player, string lastFixedPlayer)
         {
-            if (lastly == " ")
+            if (lastFixedPlayer == " ")
             {
-                lastly = "Bot 5";
+                lastFixedPlayer = "Bot 5";
             }
 
             for (int j = 0; j <= 16; j++)
@@ -622,7 +626,7 @@ namespace Poker.UserInterface
                     }
                 }
             }
-            if (player.Name == lastly)//lastfixed
+            if (player.Name == lastFixedPlayer)//lastfixed
             {
                 // TODO: avoid code repetition!
                 if (this.winners > 1)
@@ -634,41 +638,49 @@ namespace Poker.UserInterface
                         //playerPanel.Visible = true;
                     }
 
-                    if (this.pokerDatabase.CheckWinners.Contains("Bot 1"))
-                    {
-                        this.bots[0].Chips += int.Parse(this.potStatus.Text) / this.winners;
-                        this.txtBoxFirstBotChips.Text = this.bots[0].Chips.ToString();
-                        //bot1Panel.Visible = true;
-                    }
+                    //if (this.pokerDatabase.CheckWinners.Contains("Bot 1"))
+                    //{
+                    //    this.bots[0].Chips += int.Parse(this.potStatus.Text) / this.winners;
+                    //    this.txtBoxFirstBotChips.Text = this.bots[0].Chips.ToString();
+                    //    //bot1Panel.Visible = true;
+                    //}
 
-                    if (this.pokerDatabase.CheckWinners.Contains("Bot 2"))
-                    {
-                        this.bots[1].Chips += int.Parse(this.potStatus.Text) / this.winners;
-                        this.txtBoxSecondBotChips.Text = this.bots[1].Chips.ToString();
-                        //bot2Panel.Visible = true;
-                    }
+                    //if (this.pokerDatabase.CheckWinners.Contains("Bot 2"))
+                    //{
+                    //    this.bots[1].Chips += int.Parse(this.potStatus.Text) / this.winners;
+                    //    this.txtBoxSecondBotChips.Text = this.bots[1].Chips.ToString();
+                    //    //bot2Panel.Visible = true;
+                    //}
 
-                    if (this.pokerDatabase.CheckWinners.Contains("Bot 3"))
-                    {
-                        this.bots[2].Chips += int.Parse(this.potStatus.Text) / this.winners;
-                        this.txtBoxThirdBotChips.Text = this.bots[2].Chips.ToString();
-                        //bot3Panel.Visible = true;
-                    }
+                    //if (this.pokerDatabase.CheckWinners.Contains("Bot 3"))
+                    //{
+                    //    this.bots[2].Chips += int.Parse(this.potStatus.Text) / this.winners;
+                    //    this.txtBoxThirdBotChips.Text = this.bots[2].Chips.ToString();
+                    //    //bot3Panel.Visible = true;
+                    //}
 
-                    if (this.pokerDatabase.CheckWinners.Contains("Bot 4"))
-                    {
-                        this.bots[3].Chips += int.Parse(this.potStatus.Text) / this.winners;
-                        this.txtBoxFourthBotChips.Text = this.bots[3].Chips.ToString();
-                        //bot4Panel.Visible = true;
-                    }
+                    //if (this.pokerDatabase.CheckWinners.Contains("Bot 4"))
+                    //{
+                    //    this.bots[3].Chips += int.Parse(this.potStatus.Text) / this.winners;
+                    //    this.txtBoxFourthBotChips.Text = this.bots[3].Chips.ToString();
+                    //    //bot4Panel.Visible = true;
+                    //}
 
-                    if (this.pokerDatabase.CheckWinners.Contains("Bot 5"))
+                    //if (this.pokerDatabase.CheckWinners.Contains("Bot 5"))
+                    //{
+                    //    this.bots[4].Chips += int.Parse(this.potStatus.Text) / this.winners;
+                    //    this.txtBoxFifthBotChips.Text = this.bots[4].Chips.ToString();
+                    //    //bot5Panel.Visible = true;
+                    //}
+                    ////await Finish(1);
+                    foreach (var bot in this.bots)
                     {
-                        this.bots[4].Chips += int.Parse(this.potStatus.Text) / this.winners;
-                        this.txtBoxFifthBotChips.Text = this.bots[4].Chips.ToString();
-                        //bot5Panel.Visible = true;
+                        if (this.pokerDatabase.CheckWinners.Contains(bot.Name))
+                        {
+                            bot.Chips += int.Parse(this.potStatus.Text) / this.winners;
+                            bot.TextBoxBotChips.Text = bot.Chips.ToString();
+                        }
                     }
-                    //await Finish(1);
                 }
                 if (this.winners == 1)
                 {
@@ -1419,38 +1431,51 @@ namespace Poker.UserInterface
                 this.txtBoxHumanChips.Text = "Chips : 0";
             }
 
-            if (this.bots[0].Chips <= 0)
-            {
-                this.txtBoxFirstBotChips.Text = "Chips : 0";
-            }
+            //if (this.bots[0].Chips <= 0)
+            //{
+            //    this.txtBoxFirstBotChips.Text = "Chips : 0";
+            //}
 
-            if (this.bots[1].Chips <= 0)
-            {
-                this.txtBoxSecondBotChips.Text = "Chips : 0";
-            }
+            //if (this.bots[1].Chips <= 0)
+            //{
+            //    this.txtBoxSecondBotChips.Text = "Chips : 0";
+            //}
 
-            if (this.bots[2].Chips <= 0)
-            {
-                this.txtBoxThirdBotChips.Text = "Chips : 0";
-            }
+            //if (this.bots[2].Chips <= 0)
+            //{
+            //    this.txtBoxThirdBotChips.Text = "Chips : 0";
+            //}
 
-            if (this.bots[3].Chips <= 0)
-            {
-                this.txtBoxFourthBotChips.Text = "Chips : 0";
-            }
+            //if (this.bots[3].Chips <= 0)
+            //{
+            //    this.txtBoxFourthBotChips.Text = "Chips : 0";
+            //}
 
-            if (this.bots[4].Chips <= 0)
+            //if (this.bots[4].Chips <= 0)
+            //{
+            //    this.txtBoxFifthBotChips.Text = "Chips : 0";
+            //}
+
+            foreach (var bot in this.bots)
             {
-                this.txtBoxFifthBotChips.Text = "Chips : 0";
+                if (bot.Chips <= 0)
+                {
+                    bot.TextBoxBotChips.Text = "Chips : 0";
+                }
             }
 
             //TODO: extact in method
             this.txtBoxHumanChips.Text = "Chips : " + this.human.Chips;
-            this.txtBoxFirstBotChips.Text = "Chips : " + this.bots[0].Chips;
-            this.txtBoxSecondBotChips.Text = "Chips : " + this.bots[1].Chips;
-            this.txtBoxThirdBotChips.Text = "Chips : " + this.bots[2].Chips;
-            this.txtBoxFourthBotChips.Text = "Chips : " + this.bots[3].Chips;
-            this.txtBoxFifthBotChips.Text = "Chips : " + this.bots[4].Chips;
+            //this.txtBoxFirstBotChips.Text = "Chips : " + this.bots[0].Chips;
+            //this.txtBoxSecondBotChips.Text = "Chips : " + this.bots[1].Chips;
+            //this.txtBoxThirdBotChips.Text = "Chips : " + this.bots[2].Chips;
+            //this.txtBoxFourthBotChips.Text = "Chips : " + this.bots[3].Chips;
+            //this.txtBoxFifthBotChips.Text = "Chips : " + this.bots[4].Chips;
+
+            foreach (var bot in this.bots)
+            {
+                bot.TextBoxBotChips.Text = "Chips : " + bot.Chips;
+            }
 
             if (this.human.Chips <= 0)
             {
