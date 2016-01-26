@@ -23,11 +23,6 @@
         private TextBox tbSmallBlind;
         private Button buttonSmallBlind;
         private TextBox tbBigBlind;
-        private Label firstBotStatus;
-        private Label secondBotStatus;
-        private Label thirdBotStatus;
-        private Label fourthBotStatus;
-        private Label fifthBotStatus;
         private Label humanStatus;
         private Label label1;
         private TextBox tbRaise;
@@ -78,12 +73,7 @@
             this.tbSmallBlind = new TextBox();
             this.buttonSmallBlind = new Button();
             this.tbBigBlind = new TextBox();
-            this.fifthBotStatus = new Label();
-            this.fourthBotStatus = new Label();
-            this.thirdBotStatus = new Label();
-            this.firstBotStatus = new Label();
             this.humanStatus = new Label();
-            this.secondBotStatus = new Label();
             this.label1 = new Label();
             this.tbRaise = new TextBox();
             this.SuspendLayout();
@@ -284,35 +274,35 @@
             // 
             // fifthBotStatus
             // 
-            this.fifthBotStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.fifthBotStatus.Location = new System.Drawing.Point(1012, 579);
-            this.fifthBotStatus.Name = "fifthBotStatus";
-            this.fifthBotStatus.Size = new System.Drawing.Size(152, 32);
-            this.fifthBotStatus.TabIndex = 26;
+            this.bots[4].Status.Anchor = this.bots[4].GetAnchorStyles();
+            this.bots[4].Status.Location = new System.Drawing.Point(1012, 579);
+            this.bots[4].Status.Name = "fifthBotStatus";
+            this.bots[4].Status.Size = new System.Drawing.Size(152, 32);
+            this.bots[4].Status.TabIndex = 26;
             // 
             // fourthBotStatus
             // 
-            this.fourthBotStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.fourthBotStatus.Location = new System.Drawing.Point(970, 107);
-            this.fourthBotStatus.Name = "fourthBotStatus";
-            this.fourthBotStatus.Size = new System.Drawing.Size(123, 32);
-            this.fourthBotStatus.TabIndex = 27;
+            this.bots[3].Status.Anchor = this.bots[3].GetAnchorStyles();
+            this.bots[3].Status.Location = new System.Drawing.Point(970, 107);
+            this.bots[3].Status.Name = "fourthBotStatus";
+            this.bots[3].Status.Size = new System.Drawing.Size(123, 32);
+            this.bots[3].Status.TabIndex = 27;
             // 
             // thirdBotStatus
             // 
-            this.thirdBotStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.thirdBotStatus.Location = new System.Drawing.Point(755, 107);
-            this.thirdBotStatus.Name = "thirdBotStatus";
-            this.thirdBotStatus.Size = new System.Drawing.Size(125, 32);
-            this.thirdBotStatus.TabIndex = 28;
+            this.bots[2].Status.Anchor = this.bots[2].GetAnchorStyles();
+            this.bots[2].Status.Location = new System.Drawing.Point(755, 107);
+            this.bots[2].Status.Name = "thirdBotStatus";
+            this.bots[2].Status.Size = new System.Drawing.Size(125, 32);
+            this.bots[2].Status.TabIndex = 28;
             // 
             // firstBotStatus
             // 
-            this.firstBotStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.firstBotStatus.Location = new System.Drawing.Point(181, 579);
-            this.firstBotStatus.Name = "firstBotStatus";
-            this.firstBotStatus.Size = new System.Drawing.Size(142, 32);
-            this.firstBotStatus.TabIndex = 29;
+            this.bots[0].Status.Anchor = this.bots[0].GetAnchorStyles();
+            this.bots[0].Status.Location = new System.Drawing.Point(181, 579);
+            this.bots[0].Status.Name = "firstBotStatus";
+            this.bots[0].Status.Size = new System.Drawing.Size(142, 32);
+            this.bots[0].Status.TabIndex = 29;
             // 
             // humanStatus
             // 
@@ -324,10 +314,10 @@
             // 
             // secondBotStatus
             // 
-            this.secondBotStatus.Location = new System.Drawing.Point(276, 107);
-            this.secondBotStatus.Name = "secondBotStatus";
-            this.secondBotStatus.Size = new System.Drawing.Size(133, 32);
-            this.secondBotStatus.TabIndex = 31;
+            this.bots[1].Status.Location = new System.Drawing.Point(276, 107);
+            this.bots[1].Status.Name = "secondBotStatus";
+            this.bots[1].Status.Size = new System.Drawing.Size(133, 32);
+            this.bots[1].Status.TabIndex = 31;
             // 
             // label1
             // 
@@ -356,12 +346,12 @@
             this.ClientSize = new System.Drawing.Size(1350, 729);
             this.Controls.Add(this.tbRaise);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.secondBotStatus);
+            this.Controls.Add(this.bots[1].Status);
             this.Controls.Add(this.humanStatus);
-            this.Controls.Add(this.firstBotStatus);
-            this.Controls.Add(this.thirdBotStatus);
-            this.Controls.Add(this.fourthBotStatus);
-            this.Controls.Add(this.fifthBotStatus);
+            this.Controls.Add(this.bots[0].Status);
+            this.Controls.Add(this.bots[2].Status);
+            this.Controls.Add(this.bots[3].Status);
+            this.Controls.Add(this.bots[4].Status);
             this.Controls.Add(this.tbBigBlind);
             this.Controls.Add(this.buttonSmallBlind);
             this.Controls.Add(this.tbSmallBlind);

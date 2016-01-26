@@ -15,6 +15,7 @@
             this.HorizontalLocationCoordinate = horizontalLocationCoordinate;
             this.HorizontalLocation = horizontalLocation;
             this.VerticalLocation = verticalLocation;
+            this.Status = new Label();
         }
 
         // TODO: validate
@@ -27,6 +28,8 @@
         public AnchorStyles VerticalLocation { get; set; }
 
         public AnchorStyles HorizontalLocation { get; set; }
+
+        public Label Status { get; set; }
 
         public AnchorStyles GetAnchorStyles()
         {
@@ -43,6 +46,5 @@
                 return this.VerticalLocation | this.HorizontalLocation;
             }
         }
-
     }
 }

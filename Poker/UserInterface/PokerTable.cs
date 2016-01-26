@@ -109,11 +109,11 @@ namespace Poker.UserInterface
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.updates.Start();
+            this.bots = new List<IBot>();
+            this.PopulateBots();
             this.InitializeComponent();
             this.width = this.Width;
             this.height = this.Height;
-            this.bots = new List<IBot>();
-            this.PopulateBots();
             this.Shuffle();
             this.potStatus.Enabled = false;
             this.txtBoxHumanChips.Enabled = false;
@@ -472,165 +472,7 @@ namespace Poker.UserInterface
                 this.buttonFold.Enabled = false;
                 this.timer.Stop();
                 this.bots[0].CanMakeTurn = true;
-                if (!this.bots[0].OutOfChips)
-                {
-                    if (this.bots[0].CanMakeTurn)
-                    {
-                        this.FixCall(this.firstBotStatus, this.bots[0].Call, this.bots[0].Raise, 1);
-                        this.FixCall(this.firstBotStatus, this.bots[0].Call, this.bots[0].Raise, 2);
-                        this.Rules(2, 3, "Bot 1", this.bots[0]);
-                        MessageBox.Show("Bot 1's turn");
-                        this.AI(2, 3, this.firstBotStatus, 0, this.bots[0]);
-                        this.turnCount++;
-                        this.last = 1;
-                        this.bots[0].CanMakeTurn = false;
-                        this.bots[1].CanMakeTurn = true;
-                    }
-                }
-
-                if (this.bots[0].OutOfChips && !this.bots[0].Folded)
-                {
-                    this.pokerDatabase.PlayersGameStatus.RemoveAt(1);
-                    this.pokerDatabase.PlayersGameStatus.Insert(1, null);
-                    this.maxLeft--;
-                    this.bots[0].Folded = true;
-                }
-
-                if (this.bots[0].OutOfChips || !this.bots[0].CanMakeTurn)
-                {
-                    await this.CheckRaise(1, 1);
-                    this.bots[1].CanMakeTurn = true;
-                }
-
-                if (!this.bots[1].OutOfChips)
-                {
-                    if (this.bots[1].CanMakeTurn)
-                    {
-                        this.FixCall(this.secondBotStatus, this.bots[1].Call, this.bots[1].Raise, 1);
-                        this.FixCall(this.secondBotStatus, this.bots[1].Call, this.bots[1].Raise, 2);
-                        this.Rules(4, 5, "Bot 2", this.bots[1]);
-                        MessageBox.Show("Bot 2's turn");
-                        this.AI(4, 5, this.secondBotStatus, 1, this.bots[1]);
-                        this.turnCount++;
-                        this.last = 2;
-                        this.bots[1].CanMakeTurn = false;
-                        this.bots[2].CanMakeTurn = true;
-                    }
-                }
-
-                if (this.bots[1].OutOfChips && !this.bots[1].Folded)
-                {
-                    this.pokerDatabase.PlayersGameStatus.RemoveAt(2);
-                    this.pokerDatabase.PlayersGameStatus.Insert(2, null);
-                    this.maxLeft--;
-                    this.bots[1].Folded = true;
-                }
-               
-                if (this.bots[1].OutOfChips || !this.bots[1].CanMakeTurn)
-                {
-                    await this.CheckRaise(2, 2);
-                    this.bots[2].CanMakeTurn = true;
-                }
-
-                if (!this.bots[2].OutOfChips)
-                {
-                    if (this.bots[2].CanMakeTurn)
-                    {
-                        this.FixCall(this.thirdBotStatus, this.bots[2].Call, this.bots[2].Raise, 1);
-                        this.FixCall(this.thirdBotStatus, this.bots[2].Call, this.bots[2].Raise, 2);
-                        this.Rules(6, 7, "Bot 3", this.bots[2]);
-                        MessageBox.Show("Bot 3's turn");
-                        this.AI(6, 7, this.thirdBotStatus, 2, this.bots[2]);
-                        this.turnCount++;
-                        this.last = 3;
-                        this.bots[2].CanMakeTurn = false;
-                        this.bots[3].CanMakeTurn = true;
-                    }
-                }
-
-                if (this.bots[2].OutOfChips && !this.bots[2].Folded)
-                {
-                    this.pokerDatabase.PlayersGameStatus.RemoveAt(3);
-                    this.pokerDatabase.PlayersGameStatus.Insert(3, null);
-                    this.maxLeft--;
-                    this.bots[2].Folded = true;
-                }
-
-                if (this.bots[2].OutOfChips || !this.bots[2].CanMakeTurn)
-                {
-                    await this.CheckRaise(3, 3);
-                    this.bots[3].CanMakeTurn = true;
-                }
-
-                if (!this.bots[3].OutOfChips)
-                {
-                    if (this.bots[3].CanMakeTurn)
-                    {
-                        this.FixCall(this.fourthBotStatus, this.bots[3].Call, this.bots[3].Raise, 1);
-                        this.FixCall(this.fourthBotStatus, this.bots[3].Call, this.bots[3].Raise, 2);
-                        this.Rules(8, 9, "Bot 4", this.bots[3]);
-                        MessageBox.Show("Bot 4's turn");
-                        this.AI(8, 9, this.fourthBotStatus, 3, this.bots[3]);
-                        this.turnCount++;
-                        this.last = 4;
-                        this.bots[3].CanMakeTurn = false;
-                        this.bots[4].CanMakeTurn = true;
-                    }
-                }
-
-                if (this.bots[3].OutOfChips && !this.bots[3].Folded)
-                {
-                    this.pokerDatabase.PlayersGameStatus.RemoveAt(4);
-                    this.pokerDatabase.PlayersGameStatus.Insert(4, null);
-                    this.maxLeft--;
-                    this.bots[3].Folded = true;
-                }
-
-                if (this.bots[3].OutOfChips || !this.bots[3].CanMakeTurn)
-                {
-                    await this.CheckRaise(4, 4);
-                    this.bots[4].CanMakeTurn = true;
-                }
-
-                if (!this.bots[4].OutOfChips)
-                {
-                    if (this.bots[4].CanMakeTurn)
-                    {
-                        this.FixCall(this.fifthBotStatus, this.bots[4].Call, this.bots[4].Raise, 1);
-                        this.FixCall(this.fifthBotStatus, this.bots[4].Call, this.bots[4].Raise, 2);
-                        this.Rules(10, 11, "Bot 5", this.bots[4]);
-                        MessageBox.Show("Bot 5's turn");
-                        this.AI(10, 11, this.fifthBotStatus, 4, this.bots[4]);
-                        this.turnCount++;
-                        this.last = 5;
-                        this.bots[4].CanMakeTurn = false;
-                    }
-                }
-
-                if (this.bots[4].OutOfChips && !this.bots[4].Folded)
-                {
-                    this.pokerDatabase.PlayersGameStatus.RemoveAt(5);
-                    this.pokerDatabase.PlayersGameStatus.Insert(5, null);
-                    this.maxLeft--;
-                    this.bots[4].Folded = true;
-                }
-
-                if (this.bots[4].OutOfChips || !this.bots[4].CanMakeTurn)
-                {
-                    await this.CheckRaise(5, 5);
-                    this.human.CanMakeTurn = true;
-                }
-
-                if (this.human.OutOfChips && !this.human.Folded)
-                {
-                    if (this.buttonCall.Text.Contains("All in") == false || this.buttonRaise.Text.Contains("All in") == false)
-                    {
-                        this.pokerDatabase.PlayersGameStatus.RemoveAt(0);
-                        this.pokerDatabase.PlayersGameStatus.Insert(0, null);
-                        this.maxLeft--;
-                        this.human.Folded = true;
-                    }
-                }
+                this.ProceedWithBotsTurns();
                 #endregion
 
                 await this.AllIn();
@@ -643,7 +485,6 @@ namespace Poker.UserInterface
         }
 
         // TODO: in progress, create a method to proceed the bots' turns
-        /*
         private async void ProceedWithBotsTurns()
         {
             for (int botNumber = 0; botNumber < this.bots.Count; botNumber++)
@@ -652,11 +493,11 @@ namespace Poker.UserInterface
                 {
                     if (this.bots[botNumber].CanMakeTurn)
                     {
-                        this.FixCall(this.firstBotStatus, this.bots[botNumber].Call, this.bots[botNumber].Raise, 1);
-                        this.FixCall(this.firstBotStatus, this.bots[botNumber].Call, this.bots[botNumber].Raise, 2);
+                        this.FixCall(this.bots[botNumber].Status, this.bots[botNumber].Call, this.bots[botNumber].Raise, 1);
+                        this.FixCall(this.bots[botNumber].Status, this.bots[botNumber].Call, this.bots[botNumber].Raise, 2);
                         this.Rules(this.bots[botNumber].StartCard, this.bots[botNumber].StartCard + 1, "Bot " + (botNumber + 1), this.bots[botNumber]);
                         MessageBox.Show("Bot "+ (botNumber + 1) +"'s turn");
-                        this.AI(this.bots[botNumber].StartCard, this.bots[botNumber].StartCard + 1, this.firstBotStatus, botNumber, this.bots[botNumber]);
+                        this.AI(this.bots[botNumber].StartCard, this.bots[botNumber].StartCard + 1, this.bots[botNumber].Status, botNumber, this.bots[botNumber]);
                         this.turnCount++;
                         this.last = botNumber + 1;
                         this.bots[botNumber].CanMakeTurn = false;
@@ -689,7 +530,6 @@ namespace Poker.UserInterface
                 }
             }
         }
-         */
 
         private void Rules(int card1, int card2, string currentText, IPlayer player)
         {
@@ -955,27 +795,27 @@ namespace Poker.UserInterface
                         // TODO: avoid code repetition!
                         if (!this.bots[0].OutOfChips)
                         {
-                            this.firstBotStatus.Text = string.Empty;
+                            this.bots[0].Status.Text = string.Empty;
                         }
 
                         if (!this.bots[1].OutOfChips)
                         {
-                            this.secondBotStatus.Text = string.Empty;
+                            this.bots[1].Status.Text = string.Empty;
                         }
 
                         if (!this.bots[2].OutOfChips)
                         {
-                            this.thirdBotStatus.Text = string.Empty;
+                            this.bots[2].Status.Text = string.Empty;
                         }
 
                         if (!this.bots[3].OutOfChips)
                         {
-                            this.fourthBotStatus.Text = string.Empty;
+                            this.bots[3].Status.Text = string.Empty;
                         }
 
                         if (!this.bots[4].OutOfChips)
                         {
-                            this.fifthBotStatus.Text = string.Empty;
+                            this.bots[4].Status.Text = string.Empty;
                         }
 
                     }
@@ -1024,31 +864,31 @@ namespace Poker.UserInterface
                     this.Rules(0, 1, "Player", this.human);
                 }
 
-                if (!this.firstBotStatus.Text.Contains("Fold"))
+                if (!this.bots[0].Status.Text.Contains("Fold"))
                 {
                     fixedLast = "Bot 1";
                     this.Rules(2, 3, "Bot 1", this.bots[0]);
                 }
 
-                if (!this.secondBotStatus.Text.Contains("Fold"))
+                if (!this.bots[1].Status.Text.Contains("Fold"))
                 {
                     fixedLast = "Bot 2";
                     this.Rules(4, 5, "Bot 2", this.bots[1]);
                 }
 
-                if (!this.thirdBotStatus.Text.Contains("Fold"))
+                if (!this.bots[2].Status.Text.Contains("Fold"))
                 {
                     fixedLast = "Bot 3";
                     this.Rules(6, 7, "Bot 3", this.bots[2]);
                 }
 
-                if (!this.fourthBotStatus.Text.Contains("Fold"))
+                if (!this.bots[3].Status.Text.Contains("Fold"))
                 {
                     fixedLast = "Bot 4";
                     this.Rules(8, 9, "Bot 4", this.bots[3]);
                 }
 
-                if (!this.fifthBotStatus.Text.Contains("Fold"))
+                if (!this.bots[4].Status.Text.Contains("Fold"))
                 {
                     fixedLast = "Bot 5";
                     this.Rules(10, 11, "Bot 5", this.bots[4]);
@@ -1461,11 +1301,11 @@ namespace Poker.UserInterface
             this.up = 10000000;
             this.turnCount = 0;
             this.humanStatus.Text = string.Empty;
-            this.firstBotStatus.Text = string.Empty;
-            this.secondBotStatus.Text = string.Empty;
-            this.thirdBotStatus.Text = string.Empty;
-            this.fourthBotStatus.Text = string.Empty;
-            this.fifthBotStatus.Text = string.Empty;
+            this.bots[0].Status.Text = string.Empty;
+            this.bots[1].Status.Text = string.Empty;
+            this.bots[2].Status.Text = string.Empty;
+            this.bots[3].Status.Text = string.Empty;
+            this.bots[4].Status.Text = string.Empty;
 
             if (this.human.Chips <= 0)
             {
@@ -1512,31 +1352,31 @@ namespace Poker.UserInterface
                 this.Rules(0, 1, "Player", this.human);
             }
 
-            if (!this.firstBotStatus.Text.Contains("Fold"))
+            if (!this.bots[0].Status.Text.Contains("Fold"))
             {
                 fixedLast = "Bot 1";
                 this.Rules(2, 3, "Bot 1", this.bots[0]);
             }
 
-            if (!this.secondBotStatus.Text.Contains("Fold"))
+            if (!this.bots[1].Status.Text.Contains("Fold"))
             {
                 fixedLast = "Bot 2";
                 this.Rules(4, 5, "Bot 2", this.bots[1]);
             }
 
-            if (!this.thirdBotStatus.Text.Contains("Fold"))
+            if (!this.bots[2].Status.Text.Contains("Fold"))
             {
                 fixedLast = "Bot 3";
                 this.Rules(6, 7, "Bot 3", this.bots[2]);
             }
 
-            if (!this.fourthBotStatus.Text.Contains("Fold"))
+            if (!this.bots[3].Status.Text.Contains("Fold"))
             {
                 fixedLast = "Bot 4";
                 this.Rules(8, 9, "Bot 4", this.bots[3]);
             }
 
-            if (!this.fifthBotStatus.Text.Contains("Fold"))
+            if (!this.bots[4].Status.Text.Contains("Fold"))
             {
                 fixedLast = "Bot 5";
                 this.Rules(10, 11, "Bot 5", this.bots[4]);
