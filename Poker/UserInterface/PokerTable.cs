@@ -1767,7 +1767,16 @@ namespace Poker.UserInterface
         //TODO: Small and big blind have similar logic, extract in different method
         private void ButtonSmallBlind_Click(object sender, EventArgs e)
         {
-            int smallBlindNewValue;
+            
+            try
+            {
+                BlindExceptionCheck(1, this.tbSmallBlind.Text, ref this.smallBlindValue);
+            }
+            catch (ArgumentException p)
+            {
+                MessageBox.Show(p.Message);
+            }
+            /*int smallBlindNewValue;
             if (this.tbSmallBlind.Text.Contains(",") || this.tbSmallBlind.Text.Contains("."))
             {
                 MessageBox.Show("The Small Blind can be only round number !");
@@ -1800,12 +1809,20 @@ namespace Poker.UserInterface
                 this.smallBlindValue = int.Parse(this.tbSmallBlind.Text);
                 MessageBox.Show(
                     "The changes have been saved ! They will become available the next hand you play. ");
-            }
+            }*/
         }
 
         private void ButtonBigBlind_Click(object sender, EventArgs e)
         {
-            int bigBlindNewValue;
+            try
+            {
+                BlindExceptionCheck(2, this.tbBigBlind.Text, ref this.bigBlindValue);
+            }
+            catch (ArgumentException p)
+            {
+                MessageBox.Show(p.Message);
+            }
+            /*int bigBlindNewValue;
             if (this.tbBigBlind.Text.Contains(",") || this.tbBigBlind.Text.Contains("."))
             {
                 MessageBox.Show("The Big Blind can be only round number !");
@@ -1836,9 +1853,49 @@ namespace Poker.UserInterface
                 this.bigBlindValue = int.Parse(this.tbBigBlind.Text);
                 MessageBox.Show(
                     "The changes have been saved ! They will become available the next hand you play. ");
+            }*/
+        }
+        private void BlindExceptionCheck(int number, string text, ref int blindValue)
+        {
+            int smallBlindNewValue;
+            if (text.Contains(",") || text.Contains("."))
+            {
+                throw new ArgumentException("The Small Blind can be only round number !");
+                //MessageBox.Show("The Small Blind can be only round number !");
+                //this.tbSmallBlind.Text = this.smallBlindValue.ToString();
+                //
+                //return;
+            }
+
+            if (!int.TryParse(text, out smallBlindNewValue))
+            {
+                throw new ArgumentException("This is a number only field");
+                //MessageBox.Show("This is a number only field");
+                //this.tbSmallBlind.Text = this.smallBlindValue.ToString();
+                //
+                //return;
+            }
+
+            if (int.Parse(text) > 100000 * number)
+            {
+                throw new ArgumentException("The maximum of the Small Blind is " + 100000 * number + " $");
+                //MessageBox.Show("The maximum of the Small Blind is 100 000 $");
+                //this.tbSmallBlind.Text = this.smallBlindValue.ToString();
+            }
+
+            if (int.Parse(text) < 250 * number)
+            {
+                throw new ArgumentException("The maximum of the Small Blind is " + 250 * number + " $");
+                //MessageBox.Show("The minimum of the Small Blind is 250 $");
+            }
+
+            if (int.Parse(text) >= 250 * number && int.Parse(text) <= 100000 * number)
+            {
+                blindValue = int.Parse(text);
+                MessageBox.Show(
+                    "The changes have been saved ! They will become available the next hand you play. ");
             }
         }
-
         private void ChangeLayout(object sender, LayoutEventArgs e)
         {
             width = this.Width;
