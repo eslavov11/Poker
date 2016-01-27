@@ -8,10 +8,7 @@
     public class Desk
     {
         //Five bots and one person * 2 cards each + 5 cards on the table
-        private const int DefaultCardsInAGameWithSixPlayers = 17;
         private const int DefaultCardsInDesk = 52;
-
-
         private readonly Image[] deskCardsAsImages;
 
         private readonly string[] cardsImageLocation;
@@ -44,7 +41,6 @@
             }
         }
  
-
         public static PictureBox[] CardsPictures { get; private set; }
     }
 }
