@@ -1,6 +1,11 @@
-﻿using System.Windows.Forms;
-namespace Poker.Interfaces
+﻿namespace Poker.Interfaces
 {
+    using System.Windows.Forms;
+
+    /// <summary>
+    /// Interface which contains properties and methods for the bot's behavior.
+    /// </summary>
+    /// <seealso cref="Poker.Interfaces.IPlayer" />
     public interface IBot : IPlayer
     {
         int StartCard { get; set; }
@@ -13,10 +18,10 @@ namespace Poker.Interfaces
 
         AnchorStyles HorizontalLocation { get; set; }
 
-        AnchorStyles GetAnchorStyles();
-
         Label Status { get; set; }
 
         TextBox TextBoxBotChips { get; set; }
+
+        AnchorStyles GetAnchorStyles();
     }
 }

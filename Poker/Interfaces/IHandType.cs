@@ -23,6 +23,5 @@
         void FourOfAKind(IPlayer player, Label playerStatus, int name, int neededChipsToCall, TextBox potStatus, ref int raise, ref bool raising, ref int rounds);
 
         void StraightFlush(IPlayer player, Label playerStatus, int name, int neededChipsToCall, TextBox potStatus, ref int raise, ref bool raising, ref int rounds);
-
     }
 }

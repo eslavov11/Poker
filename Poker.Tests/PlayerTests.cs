@@ -7,7 +7,6 @@
     [TestClass]
     public class PlayerTests
     {
-
         [TestMethod]
         public void TestName_InitializeOnePlayer_ShouldCreatePlayer()
         {

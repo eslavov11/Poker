@@ -5,9 +5,13 @@
 
     public class Bot : Player, IBot
     {
-
-        public Bot(string name, int startCard, int verticalLocationCoordinate, int horizontalLocationCoordinate,
-            AnchorStyles verticalLocation = 0, AnchorStyles horizontalLocation = 0)
+        public Bot(
+            string name,
+            int startCard,
+            int verticalLocationCoordinate,
+            int horizontalLocationCoordinate,
+            AnchorStyles verticalLocation = 0,
+            AnchorStyles horizontalLocation = 0)
             : base(name)
         {
             this.StartCard = startCard;

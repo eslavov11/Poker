@@ -4,11 +4,15 @@
     using Interfaces;
     using Models;
 
+    /// <summary>
+    /// Class which holds various collections needed for the game
+    /// </summary>
+    /// <seealso cref="Poker.Interfaces.IDatabase" />
     public class PokerDatabase : IDatabase
     {
         private List<bool?> playersGameStatus;
 
-        private List<Type> win;
+        private List<Type> winners;
 
         private List<string> checkWinners;
 
@@ -52,12 +56,12 @@
         {
             get
             {
-                return this.win;
+                return this.winners;
             }
 
             set
             {
-                this.win = value;
+                this.winners = value;
             }
         }
 

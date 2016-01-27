@@ -3,6 +3,9 @@
     using System.Collections.Generic;
     using Models;
 
+    /// <summary>
+    /// Interface which holds various collections needed for the game
+    /// </summary>
     public interface IDatabase
     {
         List<int> Chips { get; set; }

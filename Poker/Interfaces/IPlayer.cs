@@ -4,6 +4,9 @@
     using System.Drawing;
     using System.Windows.Forms;
 
+    /// <summary>
+    // Interface containing similar logig for both human poker player and bot.
+    /// </summary>
     public interface IPlayer
     {
         string Name { get; }
@@ -28,6 +31,10 @@
 
         bool Folded { get; set; }
 
+        /// <summary>
+        /// Initializes the poker player's panel.
+        /// </summary>
+        /// <param name="location">The player's location.</param>
         void InitializePanel(Point location);
     }
 }
