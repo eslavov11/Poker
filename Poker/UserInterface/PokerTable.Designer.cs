@@ -96,24 +96,11 @@
             // 
             // pbTimer
             // 
-            this.pbTimer.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.pbTimer.BackColor = System.Drawing.SystemColors.Control;
-            this.pbTimer.Location = new System.Drawing.Point(335, 631);
-            this.pbTimer.Maximum = 1000;
-            this.pbTimer.Name = "pbTimer";
-            this.pbTimer.Size = new System.Drawing.Size(667, 23);
-            this.pbTimer.TabIndex = 5;
-            this.pbTimer.Value = 1000;
+            this.StartTimer();
             // 
             // txtBoxHumanChips
             // 
-            this.txtBoxHumanChips.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.txtBoxHumanChips.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtBoxHumanChips.Location = new System.Drawing.Point(755, 553);
-            this.txtBoxHumanChips.Name = "txtBoxHumanChips";
-            this.txtBoxHumanChips.Size = new System.Drawing.Size(163, 23);
-            this.txtBoxHumanChips.TabIndex = 6;
-            this.txtBoxHumanChips.Text = "Chips : 0";
+            this.AddHumanChips();
             // 
             // bAdd
             // 
@@ -422,6 +409,29 @@
             this.buttonRaise.Text = "Raise";
             this.buttonRaise.UseVisualStyleBackColor = true;
             this.buttonRaise.Click += new System.EventHandler(this.ButtonRaise_Click);
+        }
+
+        private void StartTimer()
+        {
+            this.pbTimer.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.pbTimer.BackColor = System.Drawing.SystemColors.Control;
+            this.pbTimer.Location = new System.Drawing.Point(335, 631);
+            this.pbTimer.Maximum = 1000;
+            this.pbTimer.Name = "pbTimer";
+            this.pbTimer.Size = new System.Drawing.Size(667, 23);
+            this.pbTimer.TabIndex = 5;
+            this.pbTimer.Value = 1000;
+        }
+
+        private void AddHumanChips()
+        {
+            this.txtBoxHumanChips.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.txtBoxHumanChips.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txtBoxHumanChips.Location = new System.Drawing.Point(755, 553);
+            this.txtBoxHumanChips.Name = "txtBoxHumanChips";
+            this.txtBoxHumanChips.Size = new System.Drawing.Size(163, 23);
+            this.txtBoxHumanChips.TabIndex = 6;
+            this.txtBoxHumanChips.Text = "Chips : 0";
         }
         #endregion
     }
