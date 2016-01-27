@@ -51,6 +51,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="PlayerMoveTests.cs" />
+    <Compile Include="AddChipsTests.cs" />
     <Compile Include="PlayerTests.cs" />
     <Compile Include="PokerDatabaseTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

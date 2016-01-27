@@ -87,6 +87,7 @@ namespace Poker.UserInterface
             this.bots = new List<IBot>();
             this.PopulateBots();
             this.InitializeComponent();
+            this.InitializePlayersDisplay();
             this.width = this.Width;
             this.height = this.Height;
             this.Shuffle();
@@ -111,6 +112,28 @@ namespace Poker.UserInterface
             this.buttonBigBlind.Visible = false;
             this.buttonSmallBlind.Visible = false;
             this.tbRaise.Text = (this.bigBlindValue * 2).ToString();
+        }
+
+        private void InitializePlayersDisplay()
+        {
+            int tabIndex = 13;
+            int locationIndex = 0;
+            int[] locationIndicesHorizontal = new int[] { 181, 276, 755, 970, 1012 };
+            int[] locationIndicesVertical = new int[] { 553, 81, 81, 81, 553 };
+            int[] sizesHorizontal = new int[] { 142, 133, 125, 123, 152 };
+            int[] sizesVertical = new int[] { 23, 23, 23, 23, 23 };
+            foreach (var bot in this.bots)
+            {
+                bot.TextBoxBotChips.Anchor = bot.GetAnchorStyles();
+                bot.TextBoxBotChips.Font = new Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+                bot.TextBoxBotChips.Location = new Point(locationIndicesHorizontal[locationIndex], locationIndicesVertical[locationIndex]);
+                bot.TextBoxBotChips.Name = bot.Name + " Chips";
+                bot.TextBoxBotChips.Size = new Size(sizesHorizontal[locationIndex], sizesVertical[locationIndex]);
+                bot.TextBoxBotChips.TabIndex = tabIndex;
+                tabIndex++;
+                locationIndex++;
+                bot.TextBoxBotChips.Text = "Chips : 0";
+            }
         }
 
         private void PopulateBots()
@@ -806,7 +829,7 @@ namespace Poker.UserInterface
         {
             AddChips chipAdder = new AddChips();
             chipAdder.ShowDialog();
-            if (chipAdder.ChipsAmount != 0)
+            if (chipAdder.ChipsAmount > 0)
             {
                 this.human.Chips = chipAdder.ChipsAmount;
 

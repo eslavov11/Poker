@@ -67,29 +67,11 @@
             this.label1 = new Label();
             this.tbRaise = new TextBox();
             this.SuspendLayout();
-            // 
-            // buttonFold
-            // 
             this.FoldButton();
-            // 
-            // buttonCheck
-            // 
             this.CheckButton();
-            // 
-            // buttonCall
-            // 
             this.CallButton();
-            // 
-            // buttonRaise
-            // 
             this.RaiseButton();
-            // 
-            // pbTimer
-            // 
             this.StartTimer();
-            // 
-            // txtBoxHumanChips
-            // 
             this.AddHumanChips();
             // 
             // bAdd
@@ -110,26 +92,6 @@
             this.tbAdd.Name = "tbAdd";
             this.tbAdd.Size = new System.Drawing.Size(125, 20);
             this.tbAdd.TabIndex = 8;
-            
-            // TODO: these numbers are just a temporary solution!
-            int tabIndex = 13;
-            int locationIndex = 0;
-            int[] locationIndicesHorizontal = new int[] { 181, 276, 755, 970, 1012 };
-            int[] locationIndicesVertical = new int[] { 553, 81, 81, 81, 553 };
-            int[] sizesHorizontal = new int[] { 142, 133, 125, 123, 152 };
-            int[] sizesVertical = new int[] { 23, 23, 23, 23, 23 };
-            foreach (var bot in this.bots)
-            {
-                bot.TextBoxBotChips.Anchor = bot.GetAnchorStyles();
-                bot.TextBoxBotChips.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-                bot.TextBoxBotChips.Location = new System.Drawing.Point(locationIndicesHorizontal[locationIndex], locationIndicesVertical[locationIndex]);
-                bot.TextBoxBotChips.Name = bot.Name + " Chips";
-                bot.TextBoxBotChips.Size = new System.Drawing.Size(sizesHorizontal[locationIndex], sizesVertical[locationIndex]);
-                bot.TextBoxBotChips.TabIndex = tabIndex;
-                tabIndex++;
-                locationIndex++;
-                bot.TextBoxBotChips.Text = "Chips : 0";
-            }
             // 
             // txtPot
             // 
@@ -262,8 +224,8 @@
             this.ClientSize = new System.Drawing.Size(1350, 729);
             this.Controls.Add(this.tbRaise);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.bots[1].Status);
             this.Controls.Add(this.humanStatus);
+            this.Controls.Add(this.bots[1].Status);
             this.Controls.Add(this.bots[0].Status);
             this.Controls.Add(this.bots[2].Status);
             this.Controls.Add(this.bots[3].Status);
@@ -274,10 +236,11 @@
             this.Controls.Add(this.buttonBigBlind);
             this.Controls.Add(this.buttonOptions);
             this.Controls.Add(this.potStatus);
-            foreach (var bot in this.bots)
-            {
-                this.Controls.Add(bot.TextBoxBotChips);
-            }
+            this.Controls.Add(this.bots[0].TextBoxBotChips);
+            this.Controls.Add(this.bots[1].TextBoxBotChips);
+            this.Controls.Add(this.bots[2].TextBoxBotChips);
+            this.Controls.Add(this.bots[3].TextBoxBotChips);
+            this.Controls.Add(this.bots[4].TextBoxBotChips);
 
             this.Controls.Add(this.tbAdd);
             this.Controls.Add(this.bAdd);
