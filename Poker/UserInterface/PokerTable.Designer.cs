@@ -80,51 +80,19 @@
             // 
             // buttonFold
             // 
-            this.buttonFold.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.buttonFold.Font = new System.Drawing.Font("Microsoft Sans Serif", 17F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonFold.Location = new System.Drawing.Point(335, 660);
-            this.buttonFold.Name = "buttonFold";
-            this.buttonFold.Size = new System.Drawing.Size(130, 62);
-            this.buttonFold.TabIndex = 0;
-            this.buttonFold.Text = "Fold";
-            this.buttonFold.UseVisualStyleBackColor = true;
-            this.buttonFold.Click += new System.EventHandler(this.ButtonFold_Click);
+            this.FoldButton();
             // 
             // buttonCheck
             // 
-            this.buttonCheck.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.buttonCheck.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonCheck.Location = new System.Drawing.Point(494, 660);
-            this.buttonCheck.Name = "buttonCheck";
-            this.buttonCheck.Size = new System.Drawing.Size(134, 62);
-            this.buttonCheck.TabIndex = 2;
-            this.buttonCheck.Text = "Check";
-            this.buttonCheck.UseVisualStyleBackColor = true;
-            this.buttonCheck.Click += new System.EventHandler(this.ButtonCheck_Click);
+            this.CheckButton();
             // 
             // buttonCall
             // 
-            this.buttonCall.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.buttonCall.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonCall.Location = new System.Drawing.Point(667, 661);
-            this.buttonCall.Name = "buttonCall";
-            this.buttonCall.Size = new System.Drawing.Size(126, 62);
-            this.buttonCall.TabIndex = 3;
-            this.buttonCall.Text = "Call";
-            this.buttonCall.UseVisualStyleBackColor = true;
-            this.buttonCall.Click += new System.EventHandler(this.ButtonCall_Click);
+            this.CallButton();
             // 
             // buttonRaise
             // 
-            this.buttonRaise.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.buttonRaise.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonRaise.Location = new System.Drawing.Point(835, 661);
-            this.buttonRaise.Name = "buttonRaise";
-            this.buttonRaise.Size = new System.Drawing.Size(124, 62);
-            this.buttonRaise.TabIndex = 4;
-            this.buttonRaise.Text = "Raise";
-            this.buttonRaise.UseVisualStyleBackColor = true;
-            this.buttonRaise.Click += new System.EventHandler(this.ButtonRaise_Click);
+            this.RaiseButton();
             // 
             // pbTimer
             // 
@@ -402,6 +370,58 @@
             this.Layout += new System.Windows.Forms.LayoutEventHandler(this.ChangeLayout);
             this.ResumeLayout(false);
             this.PerformLayout();
+        }
+
+        private void FoldButton()
+        {
+            this.buttonFold.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.buttonFold.Font = new System.Drawing.Font("Microsoft Sans Serif", 17F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonFold.Location = new System.Drawing.Point(335, 660);
+            this.buttonFold.Name = "buttonFold";
+            this.buttonFold.Size = new System.Drawing.Size(130, 62);
+            this.buttonFold.TabIndex = 0;
+            this.buttonFold.Text = "Fold";
+            this.buttonFold.UseVisualStyleBackColor = true;
+            this.buttonFold.Click += new System.EventHandler(this.ButtonFold_Click);
+        }
+
+        private void CheckButton()
+        {
+            this.buttonCheck.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.buttonCheck.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonCheck.Location = new System.Drawing.Point(494, 660);
+            this.buttonCheck.Name = "buttonCheck";
+            this.buttonCheck.Size = new System.Drawing.Size(134, 62);
+            this.buttonCheck.TabIndex = 2;
+            this.buttonCheck.Text = "Check";
+            this.buttonCheck.UseVisualStyleBackColor = true;
+            this.buttonCheck.Click += new System.EventHandler(this.ButtonCheck_Click);
+        }
+
+        private void CallButton()
+        {
+            this.buttonCall.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.buttonCall.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonCall.Location = new System.Drawing.Point(667, 661);
+            this.buttonCall.Name = "buttonCall";
+            this.buttonCall.Size = new System.Drawing.Size(126, 62);
+            this.buttonCall.TabIndex = 3;
+            this.buttonCall.Text = "Call";
+            this.buttonCall.UseVisualStyleBackColor = true;
+            this.buttonCall.Click += new System.EventHandler(this.ButtonCall_Click);
+        }
+
+        private void RaiseButton()
+        {
+            this.buttonRaise.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.buttonRaise.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonRaise.Location = new System.Drawing.Point(835, 661);
+            this.buttonRaise.Name = "buttonRaise";
+            this.buttonRaise.Size = new System.Drawing.Size(124, 62);
+            this.buttonRaise.TabIndex = 4;
+            this.buttonRaise.Text = "Raise";
+            this.buttonRaise.UseVisualStyleBackColor = true;
+            this.buttonRaise.Click += new System.EventHandler(this.ButtonRaise_Click);
         }
         #endregion
     }
