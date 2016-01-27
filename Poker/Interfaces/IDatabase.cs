@@ -12,7 +12,7 @@
 
         List<string> CheckWinners { get; set; }
 
-        List<Type> Win { get; set; }
+        List<Type> Winners { get; set; }
 
         List<bool?> PlayersGameStatus { get; set; }
     }

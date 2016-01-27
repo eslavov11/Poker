@@ -519,16 +519,16 @@ namespace Poker.UserInterface
                     if (this.reservedGameCardsIndeces[index] == int.Parse(this.cardsPictureBoxList[card1].Tag.ToString()) &&
                         this.reservedGameCardsIndeces[index + 1] == int.Parse(this.cardsPictureBoxList[card2].Tag.ToString()))
                     {
-                        this.assertHandType.PairFromHand(player, index, this.pokerDatabase.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
-                        this.assertHandType.PairTwoPair(player, index, this.pokerDatabase.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
-                        this.assertHandType.TwoPair(player, index, this.pokerDatabase.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
-                        this.assertHandType.ThreeOfAKind(player, straight, index, this.pokerDatabase.Win, ref this.sorted);
-                        this.assertHandType.Straight(player, straight, index, this.pokerDatabase.Win, ref this.sorted);
-                        this.assertHandType.Flush(player, ref vf, cardsOnBoard, ref index, this.pokerDatabase.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
-                        this.assertHandType.FullHouse(player, ref done, straight, this.pokerDatabase.Win, ref this.sorted, ref this.type);
-                        this.assertHandType.FourOfAKind(player, straight, this.pokerDatabase.Win, ref this.sorted);
-                        this.assertHandType.StraightFlush(player, clubes, diamonds, hearts, spades, this.pokerDatabase.Win, ref this.sorted);
-                        this.assertHandType.HighCard(player, index, this.pokerDatabase.Win, ref this.sorted, ref this.reservedGameCardsIndeces);
+                        this.assertHandType.PairFromHand(player, index, this.pokerDatabase.Winners, ref this.sorted, ref this.reservedGameCardsIndeces);
+                        this.assertHandType.PairTwoPair(player, index, this.pokerDatabase.Winners, ref this.sorted, ref this.reservedGameCardsIndeces);
+                        this.assertHandType.TwoPair(player, index, this.pokerDatabase.Winners, ref this.sorted, ref this.reservedGameCardsIndeces);
+                        this.assertHandType.ThreeOfAKind(player, straight, index, this.pokerDatabase.Winners, ref this.sorted);
+                        this.assertHandType.Straight(player, straight, index, this.pokerDatabase.Winners, ref this.sorted);
+                        this.assertHandType.Flush(player, ref vf, cardsOnBoard, ref index, this.pokerDatabase.Winners, ref this.sorted, ref this.reservedGameCardsIndeces);
+                        this.assertHandType.FullHouse(player, ref done, straight, this.pokerDatabase.Winners, ref this.sorted, ref this.type);
+                        this.assertHandType.FourOfAKind(player, straight, this.pokerDatabase.Winners, ref this.sorted);
+                        this.assertHandType.StraightFlush(player, clubes, diamonds, hearts, spades, this.pokerDatabase.Winners, ref this.sorted);
+                        this.assertHandType.HighCard(player, index, this.pokerDatabase.Winners, ref this.sorted, ref this.reservedGameCardsIndeces);
                     }
                 }
             }
@@ -785,7 +785,7 @@ namespace Poker.UserInterface
                 this.pokerDatabase.Chips.Clear();
                 this.pokerDatabase.CheckWinners.Clear();
                 this.winners = 0;
-                this.pokerDatabase.Win.Clear();
+                this.pokerDatabase.Winners.Clear();
                 this.sorted.Current = 0;
                 this.sorted.Power = 0;
                 for (int os = 0; os < 17; os++)
@@ -1000,7 +1000,7 @@ namespace Poker.UserInterface
             this.pokerDatabase.PlayersGameStatus.Clear();
             this.pokerDatabase.CheckWinners.Clear();
             this.pokerDatabase.Chips.Clear();
-            this.pokerDatabase.Win.Clear();
+            this.pokerDatabase.Winners.Clear();
             this.sorted.Current = 0;
             this.sorted.Power = 0;
             this.potStatus.Text = "0";
@@ -1068,7 +1068,7 @@ namespace Poker.UserInterface
 
         private void FixWinners()
         {
-            this.pokerDatabase.Win.Clear();
+            this.pokerDatabase.Winners.Clear();
             this.sorted.Current = 0;
             this.sorted.Power = 0;
             string fixedLast = "qwerty";

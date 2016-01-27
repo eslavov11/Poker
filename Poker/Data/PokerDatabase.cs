@@ -21,7 +21,7 @@
         public PokerDatabase()
         {
             this.PlayersGameStatus = new List<bool?>();
-            this.Win = new List<Type>();
+            this.Winners = new List<Type>();
             this.CheckWinners = new List<string>();
             this.Chips = new List<int>();
         }
@@ -52,7 +52,7 @@
             }
         }
 
-        public List<Type> Win
+        public List<Type> Winners
         {
             get
             {
