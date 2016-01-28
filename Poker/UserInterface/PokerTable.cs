@@ -1069,7 +1069,7 @@
             {
                 AddChips chipAdder = new AddChips();
                 chipAdder.ShowDialog();
-                if (chipAdder.ChipsAmount != 0)
+                if (chipAdder.ChipsAmount > 0)
                 {
                     this.human.Chips = chipAdder.ChipsAmount;
 
@@ -1395,6 +1395,11 @@
             }
             else
             {
+                if (int.Parse(tbAdd.Text) <= 0)
+                {
+                    return;
+                }
+
                 this.human.Chips += int.Parse(tbAdd.Text);
 
                 foreach (var bot in this.bots)

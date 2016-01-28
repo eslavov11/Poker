@@ -39,8 +39,6 @@
             IBot currentPlayer = new Bot("Bot 1", 0, 0, 0);
             currentPlayer.Status = new Label();
             bool isRisingActivated = false;
-            int globalCall = 0;
-            int globalRaise = 500;
             TextBox box = new TextBox();
             box.Text = "0";
 
