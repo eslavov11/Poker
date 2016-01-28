@@ -40,7 +40,7 @@
             potStatus.Text = (int.Parse(potStatus.Text) + neededChipsToCall).ToString();
         }
 
-        public void Raised(IPlayer player, Label playerStatus, ref bool risingIsActivated, ref int raise, ref int neededChipsToCall, TextBox potStatus)
+        public void Raise(IPlayer player, Label playerStatus, ref bool risingIsActivated, ref int raise, ref int neededChipsToCall, TextBox potStatus)
         {
             player.Chips -= Convert.ToInt32(raise);
             playerStatus.Text = "Raise " + raise;
@@ -80,14 +80,14 @@
                 if (raise == 0)
                 {
                     raise = neededChipsToCall * 2;
-                    this.Raised(player, playerStatus, ref raising, ref raise, ref neededChipsToCall, potStatus);
+                    this.Raise(player, playerStatus, ref raising, ref raise, ref neededChipsToCall, potStatus);
                 }
                 else
                 {
                     if (raise <= RoundN(player.Chips, n))
                     {
                         raise = neededChipsToCall * 2;
-                        this.Raised(player, playerStatus, ref raising, ref raise, ref neededChipsToCall, potStatus);
+                        this.Raise(player, playerStatus, ref raising, ref raise, ref neededChipsToCall, potStatus);
                     }
                     else
                     {
@@ -142,12 +142,12 @@
                             if (raise > 0)
                             {
                                 raise = (int)RoundN(player.Chips, n);
-                                this.Raised(player, playerStatus, ref raising, ref raise, ref neededChipsToCall, potStatus);
+                                this.Raise(player, playerStatus, ref raising, ref raise, ref neededChipsToCall, potStatus);
                             }
                             else
                             {
                                 raise = neededChipsToCall * 2;
-                                this.Raised(player, playerStatus, ref raising, ref raise, ref neededChipsToCall, potStatus);
+                                this.Raise(player, playerStatus, ref raising, ref raise, ref neededChipsToCall, potStatus);
                             }
                         }
                     }
@@ -185,12 +185,12 @@
                             if (raise > 0)
                             {
                                 raise = (int)RoundN(player.Chips, n - rnd);
-                                this.Raised(player, playerStatus, ref raising, ref raise, ref neededChipsToCall, potStatus);
+                                this.Raise(player, playerStatus, ref raising, ref raise, ref neededChipsToCall, potStatus);
                             }
                             else
                             {
                                 raise = neededChipsToCall * 2;
-                                this.Raised(player, playerStatus, ref raising, ref raise, ref neededChipsToCall, potStatus);
+                                this.Raise(player, playerStatus, ref raising, ref raise, ref neededChipsToCall, potStatus);
                             }
                         }
                     }
@@ -199,7 +199,7 @@
                 if (neededChipsToCall <= 0)
                 {
                     raise = (int)RoundN(player.Chips, r - rnd);
-                    this.Raised(player, playerStatus, ref raising, ref raise, ref neededChipsToCall, potStatus);
+                    this.Raise(player, playerStatus, ref raising, ref raise, ref neededChipsToCall, potStatus);
                 }
             }
 

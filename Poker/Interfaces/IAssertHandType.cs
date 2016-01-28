@@ -8,36 +8,27 @@
     /// </summary>
     public interface IAssertHandType
     {
+
         /// <summary>
-        /// Performs the needed actions if the player's hand is straight flush.
+        /// Sets the player type if his hand type is straight flush.
         /// </summary>
-        /// <param name="player">The player.</param>
-        /// <param name="clubes">The clubes.</param>
-        /// <param name="dimonds">The dimonds.</param>
-        /// <param name="hearts">The hearts.</param>
-        /// <param name="spades">The spades.</param>
-        /// <param name="winners">The winners.</param>
         void StraightFlush(IPlayer player, int[] clubes, int[] dimonds, int[] hearts, int[] spades, List<Type> winners, ref Type sorted);
 
-        /// <summary>
-        /// Performs the needed actions if the player's hand is four of a kind.
-        /// </summary>
-        /// <param name="player">The player.</param>
-        /// <param name="winners">The winners.</param>
-        /// <param name="sorted">The sorted.</param>
-        void FourOfAKind(IPlayer player, int[] straight, List<Type> winners, ref Type sorted);
 
         /// <summary>
-        /// Performs the needed actions if the player's hand is full house.
+        /// Sets the player type if his hand type is four of a kind.
         /// </summary>
-        /// <param name="player">The player.</param>
-        /// <param name="winners">The winners.</param>
-        /// <param name="sorted">The sorted.</param>
-        /// <param name="type">The type.</param>
-        void FullHouse(IPlayer player, ref bool done, int[] straight, List<Type> winners, ref Type sorted, ref double type);
-        
+        void FourOfAKind(IPlayer player, int[] straight, List<Type> winners, ref Type sorted);
+
+
         /// <summary>
-        /// Performs the needed actions if the player's hand is flush.
+        /// Sets the player type if his hand type is full house.
+        /// </summary>
+        void FullHouse(IPlayer player, ref bool done, int[] straight, List<Type> winners, ref Type sorted, ref double type);
+
+
+        /// <summary>
+        /// Sets the player type if his hand type is flush.
         /// </summary>
         void Flush(IPlayer player, ref bool vf, int[] straight1, ref int index, List<Type> winners, ref Type sorted, ref int[] reserve);
 

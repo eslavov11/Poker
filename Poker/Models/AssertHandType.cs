@@ -44,6 +44,9 @@
             }
         }
 
+        /// <summary>
+        /// Sets the player type if his hand type is four of a kind.
+        /// </summary>
         public void FourOfAKind(IPlayer player, int[] straight, List<Type> winners, ref Type sorted)
         {
             if (player.Type >= -1)
@@ -71,6 +74,9 @@
             }
         }
 
+        /// <summary>
+        /// Sets the player type if his hand type is full house.
+        /// </summary>
         public void FullHouse(
             IPlayer player,
             ref bool done,
@@ -135,6 +141,9 @@
             }
         }
 
+        /// <summary>
+        /// Sets the player type if his hand type is flush.
+        /// </summary>
         public void Flush(
             IPlayer player,
             ref bool vf,
@@ -677,6 +686,9 @@
             }
         }
 
+        /// <summary>
+        /// Sets the player type if his hand type is straight.
+        /// </summary>
         public void Straight(IPlayer player, int[] stright, int index, List<Type> winners, ref Type sorted)
         {
             if (player.Type >= -1)
@@ -716,6 +728,9 @@
             }
         }
 
+        /// <summary>
+        /// Sets the player type if his hand type is three of a kind.
+        /// </summary>
         public void ThreeOfAKind(IPlayer player, int[] stright, int index, List<Type> winners, ref Type sorted)
         {
             if (player.Type >= -1)
@@ -744,6 +759,9 @@
             }
         }
 
+        /// <summary>
+        /// Sets the player type if his hand type is pair of two cards.
+        /// </summary>
         public void TwoPair(IPlayer player, int index, List<Type> winners, ref Type sorted, ref int[] reserve)
         {
             if (player.Type >= -1)
@@ -814,6 +832,9 @@
             }
         }
 
+        /// <summary>
+        /// Sets the player type if his hand type is pair of two pairs.
+        /// </summary>
         public void PairTwoPair(IPlayer player, int index, List<Type> winners, ref Type sorted, ref int[] reserve)
         {
             if (player.Type >= -1)
@@ -951,6 +972,9 @@
             }
         }
 
+        /// <summary>
+        /// Sets the player type if his hand type is pair from hand.
+        /// </summary>
         public void PairFromHand(IPlayer player, int index, List<Type> winners, ref Type sorted, ref int[] reserve)
         {
             if (player.Type >= -1)
@@ -1034,6 +1058,9 @@
             }
         }
 
+        /// <summary>
+        /// Sets the player type if his hand is high card.
+        /// </summary>
         public void HighCard(IPlayer player, int index, List<Type> winners, ref Type sorted, ref int[] reserve)
         {
             if (player.Type == -1)

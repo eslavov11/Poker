@@ -1129,8 +1129,7 @@
                 this.Winner(bot, fixedLast);
             }
         }
-
-        //TODO: Prevous name AI
+        
         private void AI(int c1, int c2, Label playerStatus, int name, IPlayer player)
         {
             if (!player.OutOfChips)

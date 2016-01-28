@@ -180,7 +180,7 @@
                         if (player.Chips >= raise * 2)
                         {
                             raise *= 2;
-                            this.playerMove.Raised(player, botStatus, ref raising, ref raise, ref neededChipsToCall, potStatus);
+                            this.playerMove.Raise(player, botStatus, ref raising, ref raise, ref neededChipsToCall, potStatus);
                         }
                         else
                         {
@@ -190,7 +190,7 @@
                     else
                     {
                         raise = neededChipsToCall * 2;
-                        this.playerMove.Raised(player, botStatus, ref raising, ref raise, ref neededChipsToCall, potStatus);
+                        this.playerMove.Raise(player, botStatus, ref raising, ref raise, ref neededChipsToCall, potStatus);
                     }
                 }
             }
