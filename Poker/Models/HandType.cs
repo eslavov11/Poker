@@ -149,6 +149,9 @@
             }
         }
 
+        /// <summary>
+        /// Method which 
+        /// </summary>
         private void Smooth(IPlayer player, Label botStatus, int name, int n, int r, int neededChipsToCall, TextBox potStatus, ref int raise, ref bool raising, ref int rounds)
         {
             int rnd = this.randomGenerator.Next(1, 3);

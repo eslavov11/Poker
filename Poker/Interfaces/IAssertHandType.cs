@@ -8,24 +8,20 @@
     /// </summary>
     public interface IAssertHandType
     {
-
         /// <summary>
         /// Sets the player type if his hand type is straight flush.
         /// </summary>
         void StraightFlush(IPlayer player, int[] clubes, int[] dimonds, int[] hearts, int[] spades, List<Type> winners, ref Type sorted);
-
-
+       
         /// <summary>
         /// Sets the player type if his hand type is four of a kind.
         /// </summary>
         void FourOfAKind(IPlayer player, int[] straight, List<Type> winners, ref Type sorted);
 
-
         /// <summary>
         /// Sets the player type if his hand type is full house.
         /// </summary>
         void FullHouse(IPlayer player, ref bool done, int[] straight, List<Type> winners, ref Type sorted, ref double type);
-
 
         /// <summary>
         /// Sets the player type if his hand type is flush.

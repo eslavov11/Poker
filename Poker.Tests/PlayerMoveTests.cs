@@ -77,6 +77,7 @@
             playerMove.Call(currentPlayer, currentPlayer.Status, ref isRisingActivated, ref globalRaise, box);
 
             Assert.IsFalse(currentPlayer.CanMakeTurn, "Bot shouldnt be able to make turn.");
-            Assert.IsFalse(isRisingActivated, "Bot shouldnt be able to raise");}
+            Assert.IsFalse(isRisingActivated, "Bot shouldnt be able to raise");
+        }
     }
 }

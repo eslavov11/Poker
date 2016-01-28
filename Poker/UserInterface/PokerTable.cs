@@ -8,6 +8,7 @@
     using System.Threading.Tasks;
     using System.Windows.Forms;
     using Poker.Data;
+    using Poker.Enums;
     using Poker.Interfaces;
     using Poker.Models;
     using Poker.Models.Players;
@@ -38,11 +39,6 @@
         private int height;
         private int width;
         private int winners;
-
-        private int flop = 1;
-        private int turn = 2;
-        private int river = 3;
-        private int end = 4;
 
         private int maxLeft = 6;
         private int last = 123;
@@ -468,7 +464,6 @@
         {
             for (int botNumber = 0; botNumber < this.bots.Count; botNumber++)
             {
-                //TODO: FIX BUG, Dealer doesnot deal cards to bot 2 and 4
                 if (!this.bots[botNumber].OutOfChips)
                 {
                     if (this.bots[botNumber].CanMakeTurn)
@@ -641,15 +636,16 @@
 
                     foreach (var bot in this.bots)
                     {
-                        if (this.pokerDatabase.CheckWinners.Contains(bot.Name))
+                        if (!this.pokerDatabase.CheckWinners.Contains(bot.Name))
                         {
-                            bot.Chips += int.Parse(this.potStatus.Text) / this.winners;
-                            bot.TextBoxBotChips.Text = bot.Chips.ToString();
+                            continue;
                         }
+
+                        bot.Chips += int.Parse(this.potStatus.Text) / this.winners;
+                        bot.TextBoxBotChips.Text = bot.Chips.ToString();
                     }
                 }
-
-                if (this.winners == 1)
+                else if (this.winners == 1)
                 {
                     if (this.pokerDatabase.CheckWinners.Contains("Player"))
                     {
@@ -712,7 +708,7 @@
                 }
             }
 
-            if (this.rounds == this.flop)
+            if (this.rounds == (int)GameStage.Flop)
             {
                 for (int j = 12; j <= 14; j++)
                 {
@@ -723,7 +719,7 @@
                 }
             }
 
-            if (this.rounds == this.turn)
+            if (this.rounds == (int)GameStage.Turn)
             {
                 for (int j = 14; j <= 15; j++)
                 {
@@ -734,7 +730,7 @@
                 }
             }
 
-            if (this.rounds == this.river)
+            if (this.rounds == (int)GameStage.River)
             {
                 for (int j = 15; j <= 16; j++)
                 {
@@ -745,7 +741,7 @@
                 }
             }
 
-            if (this.rounds == this.end && this.maxLeft == 6)
+            if (this.rounds == (int)GameStage.End && this.maxLeft == 6)
             {
                 string fixedLast = "qwerty";
                 if (!this.humanStatus.Text.Contains("Fold"))
@@ -999,7 +995,7 @@
             this.chipsAreAdded = false;
 
             // FiveOrLessLeft
-            if (leftPlayers < 6 && leftPlayers > 1 && this.rounds >= this.end)
+            if (leftPlayers < 6 && leftPlayers > 1 && this.rounds >= (int)GameStage.End)
             {
                 await this.Finish(2);
             }
@@ -1023,10 +1019,6 @@
             this.height = 0;
             this.width = 0;
             this.winners = 0;
-            this.flop = 1;
-            this.turn = 2;
-            this.river = 3;
-            this.end = 4;
             this.maxLeft = 6;
             this.last = 123;
             this.raisedTurn = 1;
