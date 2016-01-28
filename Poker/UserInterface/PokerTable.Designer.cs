@@ -19,7 +19,7 @@
         private Button buttonSmallBlind;
         private TextBox tbBigBlind;
         private Label humanStatus;
-        private Label label1;
+        private Label potLabel;
         private TextBox tbRaise;
 
         /// <summary>
@@ -64,7 +64,7 @@
             this.buttonSmallBlind = new Button();
             this.tbBigBlind = new TextBox();
             this.humanStatus = new Label();
-            this.label1 = new Label();
+            this.potLabel = new Label();
             this.tbRaise = new TextBox();
             this.SuspendLayout();
             this.FoldButton();
@@ -199,13 +199,13 @@
             // 
             // label1
             // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(654, 188);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(31, 21);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Pot";
+            this.potLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.potLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.potLabel.Location = new System.Drawing.Point(654, 188);
+            this.potLabel.Name = "potLabel";
+            this.potLabel.Size = new System.Drawing.Size(31, 21);
+            this.potLabel.TabIndex = 0;
+            this.potLabel.Text = "Pot";
             // 
             // tbRaise
             // 
@@ -223,7 +223,7 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1350, 729);
             this.Controls.Add(this.tbRaise);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.potLabel);
             this.Controls.Add(this.humanStatus);
             this.Controls.Add(this.bots[1].Status);
             this.Controls.Add(this.bots[0].Status);

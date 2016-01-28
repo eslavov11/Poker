@@ -407,7 +407,8 @@
                     }
                 }
 
-                if (f3.Length == 4) // different cards in hand
+                // different cards in hand
+                if (f3.Length == 4) 
                 {
                     if (reserve[index] % 4 != reserve[index + 1] % 4 && reserve[index] % 4 == f3[0] % 4)
                     {
@@ -518,7 +519,8 @@
                     }
                 }
 
-                if (f4.Length == 4) //different cards in hand
+                // different cards in hand
+                if (f4.Length == 4) 
                 {
                     if (reserve[index] % 4 != reserve[index + 1] % 4 && reserve[index] % 4 == f4[0] % 4)
                     {
@@ -756,6 +758,7 @@
                             {
                                 max--;
                             }
+
                             if (tc - k >= 12)
                             {
                                 if (reserve[index] / 4 == reserve[tc] / 4
@@ -1059,7 +1062,7 @@
 
         private static void GetValue(IPlayer player, int[] colour, List<Type> winners, out Type sorted)
         {
-            player.Power = (colour.Max()) / 4 + player.Type * 100;
+            player.Power = colour.Max() / 4 + player.Type * 100;
             if (colour[0] + 4 == colour[4])
             {
                 //Straight Flush

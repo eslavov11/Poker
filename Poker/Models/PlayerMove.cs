@@ -34,19 +34,19 @@
             potStatus.Text = (int.Parse(potStatus.Text) + neededChipsToCall).ToString();
         }
 
-        public void Raised(IPlayer player, Label playerStatus, ref bool raising, ref int raise, ref int neededChipsToCall, TextBox potStatus)
+        public void Raised(IPlayer player, Label playerStatus, ref bool risingIsActivated, ref int raise, ref int neededChipsToCall, TextBox potStatus)
         {
             player.Chips -= Convert.ToInt32(raise);
             playerStatus.Text = "Raise " + raise;
             potStatus.Text = (int.Parse(potStatus.Text) + Convert.ToInt32(raise)).ToString();
             neededChipsToCall = Convert.ToInt32(raise);
-            raising = true;
+            risingIsActivated = true;
             player.CanMakeTurn = false;
         }
 
         public static double RoundN(int sChips, int n)
         {
-            double a = Math.Round((sChips / n) / 100d, 0) * 100;
+            double a = Math.Round(sChips / n / 100d, 0) * 100;
             return a;
         }
 

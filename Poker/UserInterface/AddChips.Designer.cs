@@ -35,10 +35,7 @@
         private void InitializeComponent()
         {
             this.SuspendLayout();
-
-            // 
-            // label1
-            // 
+            
             this.label1 = new Label()
             {
                 Font = new System.Drawing.Font(
@@ -55,9 +52,6 @@
                 TextAlign = System.Drawing.ContentAlignment.MiddleCenter
             };
 
-            // 
-            // button1
-            // 
             this.button1 = new Button()
             {
                 Font = new System.Drawing.Font(
@@ -75,9 +69,6 @@
             };
             this.button1.Click += new System.EventHandler(this.ButtonAddChips_Click);
            
-            // 
-            // button2
-            // 
             this.button2 = new Button()
             {
                 Font = new System.Drawing.Font(
@@ -95,9 +86,6 @@
             };
 
             this.button2.Click += new System.EventHandler(this.ButtonExit_Click);
-            // 
-            // textBox1
-            // 
             this.textBox1 = new TextBox()
             {
                 Location = new System.Drawing.Point(91, 229),
@@ -105,10 +93,6 @@
                 Size = new System.Drawing.Size(100, 20),
                 TabIndex = 3
             };
-
-            // 
-            // AddChips
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);

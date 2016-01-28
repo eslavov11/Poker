@@ -2,6 +2,8 @@
 {
     using System;
     using System.Windows.Forms;
+    using Core;
+    using Interfaces;
     using UserInterface;
 
     public static class PokerMain
@@ -12,9 +14,9 @@
         [STAThread]
         public static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new PokerTable());
+            IEngine engine = new PokerEngine();
+            engine.Run();
+            
         }
     }
 }

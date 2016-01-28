@@ -94,7 +94,7 @@
                 this.Smooth(player, playerStatus, name, sCall, sRaise, neededChipsToCall, potStatus, ref raise, ref raising, ref rounds);
             }
 
-            if (player.Power <= 409 && player.Power >= 407)//10  8
+            if (player.Power <= 409 && player.Power >= 407)
             {
                 this.Smooth(player, playerStatus, name, sCall, sRaise, neededChipsToCall, potStatus, ref raise, ref raising, ref rounds);
             }

@@ -33,7 +33,7 @@
         /// </summary>
         /// <param name="pokerPlayer">The poker player.</param>
         /// <param name="playerStatus">The player status.</param>
-        void Raised(IPlayer pokerPlayer, Label playerStatus, ref bool raising, ref int raise, ref int neededChipsToCall, TextBox potStatus);
+        void Raised(IPlayer pokerPlayer, Label playerStatus, ref bool risingIsActivated, ref int raise, ref int neededChipsToCall, TextBox potStatus);
 
         void HP(IPlayer pokerPlayer, Label playerStatus, int n, int n1, int neededChipsToCall, TextBox potStatus, ref int raise, ref bool raising);
 
