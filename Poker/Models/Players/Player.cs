@@ -5,6 +5,8 @@
     using System.Windows.Forms;
     using Interfaces;
 
+    using Poker.UserInterface;
+
     public abstract class Player : IPlayer
     {
         private const int DefaultStartChips = 10000;
@@ -48,11 +50,6 @@
 
             set
             {
-                if (value < 0)
-                {
-                    // TODO: throw or set to 0
-                }
-
                 this.chips = value;
             }
         }
@@ -67,6 +64,12 @@
 
         public bool Folded { get; set; }
 
+        public IList<ICard> Cards { get; }
+
+        public Panel Panel { get; set; }
+
+        public double Type { get; set; }
+
         public void InitializePanel(Point location)
         {
             this.Panel.Location = location;
@@ -75,11 +78,5 @@
             this.Panel.Width = DefaultPlayerPanelWidth;
             this.Panel.Visible = false;
         }
-
-        public IList<ICard> Cards { get; private set; }
-
-        public Panel Panel { get; set; }
-
-        public double Type { get; set; }
     }
 }

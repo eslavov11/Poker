@@ -2,7 +2,7 @@
 {
     using System.Windows.Forms;
 
-    partial class AddChips
+    public partial class AddChips
     {
         private Label label1;
         private Button button1;
@@ -20,9 +20,9 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing && (this.components != null))
             {
-                components.Dispose();
+                this.components.Dispose();
             }
 
             base.Dispose(disposing);
@@ -43,7 +43,7 @@
                         12.5F,
                         System.Drawing.FontStyle.Regular,
                         System.Drawing.GraphicsUnit.Point,
-                        ((byte)(204))),
+                        (byte)204),
                 Location = new System.Drawing.Point(48, 49),
                 Name = "label1",
                 Size = new System.Drawing.Size(176, 23),
@@ -59,7 +59,7 @@
                             9F,
                             System.Drawing.FontStyle.Regular,
                             System.Drawing.GraphicsUnit.Point,
-                            ((byte)(204))),
+                            (byte)204),
                 Location = new System.Drawing.Point(12, 226),
                 Name = "button1",
                 Size = new System.Drawing.Size(75, 23),
@@ -76,7 +76,7 @@
                             9F,
                             System.Drawing.FontStyle.Regular,
                             System.Drawing.GraphicsUnit.Point,
-                            ((byte)(204))),
+                            (byte)204),
                 Location = new System.Drawing.Point(197, 226),
                 Name = "button2",
                 Size = new System.Drawing.Size(75, 23),

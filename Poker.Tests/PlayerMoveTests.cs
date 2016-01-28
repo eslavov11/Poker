@@ -1,14 +1,10 @@
 ﻿namespace Poker.Tests
 {
     using System.Windows.Forms;
-
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Interfaces;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Models;
     using Models.Players;
-
-    using Poker.Models;
-
-    using UserInterface;
 
     [TestClass]
     public class PlayerMoveTests

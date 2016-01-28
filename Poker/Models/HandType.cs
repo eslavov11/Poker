@@ -74,12 +74,14 @@
                 this.Smooth(player, playerStatus, name, tCall, tRaise, neededChipsToCall, potStatus, ref raise, ref raising, ref rounds);
             }
 
-            if (player.Power <= 327 && player.Power >= 321)//10  8
+            //10  8
+            if (player.Power <= 327 && player.Power >= 321)
             {
                 this.Smooth(player, playerStatus, name, tCall, tRaise, neededChipsToCall, potStatus, ref raise, ref raising, ref rounds);
             }
 
-            if (player.Power < 321 && player.Power >= 303)//7 2
+            //7 2
+            if (player.Power < 321 && player.Power >= 303)
             {
                 this.Smooth(player, playerStatus, name, tCall, tRaise, neededChipsToCall, potStatus, ref raise, ref raising, ref rounds);
             }

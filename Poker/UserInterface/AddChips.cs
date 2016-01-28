@@ -40,7 +40,8 @@
             var message = "Are you sure?";
             var title = "Quit";
             var result = MessageBox.Show(
-            message,title,
+            message,
+            title,
             MessageBoxButtons.YesNo, 
             MessageBoxIcon.Question);
 

@@ -1,7 +1,7 @@
 ﻿namespace Poker.Models.Players
 {
-    using Interfaces;
     using System.Windows.Forms;
+    using Interfaces;
 
     public class Bot : Player, IBot
     {
@@ -22,8 +22,7 @@
             this.Status = new Label();
             this.TextBoxBotChips = new TextBox();
         }
-
-        // TODO: validate
+        
         public int StartCard { get; set; }
 
         public int VerticalLocationCoordinate { get; set; }

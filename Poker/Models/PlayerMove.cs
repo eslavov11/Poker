@@ -10,6 +10,12 @@
     /// <seealso cref="Poker.Interfaces.IPlayerMove" />
     public class PlayerMove : IPlayerMove
     {
+        public static double RoundN(int sChips, int n)
+        {
+            double a = Math.Round(sChips / n / 100d, 0) * 100;
+            return a;
+        }
+
         public void Fold(IPlayer player, Label playerStatus, ref bool rising)
         {
             rising = false;
@@ -44,12 +50,6 @@
             player.CanMakeTurn = false;
         }
 
-        public static double RoundN(int sChips, int n)
-        {
-            double a = Math.Round(sChips / n / 100d, 0) * 100;
-            return a;
-        }
-
         // TODO: rename
         public void HP(IPlayer player, Label playerStatus, int n, int n1, int neededChipsToCall, TextBox potStatus, ref int raise, ref bool raising)
         {
@@ -63,6 +63,7 @@
             if (neededChipsToCall > 0)
             {
                 if (rnd == 1 || rnd == 2)
+                {
                     if (neededChipsToCall <= RoundN(player.Chips, n1))
                     {
                         this.Call(player, playerStatus, ref raising, ref neededChipsToCall, potStatus);
@@ -71,6 +72,7 @@
                     {
                         this.Fold(player, playerStatus, ref raising);
                     }
+                }
             }
 
             if (rnd == 3)
@@ -148,7 +150,6 @@
                                 this.Raised(player, playerStatus, ref raising, ref raise, ref neededChipsToCall, potStatus);
                             }
                         }
-
                     }
                 }
             }
@@ -174,12 +175,12 @@
                             this.Call(player, playerStatus, ref raising, ref neededChipsToCall, potStatus);
                         }
 
-                        if (raise <= RoundN(player.Chips, n - rnd) && raise >= (RoundN(player.Chips, n - rnd)) / 2)
+                        if (raise <= RoundN(player.Chips, n - rnd) && raise >= RoundN(player.Chips, n - rnd) / 2)
                         {
                             this.Call(player, playerStatus, ref raising, ref neededChipsToCall, potStatus);
                         }
 
-                        if (raise <= (RoundN(player.Chips, n - rnd)) / 2)
+                        if (raise <= RoundN(player.Chips, n - rnd) / 2)
                         {
                             if (raise > 0)
                             {

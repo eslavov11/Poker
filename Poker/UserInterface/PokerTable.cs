@@ -1,5 +1,4 @@
-﻿using System;
-namespace Poker.UserInterface
+﻿namespace Poker.UserInterface
 {
     using System;
     using System.Collections.Generic;
@@ -21,7 +20,6 @@ namespace Poker.UserInterface
         private readonly IAssertHandType assertHandType;
         private readonly IHandType handType;
         private readonly IPlayer human;
-        // TODO: put all bots in one list!
         private readonly IList<IBot> bots;
         private readonly IDatabase pokerDatabase;
         private readonly Image[] deckImages;
@@ -75,6 +73,7 @@ namespace Poker.UserInterface
             this.reservedGameCardsIndeces = new int[Constants.NeededCardsFromDeck];
             this.deckImages = new Image[Constants.CardsInADeck];
             this.cardsPictureBoxList = new PictureBox[Constants.CardsInADeck];
+            
             //pokerDatabasePlayersGameStatus.Add(humanOutOfChips); pokerDatabasePlayersGameStatus.Add(firstBotOutOfChips); pokerDatabasePlayersGameStatus.Add(secondBotOutOfChips); pokerDatabasePlayersGameStatus.Add(thirdBotOutOfChips); pokerDatabasePlayersGameStatus.Add(fourthBotOutOfChips); pokerDatabasePlayersGameStatus.Add(fifthBotOutOfChips);
             this.bigBlindValue = Constants.MinBigBlindValue;
             this.smallBlindValue = Constants.MinSmallBlindValue;
@@ -95,9 +94,9 @@ namespace Poker.UserInterface
             this.txtBoxHumanChips.Enabled = false;
             this.txtBoxHumanChips.Text = "Chips : " + this.human.Chips;
             this.PopulateBotChips();
-            this.timer.Interval = (1 * 1 * 1000);
+            this.timer.Interval = 1 * 1 * 1000;
             this.timer.Tick += this.TimerTick;
-            this.updates.Interval = (1 * 1 * 100);
+            this.updates.Interval = 1 * 1 * 100;
             this.updates.Tick += this.UpdateTick;
             this.tbBigBlind.Visible = true;
             this.tbSmallBlind.Visible = true;
@@ -125,10 +124,19 @@ namespace Poker.UserInterface
             foreach (var bot in this.bots)
             {
                 bot.TextBoxBotChips.Anchor = bot.GetAnchorStyles();
-                bot.TextBoxBotChips.Font = new Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-                bot.TextBoxBotChips.Location = new Point(locationIndicesHorizontal[locationIndex], locationIndicesVertical[locationIndex]);
+                bot.TextBoxBotChips.Font = new Font(
+                    "Microsoft Sans Serif",
+                    10F,
+                    FontStyle.Regular,
+                    GraphicsUnit.Point, 
+                    (byte)204);
+                bot.TextBoxBotChips.Location = new Point(
+                    locationIndicesHorizontal[locationIndex],
+                    locationIndicesVertical[locationIndex]);
                 bot.TextBoxBotChips.Name = bot.Name + " Chips";
-                bot.TextBoxBotChips.Size = new Size(sizesHorizontal[locationIndex], sizesVertical[locationIndex]);
+                bot.TextBoxBotChips.Size = new Size(
+                    sizesHorizontal[locationIndex],
+                    sizesVertical[locationIndex]);
                 bot.TextBoxBotChips.TabIndex = tabIndex;
                 tabIndex++;
                 locationIndex++;
@@ -189,7 +197,7 @@ namespace Poker.UserInterface
             for (this.cardNumber = 0; this.cardNumber < Constants.NeededCardsFromDeck; this.cardNumber++)
             {
                 //PERFORMANCE: Unnecessary loop for removing parts of the image location
-                this.deckImages[cardNumber] = Image.FromFile(this.cardsImageLocation[cardNumber]);
+                this.deckImages[this.cardNumber] = Image.FromFile(this.cardsImageLocation[this.cardNumber]);
 
                 int lastSlashIndex = this.cardsImageLocation[this.cardNumber].LastIndexOf("\\");
                 int lastDotIndex = this.cardsImageLocation[this.cardNumber].LastIndexOf(".");
@@ -208,8 +216,7 @@ namespace Poker.UserInterface
                 this.cardsPictureBoxList[this.cardNumber].Name = "pb" + this.cardNumber.ToString();
                 await Task.Delay(200);
 
-                //TODO: Should this region be in the for loop at all?
-                #region Throwing Cards
+                // Throwing cards
                 if (this.cardNumber < 2)
                 {
                     if (this.cardsPictureBoxList[0].Tag != null)
@@ -219,7 +226,8 @@ namespace Poker.UserInterface
 
                     this.cardsPictureBoxList[0].Tag = this.reservedGameCardsIndeces[0];
                     this.cardsPictureBoxList[this.cardNumber].Image = this.deckImages[this.cardNumber];
-                    this.cardsPictureBoxList[this.cardNumber].Anchor = (AnchorStyles.Bottom);
+                    this.cardsPictureBoxList[this.cardNumber].Anchor = AnchorStyles.Bottom;
+                    
                     //cardsPictureBoxList[i].Dock = DockStyle.Top;
                     this.cardsPictureBoxList[this.cardNumber].Location = new Point(horizontal, vertical);
                     horizontal += this.cardsPictureBoxList[this.cardNumber].Width;
@@ -256,7 +264,6 @@ namespace Poker.UserInterface
                     if (this.cardNumber > Constants.NeededCardsFromDeskForPlayersOnly + 3)
                     {
                         this.cardsPictureBoxList[Constants.NeededCardsFromDeskForPlayersOnly + 4].Tag = this.reservedGameCardsIndeces[Constants.NeededCardsFromDeskForPlayersOnly + 4];
-
                     }
 
                     if (!check)
@@ -270,15 +277,13 @@ namespace Poker.UserInterface
                     {
                         this.cardsPictureBoxList[this.cardNumber].Anchor = AnchorStyles.None;
                         this.cardsPictureBoxList[this.cardNumber].Image = backImage;
+
                         //cardsPictureBoxList[i].Image = deckImages[i];
                         this.cardsPictureBoxList[this.cardNumber].Location = new Point(horizontal, vertical);
                         horizontal += 110;
                     }
                 }
-
-                #endregion
                 
-                #region CheckForDefeatedBots
                 foreach (var bot in this.bots)
                 {
                     this.CheckForDefeatedBot(bot, this.cardNumber);
@@ -291,13 +296,12 @@ namespace Poker.UserInterface
                         this.MaximizeBox = true;
                         this.MinimizeBox = true;
                     }
+
                     this.timer.Start();
                 }
-                #endregion
             }
 
-            //TODO: GameOver state
-            #region GameOverState?
+            // GameOver state
             if (this.foldedBotsCount == Constants.DefaultBotsCount)
             {
                 DialogResult dialogResult =
@@ -328,16 +332,20 @@ namespace Poker.UserInterface
                 this.buttonRaise.Enabled = true;
                 this.buttonFold.Enabled = true;
             }
-            #endregion
         }
 
-        private void DealCardsForBots(IBot bot, int cardNumber, Bitmap backImage, 
-            ref bool check, ref int horizontal, ref int vertical)
+        private void DealCardsForBots(
+            IBot bot,
+            int cardNumberIndex, 
+            Bitmap backImage, 
+            ref bool check, 
+            ref int horizontal,
+            ref int vertical)
         {
             if (bot.Chips > 0)
             {
                 this.foldedBotsCount--;
-                if (cardNumber >= bot.StartCard && cardNumber < bot.StartCard + 2)
+                if (cardNumberIndex >= bot.StartCard && cardNumberIndex < bot.StartCard + 2)
                 {
                     if (this.cardsPictureBoxList[bot.StartCard].Tag != null)
                     {
@@ -352,18 +360,19 @@ namespace Poker.UserInterface
                     }
 
                     check = true;
-                    this.cardsPictureBoxList[cardNumber].Anchor = bot.GetAnchorStyles();
-                    this.cardsPictureBoxList[cardNumber].Image = backImage;
+                    this.cardsPictureBoxList[cardNumberIndex].Anchor = bot.GetAnchorStyles();
+                    this.cardsPictureBoxList[cardNumberIndex].Image = backImage;
+                   
                     //cardsPictureBoxList[i].Image = deckImages[i];
-                    this.cardsPictureBoxList[cardNumber].Location = new Point(horizontal, vertical);
-                    horizontal += this.cardsPictureBoxList[cardNumber].Width;
-                    this.cardsPictureBoxList[cardNumber].Visible = true;
+                    this.cardsPictureBoxList[cardNumberIndex].Location = new Point(horizontal, vertical);
+                    horizontal += this.cardsPictureBoxList[cardNumberIndex].Width;
+                    this.cardsPictureBoxList[cardNumberIndex].Visible = true;
                     this.Controls.Add(bot.Panel);
                     bot.InitializePanel(new Point(
                         this.cardsPictureBoxList[bot.StartCard].Left - 10,
                         this.cardsPictureBoxList[bot.StartCard].Top - 10));
 
-                    if (cardNumber == bot.StartCard + 1)
+                    if (cardNumberIndex == bot.StartCard + 1)
                     {
                         check = false;
                     }
@@ -396,13 +405,13 @@ namespace Poker.UserInterface
 
         private async Task Turns()
         {
-            #region Rotating
-            // TODO: avoid code repetition in this region
+            // Rotation
             if (!this.human.OutOfChips)
             {
                 if (this.human.CanMakeTurn)
                 {
                     this.FixCall(this.humanStatus, this.human.Call, this.human.Raise, 1);
+                   
                     //MessageBox.Show("Player's turn");
                     this.pbTimer.Visible = true;
                     this.pbTimer.Value = 1000;
@@ -444,13 +453,13 @@ namespace Poker.UserInterface
                 this.bots[0].CanMakeTurn = true;
 
                 this.ProceedWithBotsTurns();
-                #endregion
 
                 await this.AllIn();
                 if (!this.restart)
                 {
                     await this.Turns();
                 }
+
                 this.restart = false;
             }
         }
@@ -467,7 +476,7 @@ namespace Poker.UserInterface
                         this.FixCall(this.bots[botNumber].Status, this.bots[botNumber].Call, this.bots[botNumber].Raise, 1);
                         this.FixCall(this.bots[botNumber].Status, this.bots[botNumber].Call, this.bots[botNumber].Raise, 2);
                         this.Rules(this.bots[botNumber].StartCard, this.bots[botNumber].StartCard + 1, this.bots[botNumber]);
-                        MessageBox.Show("Bot "+ (botNumber + 1) +"'s turn");
+                        MessageBox.Show("Bot " + (botNumber + 1) + "'s turn");
                         this.AI(this.bots[botNumber].StartCard, this.bots[botNumber].StartCard + 1, this.bots[botNumber].Status, botNumber, this.bots[botNumber]);
                         this.turnCount++;
                         this.last = botNumber + 1;
@@ -511,7 +520,7 @@ namespace Poker.UserInterface
 
             if (((!player.OutOfChips || card1 == 0) && card2 == 1) && !this.humanStatus.Text.Contains("Fold"))
             {
-                #region Variables
+                // Initialization
                 bool done = false;
                 bool vf = false;
                 int[] cardsOnBoard = new int[5];
@@ -536,7 +545,7 @@ namespace Poker.UserInterface
                 Array.Sort(diamonds);
                 Array.Sort(hearts);
                 Array.Sort(spades);
-                #endregion
+
                 for (int index = 0; index < 16; index++)
                 {
                     if (this.reservedGameCardsIndeces[index] == int.Parse(this.cardsPictureBoxList[card1].Tag.ToString()) &&
@@ -618,15 +627,15 @@ namespace Poker.UserInterface
                 }
             }
 
-            if (player.Name == lastFixedPlayer)//lastfixed
+            if (player.Name == lastFixedPlayer)
             {
-                // TODO: avoid code repetition!
                 if (this.winners > 1)
                 {
                     if (this.pokerDatabase.CheckWinners.Contains("Player"))
                     {
                         this.human.Chips += int.Parse(this.potStatus.Text) / this.winners;
                         this.txtBoxHumanChips.Text = this.human.Chips.ToString();
+                        
                         //playerPanel.Visible = true;
                     }
 
@@ -639,12 +648,14 @@ namespace Poker.UserInterface
                         }
                     }
                 }
+
                 if (this.winners == 1)
                 {
                     if (this.pokerDatabase.CheckWinners.Contains("Player"))
                     {
                         this.human.Chips += int.Parse(this.potStatus.Text);
                         this.txtBoxHumanChips.Text = this.human.Chips.ToString();
+                        
                         //playerPanel.Visible = true;
                         return;
                     }
@@ -689,8 +700,8 @@ namespace Poker.UserInterface
                         {
                             this.humanStatus.Text = string.Empty;
                         }
-                        // TODO: avoid code repetition! --> 
-                        for (int i = 0; i < this.bots.Count; i++) // avoiding repetitions
+
+                        for (int i = 0; i < this.bots.Count; i++) 
                         {
                             if (!this.bots[i].OutOfChips)
                             {
@@ -803,8 +814,8 @@ namespace Poker.UserInterface
                     bot.Power = 0;
                     bot.Type = -1;
                 }
-                this.human.Type = -1;
 
+                this.human.Type = -1;
                 this.pokerDatabase.Chips.Clear();
                 this.pokerDatabase.CheckWinners.Clear();
                 this.winners = 0;
@@ -819,7 +830,7 @@ namespace Poker.UserInterface
                 }
 
                 this.potStatus.Text = "0";
-                this.humanStatus.Text = "";
+                this.humanStatus.Text = string.Empty;
                 await this.Shuffle();
                 await this.Turns();
             }
@@ -884,6 +895,7 @@ namespace Poker.UserInterface
                         call = 0;
                     }
                 }
+
                 if (options == 2)
                 {
                     if (raiseCall != this.raise && raiseCall <= this.raise)
@@ -908,7 +920,7 @@ namespace Poker.UserInterface
 
         private async Task AllIn()
         {
-            #region All in
+            // ALl in
             if (this.human.Chips <= 0 && !this.chipsAreAdded)
             {
                 if (this.humanStatus.Text.Contains("Raise"))
@@ -925,7 +937,7 @@ namespace Poker.UserInterface
             }
 
             this.chipsAreAdded = false;
-            for (int botCount = 0; botCount < this.bots.Count; botCount++) //removed some repetitions
+            for (int botCount = 0; botCount < this.bots.Count; botCount++) 
             {
                 if (this.bots[botCount].Chips <= 0 && !this.bots[botCount].OutOfChips)
                 {
@@ -941,21 +953,20 @@ namespace Poker.UserInterface
 
             if (this.pokerDatabase.Chips.ToArray().Length == this.maxLeft)
             {
-                await Finish(2);
+                await this.Finish(2);
             }
             else
             {
                 this.pokerDatabase.Chips.Clear();
             }
-            #endregion
-            //TODO: previous name abs
+
             var leftPlayers = this.pokerDatabase.PlayersGameStatus.Count(x => x == false);
 
-            #region LastManStanding
+            // LastManStanding
             if (leftPlayers == 1)
             {
                 int index = this.pokerDatabase.PlayersGameStatus.IndexOf(false);
-                switch (index) //removing repetitions
+                switch (index)
                 {
                     case 0:
                         this.human.Chips += int.Parse(this.potStatus.Text);
@@ -982,17 +993,16 @@ namespace Poker.UserInterface
                     this.cardsPictureBoxList[j].Visible = false;
                 }
 
-                await Finish(1);
+                await this.Finish(1);
             }
-            this.chipsAreAdded = false;
-            #endregion
 
-            #region FiveOrLessLeft
+            this.chipsAreAdded = false;
+
+            // FiveOrLessLeft
             if (leftPlayers < 6 && leftPlayers > 1 && this.rounds >= this.end)
             {
-                await Finish(2);
+                await this.Finish(2);
             }
-            #endregion
         }
 
         private async Task Finish(int n)
@@ -1057,15 +1067,15 @@ namespace Poker.UserInterface
 
             if (this.human.Chips <= 0)
             {
-                AddChips f2 = new AddChips();
-                f2.ShowDialog();
-                if (f2.ChipsAmount != 0)
+                AddChips chipAdder = new AddChips();
+                chipAdder.ShowDialog();
+                if (chipAdder.ChipsAmount != 0)
                 {
-                    this.human.Chips = f2.ChipsAmount;
+                    this.human.Chips = chipAdder.ChipsAmount;
 
                     foreach (var bot in this.bots)
                     {
-                        bot.Chips += f2.ChipsAmount;
+                        bot.Chips += chipAdder.ChipsAmount;
                     }
 
                     this.human.OutOfChips = false;
@@ -1086,6 +1096,7 @@ namespace Poker.UserInterface
             }
 
             await this.Shuffle();
+
             //await Turns();
         }
 
@@ -1216,9 +1227,9 @@ namespace Poker.UserInterface
                 this.buttonCheck.Enabled = false;
             }
 
-            if (up > 0)
+            if (this.up > 0)
             {
-                up--;
+                this.up--;
             }
 
             if (this.human.Chips >= this.neededChipsToCall)
@@ -1250,7 +1261,7 @@ namespace Poker.UserInterface
 
             int parsedValue;
 
-            if (tbRaise.Text != "" && int.TryParse(tbRaise.Text, out parsedValue))
+            if (tbRaise.Text != string.Empty && int.TryParse(tbRaise.Text, out parsedValue))
             {
                 if (this.human.Chips <= int.Parse(tbRaise.Text))
                 {
@@ -1288,6 +1299,7 @@ namespace Poker.UserInterface
                 //humanStatus.Text = "All in " + Chips;
                 this.buttonCheck.Enabled = false;
             }
+
             await this.Turns();
         }
 
@@ -1298,7 +1310,7 @@ namespace Poker.UserInterface
             {
                 this.human.Chips -= this.neededChipsToCall;
                 this.txtBoxHumanChips.Text = "Chips : " + this.human.Chips.ToString();
-                if (this.potStatus.Text != "")
+                if (this.potStatus.Text != string.Empty)
                 {
                     this.potStatus.Text = (int.Parse(this.potStatus.Text) + this.neededChipsToCall).ToString();
                 }
@@ -1329,7 +1341,7 @@ namespace Poker.UserInterface
         {
             this.Rules(0, 1, this.human);
             int parsedValue;
-            if (tbRaise.Text != "" && int.TryParse(tbRaise.Text, out parsedValue))
+            if (tbRaise.Text != string.Empty && int.TryParse(tbRaise.Text, out parsedValue))
             {
                 if (this.human.Chips > this.neededChipsToCall)
                 {
@@ -1379,9 +1391,8 @@ namespace Poker.UserInterface
         
         private void ButtonAddChips_Click(object sender, EventArgs e)
         {
-            if (tbAdd.Text == "")
+            if (tbAdd.Text == string.Empty)
             {
-
             }
             else
             {
@@ -1420,139 +1431,63 @@ namespace Poker.UserInterface
         //TODO: Small and big blind have similar logic, extract in different method
         private void ButtonSmallBlind_Click(object sender, EventArgs e)
         {
-            
             try
             {
-                BlindExceptionCheck(1, this.tbSmallBlind.Text, ref this.smallBlindValue);
+                this.BlindExceptionCheck(1, this.tbSmallBlind.Text, ref this.smallBlindValue);
             }
             catch (ArgumentException p)
             {
                 MessageBox.Show(p.Message);
             }
-            /*int smallBlindNewValue;
-            if (this.tbSmallBlind.Text.Contains(",") || this.tbSmallBlind.Text.Contains("."))
-            {
-                MessageBox.Show("The Small Blind can be only round number !");
-                this.tbSmallBlind.Text = this.smallBlindValue.ToString();
-
-                return;
-            }
-
-            if (!int.TryParse(this.tbSmallBlind.Text, out smallBlindNewValue))
-            {
-                MessageBox.Show("This is a number only field");
-                this.tbSmallBlind.Text = this.smallBlindValue.ToString();
-
-                return;
-            }
-
-            if (int.Parse(this.tbSmallBlind.Text) > 100000)
-            {
-                MessageBox.Show("The maximum of the Small Blind is 100 000 $");
-                this.tbSmallBlind.Text = this.smallBlindValue.ToString();
-            }
-
-            if (int.Parse(this.tbSmallBlind.Text) < 250)
-            {
-                MessageBox.Show("The minimum of the Small Blind is 250 $");
-            }
-
-            if (int.Parse(this.tbSmallBlind.Text) >= 250 && int.Parse(this.tbSmallBlind.Text) <= 100000)
-            {
-                this.smallBlindValue = int.Parse(this.tbSmallBlind.Text);
-                MessageBox.Show(
-                    "The changes have been saved ! They will become available the next hand you play. ");
-            }*/
         }
 
         private void ButtonBigBlind_Click(object sender, EventArgs e)
         {
             try
             {
-                BlindExceptionCheck(2, this.tbBigBlind.Text, ref this.bigBlindValue);
+                this.BlindExceptionCheck(2, this.tbBigBlind.Text, ref this.bigBlindValue);
             }
             catch (ArgumentException p)
             {
                 MessageBox.Show(p.Message);
             }
-            /*int bigBlindNewValue;
-            if (this.tbBigBlind.Text.Contains(",") || this.tbBigBlind.Text.Contains("."))
-            {
-                MessageBox.Show("The Big Blind can be only round number !");
-                this.tbBigBlind.Text = this.bigBlindValue.ToString();
-                return;
-            }
-
-            if (!int.TryParse(tbBigBlind.Text, out bigBlindNewValue))
-            {
-                MessageBox.Show("This is a number only field");
-                tbBigBlind.Text = this.bigBlindValue.ToString();
-                return;
-            }
-
-            if (int.Parse(this.tbBigBlind.Text) > 200000)
-            {
-                MessageBox.Show("The maximum of the Big Blind is 200 000");
-                this.tbBigBlind.Text = this.bigBlindValue.ToString();
-            }
-
-            if (int.Parse(this.tbBigBlind.Text) < 500)
-            {
-                MessageBox.Show("The minimum of the Big Blind is 500 $");
-            }
-
-            if (int.Parse(this.tbBigBlind.Text) >= 500 && int.Parse(this.tbBigBlind.Text) <= 200000)
-            {
-                this.bigBlindValue = int.Parse(this.tbBigBlind.Text);
-                MessageBox.Show(
-                    "The changes have been saved ! They will become available the next hand you play. ");
-            }*/
         }
+
         private void BlindExceptionCheck(int number, string text, ref int blindValue)
         {
             int smallBlindNewValue;
             if (text.Contains(",") || text.Contains("."))
             {
                 throw new ArgumentException("The Small Blind can be only round number !");
-                //MessageBox.Show("The Small Blind can be only round number !");
-                //this.tbSmallBlind.Text = this.smallBlindValue.ToString();
-                //
-                //return;
             }
 
             if (!int.TryParse(text, out smallBlindNewValue))
             {
                 throw new ArgumentException("This is a number only field");
-                //MessageBox.Show("This is a number only field");
-                //this.tbSmallBlind.Text = this.smallBlindValue.ToString();
-                //
-                //return;
             }
 
             if (int.Parse(text) > 100000 * number)
             {
-                throw new ArgumentException("The maximum of the Small Blind is " + 100000 * number + " $");
-                //MessageBox.Show("The maximum of the Small Blind is 100 000 $");
-                //this.tbSmallBlind.Text = this.smallBlindValue.ToString();
+                throw new ArgumentException("The maximum of the Small Blind is " + Constants.MaxSmallBlindValue * number + " $");
             }
 
             if (int.Parse(text) < 250 * number)
             {
-                throw new ArgumentException("The maximum of the Small Blind is " + 250 * number + " $");
-                //MessageBox.Show("The minimum of the Small Blind is 250 $");
+                throw new ArgumentException("The maximum of the Small Blind is " + Constants.MinSmallBlindValue * number + " $");
             }
 
-            if (int.Parse(text) >= 250 * number && int.Parse(text) <= 100000 * number)
+            if (int.Parse(text) >= Constants.MinSmallBlindValue * number && int.Parse(text) <= Constants.MaxSmallBlindValue * number)
             {
                 blindValue = int.Parse(text);
                 MessageBox.Show(
                     "The changes have been saved ! They will become available the next hand you play. ");
             }
         }
+
         private void ChangeLayout(object sender, LayoutEventArgs e)
         {
-            width = this.Width;
-            height = this.Height;
+            this.width = this.Width;
+            this.height = this.Height;
         }
         #endregion
     }

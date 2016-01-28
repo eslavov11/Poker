@@ -18,18 +18,21 @@
             this.deskCardsAsImages = new Image[DefaultCardsInDesk];
             CardsPictures = new PictureBox[DefaultCardsInDesk];
             this.cardsImageLocation = Directory.GetFiles(
-                "Assets\\Cards", "*.png", 
+                "Assets\\Cards",
+                "*.png",
                 SearchOption.TopDirectoryOnly);
             this.InitializeDesk();
         }
+
+        public static PictureBox[] CardsPictures { get; private set; }
 
         private void InitializeDesk()
         {
             var randomCardLocation = new Random();
 
             //Shuffle cards location
-            for (int cardLocationIndex = DefaultCardsInDesk; 
-                cardLocationIndex > 0; 
+            for (int cardLocationIndex = DefaultCardsInDesk;
+                cardLocationIndex > 0;
                 cardLocationIndex--)
             {
                 //Swaps two cards from the desk, taking one random and replacing it with the 
@@ -40,7 +43,5 @@
                 this.cardsImageLocation[cardLocationIndex - 1] = oldCardLocation;
             }
         }
- 
-        public static PictureBox[] CardsPictures { get; private set; }
     }
 }

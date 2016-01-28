@@ -185,7 +185,8 @@
                     }
                 }
 
-                if (f1.Length == 4) //different cards in hand
+                //different cards in hand
+                if (f1.Length == 4) 
                 {
                     if (reserve[index] % 4 != reserve[index + 1] % 4 && reserve[index] % 4 == f1[0] % 4)
                     {
@@ -296,7 +297,8 @@
                     }
                 }
 
-                if (f2.Length == 4) // different cards in hand
+                // different cards in hand
+                if (f2.Length == 4) 
                 {
                     if (reserve[index] % 4 != reserve[index + 1] % 4 && reserve[index] % 4 == f2[0] % 4)
                     {
@@ -1025,6 +1027,7 @@
                                     winners.OrderByDescending(op => op.Current).ThenByDescending(op => op.Power).First();
                             }
                         }
+
                         msgbox = true;
                     }
                 }

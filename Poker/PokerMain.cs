@@ -16,7 +16,6 @@
         {
             IEngine engine = new PokerEngine();
             engine.Run();
-            
         }
     }
 }
