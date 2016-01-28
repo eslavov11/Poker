@@ -22,6 +22,10 @@
 
         TextBox TextBoxBotChips { get; set; }
 
+        /// <summary>
+        /// Gets the anchor styles.
+        /// </summary>
+        /// <returns></returns>
         AnchorStyles GetAnchorStyles();
     }
 }

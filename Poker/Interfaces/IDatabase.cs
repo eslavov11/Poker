@@ -4,7 +4,7 @@
     using Models;
 
     /// <summary>
-    /// Interface which holds various collections needed for the game
+    /// Interface which holds various collections needed for the game's logic.
     /// </summary>
     public interface IDatabase
     {
