@@ -7,6 +7,8 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows.Forms;
+
+    using Poker.Core.AI;
     using Poker.Data;
     using Poker.Enums;
     using Poker.Interfaces;

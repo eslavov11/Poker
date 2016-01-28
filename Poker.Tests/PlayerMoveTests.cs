@@ -5,6 +5,7 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Models;
     using Models.Players;
+    using Poker.Core.AI;
 
     [TestClass]
     public class PlayerMoveTests

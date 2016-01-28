@@ -1,4 +1,4 @@
-﻿namespace Poker.Models
+﻿namespace Poker.Core.AI
 {
     using System;
     using System.Windows.Forms;

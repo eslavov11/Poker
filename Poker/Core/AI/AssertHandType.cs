@@ -1,9 +1,9 @@
-﻿namespace Poker.Models
+﻿namespace Poker.Core.AI
 {
     using System.Collections.Generic;
     using System.Linq;
-
     using Interfaces;
+    using Poker.Models;
 
     /// <summary>
     /// Class which contains methods with different kinds of poker hand types.
