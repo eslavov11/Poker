@@ -3,6 +3,11 @@
     using System.Windows.Forms;
     using Interfaces;
 
+    /// <summary>
+    /// Class defining the behavior for the poker bots.
+    /// </summary>
+    /// <seealso cref="Poker.Models.Players.Player" />
+    /// <seealso cref="Poker.Interfaces.IBot" />
     public class Bot : Player, IBot
     {
         public Bot(

@@ -1,5 +1,8 @@
 ﻿namespace Poker.Utility
 {
+    /// <summary>
+    /// All constant values needed for the poker.
+    /// </summary>
     public static class Constants
     {
         public const int CardsInADeck = 52;

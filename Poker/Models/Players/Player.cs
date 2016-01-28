@@ -30,11 +30,7 @@
 
             //Initialize player with two cards, the default number of cards for texas poker
             //Expandable for poker with 5 cards
-            this.Cards = new List<ICard>
-            {
-                new Card(),
-                new Card()
-            };
+            
         }
 
         public string Name { get; set; }
