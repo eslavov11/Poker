@@ -69,7 +69,7 @@
             this.reservedGameCardsIndeces = new int[Constants.NeededCardsFromDeck];
             this.deckImages = new Image[Constants.CardsInADeck];
             this.cardsPictureBoxList = new PictureBox[Constants.CardsInADeck];
-            
+
             //pokerDatabasePlayersGameStatus.Add(humanOutOfChips); pokerDatabasePlayersGameStatus.Add(firstBotOutOfChips); pokerDatabasePlayersGameStatus.Add(secondBotOutOfChips); pokerDatabasePlayersGameStatus.Add(thirdBotOutOfChips); pokerDatabasePlayersGameStatus.Add(fourthBotOutOfChips); pokerDatabasePlayersGameStatus.Add(fifthBotOutOfChips);
             this.bigBlindValue = Constants.MinBigBlindValue;
             this.smallBlindValue = Constants.MinSmallBlindValue;
@@ -124,7 +124,7 @@
                     "Microsoft Sans Serif",
                     10F,
                     FontStyle.Regular,
-                    GraphicsUnit.Point, 
+                    GraphicsUnit.Point,
                     (byte)204);
                 bot.TextBoxBotChips.Location = new Point(
                     locationIndicesHorizontal[locationIndex],
@@ -223,7 +223,7 @@
                     this.cardsPictureBoxList[0].Tag = this.reservedGameCardsIndeces[0];
                     this.cardsPictureBoxList[this.cardNumber].Image = this.deckImages[this.cardNumber];
                     this.cardsPictureBoxList[this.cardNumber].Anchor = AnchorStyles.Bottom;
-                    
+
                     //cardsPictureBoxList[i].Dock = DockStyle.Top;
                     this.cardsPictureBoxList[this.cardNumber].Location = new Point(horizontal, vertical);
                     horizontal += this.cardsPictureBoxList[this.cardNumber].Width;
@@ -232,7 +232,7 @@
                         this.cardsPictureBoxList[0].Left - 10,
                         this.cardsPictureBoxList[0].Top - 10));
                 }
-                
+
                 // solved the problem with the code repetition(still need to check the code for quality!)
                 foreach (var bot in this.bots)
                 {
@@ -279,7 +279,7 @@
                         horizontal += 110;
                     }
                 }
-                
+
                 foreach (var bot in this.bots)
                 {
                     this.CheckForDefeatedBot(bot, this.cardNumber);
@@ -332,9 +332,9 @@
 
         private void DealCardsForBots(
             IBot bot,
-            int cardNumberIndex, 
-            Bitmap backImage, 
-            ref bool check, 
+            int cardNumberIndex,
+            Bitmap backImage,
+            ref bool check,
             ref int horizontal,
             ref int vertical)
         {
@@ -358,7 +358,7 @@
                     check = true;
                     this.cardsPictureBoxList[cardNumberIndex].Anchor = bot.GetAnchorStyles();
                     this.cardsPictureBoxList[cardNumberIndex].Image = backImage;
-                   
+
                     //cardsPictureBoxList[i].Image = deckImages[i];
                     this.cardsPictureBoxList[cardNumberIndex].Location = new Point(horizontal, vertical);
                     horizontal += this.cardsPictureBoxList[cardNumberIndex].Width;
@@ -407,7 +407,7 @@
                 if (this.human.CanMakeTurn)
                 {
                     this.FixCall(this.humanStatus, this.human.Call, this.human.Raise, 1);
-                   
+
                     //MessageBox.Show("Player's turn");
                     this.pbTimer.Visible = true;
                     this.pbTimer.Value = 1000;
@@ -630,7 +630,7 @@
                     {
                         this.human.Chips += int.Parse(this.potStatus.Text) / this.winners;
                         this.txtBoxHumanChips.Text = this.human.Chips.ToString();
-                        
+
                         //playerPanel.Visible = true;
                     }
 
@@ -651,7 +651,7 @@
                     {
                         this.human.Chips += int.Parse(this.potStatus.Text);
                         this.txtBoxHumanChips.Text = this.human.Chips.ToString();
-                        
+
                         //playerPanel.Visible = true;
                         return;
                     }
@@ -697,7 +697,7 @@
                             this.humanStatus.Text = string.Empty;
                         }
 
-                        for (int i = 0; i < this.bots.Count; i++) 
+                        for (int i = 0; i < this.bots.Count; i++)
                         {
                             if (!this.bots[i].OutOfChips)
                             {
@@ -758,7 +758,7 @@
                         this.Rules(bot.StartCard, bot.StartCard + 1, bot);
                     }
                 }
-                
+
                 this.Winner(this.human, fixedLast);
 
                 foreach (var bot in this.bots)
@@ -784,7 +784,7 @@
                 foreach (var bot in this.bots)
                 {
                     bot.Panel.Visible = false;
-                } 
+                }
 
                 this.human.Call = 0;
                 this.human.Raise = 0;
@@ -933,7 +933,7 @@
             }
 
             this.chipsAreAdded = false;
-            for (int botCount = 0; botCount < this.bots.Count; botCount++) 
+            for (int botCount = 0; botCount < this.bots.Count; botCount++)
             {
                 if (this.bots[botCount].Chips <= 0 && !this.bots[botCount].OutOfChips)
                 {
@@ -1042,7 +1042,7 @@
             this.human.Call = 0;
             this.human.Raise = 0;
             this.humanStatus.Text = string.Empty;
-            
+
             for (int botCount = 0; botCount < this.bots.Count; botCount++)
             {
                 this.bots[botCount].Panel.Visible = false;
@@ -1102,7 +1102,7 @@
                 fixedLast = "Player";
                 this.Rules(0, 1, this.human);
             }
-            
+
             foreach (var bot in this.bots)
             {
                 if (!bot.Status.Text.Contains("Fold"))
@@ -1120,7 +1120,7 @@
                 this.Winner(bot, fixedLast);
             }
         }
-        
+
         private void AI(int c1, int c2, Label playerStatus, int name, IPlayer player)
         {
             if (!player.OutOfChips)
@@ -1190,7 +1190,7 @@
             {
                 this.txtBoxHumanChips.Text = "Chips : 0";
             }
-            
+
             foreach (var bot in this.bots)
             {
                 if (bot.Chips <= 0)
@@ -1378,7 +1378,7 @@
             this.human.CanMakeTurn = false;
             await this.Turns();
         }
-        
+
         private void ButtonAddChips_Click(object sender, EventArgs e)
         {
             if (tbAdd.Text == string.Empty)
@@ -1386,9 +1386,17 @@
             }
             else
             {
+                int parsed = 0;
+
+                if (!int.TryParse(tbAdd.Text, out parsed))
+                {
+                    MessageBox.Show("Chips amount should be a round number.");
+                    return;
+                }
+
                 if (int.Parse(tbAdd.Text) <= 0)
                 {
-                    return;
+                    MessageBox.Show("Chips amount should be positive number.");
                 }
 
                 this.human.Chips += int.Parse(tbAdd.Text);
