@@ -11,13 +11,11 @@
     {
         string Name { get; }
 
-        IList<ICard> Cards { get; }
-
         Panel Panel { get; }
 
-        double Type { get; set; }
+        double HandType { get; set; }
 
-        double Power { get; set; }
+        double HandPower { get; set; }
 
         int Chips { get; set; }
 

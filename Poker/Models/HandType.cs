@@ -29,17 +29,17 @@
         {
             int rCall = this.randomGenerator.Next(10, 16);
             int rRaise = this.randomGenerator.Next(10, 13);
-            if (player.Power <= 199 && player.Power >= 140)
+            if (player.HandPower <= 199 && player.HandPower >= 140)
             {
                 this.playerMove.PH(player, playerStatus, rCall, 6, rRaise, neededChipsToCall, potStatus, ref raise, ref raising, rounds);
             }
 
-            if (player.Power <= 139 && player.Power >= 128)
+            if (player.HandPower <= 139 && player.HandPower >= 128)
             {
                 this.playerMove.PH(player, playerStatus, rCall, 7, rRaise, neededChipsToCall, potStatus, ref raise, ref raising, rounds);
             }
 
-            if (player.Power < 128 && player.Power >= 101)
+            if (player.HandPower < 128 && player.HandPower >= 101)
             {
                 this.playerMove.PH(player, playerStatus, rCall, 9, rRaise, neededChipsToCall, potStatus, ref raise, ref raising, rounds);
             }
@@ -49,17 +49,17 @@
         {
             int rCall = this.randomGenerator.Next(6, 11);
             int rRaise = this.randomGenerator.Next(6, 11);
-            if (player.Power <= 290 && player.Power >= 246)
+            if (player.HandPower <= 290 && player.HandPower >= 246)
             {
                 this.playerMove.PH(player, playerStatus, rCall, 3, rRaise, neededChipsToCall, potStatus, ref raise, ref raising, rounds);
             }
 
-            if (player.Power <= 244 && player.Power >= 234)
+            if (player.HandPower <= 244 && player.HandPower >= 234)
             {
                 this.playerMove.PH(player, playerStatus, rCall, 4, rRaise, neededChipsToCall, potStatus, ref raise, ref raising, rounds);
             }
 
-            if (player.Power < 234 && player.Power >= 201)
+            if (player.HandPower < 234 && player.HandPower >= 201)
             {
                 this.playerMove.PH(player, playerStatus, rCall, 4, rRaise, neededChipsToCall, potStatus, ref raise, ref raising, rounds);
             }
@@ -69,19 +69,19 @@
         {
             int tCall = this.randomGenerator.Next(3, 7);
             int tRaise = this.randomGenerator.Next(4, 8);
-            if (player.Power <= 390 && player.Power >= 330)
+            if (player.HandPower <= 390 && player.HandPower >= 330)
             {
                 this.Smooth(player, playerStatus, name, tCall, tRaise, neededChipsToCall, potStatus, ref raise, ref raising, ref rounds);
             }
 
             //10  8
-            if (player.Power <= 327 && player.Power >= 321)
+            if (player.HandPower <= 327 && player.HandPower >= 321)
             {
                 this.Smooth(player, playerStatus, name, tCall, tRaise, neededChipsToCall, potStatus, ref raise, ref raising, ref rounds);
             }
 
             //7 2
-            if (player.Power < 321 && player.Power >= 303)
+            if (player.HandPower < 321 && player.HandPower >= 303)
             {
                 this.Smooth(player, playerStatus, name, tCall, tRaise, neededChipsToCall, potStatus, ref raise, ref raising, ref rounds);
             }
@@ -91,17 +91,17 @@
         {
             int sCall = this.randomGenerator.Next(3, 6);
             int sRaise = this.randomGenerator.Next(3, 8);
-            if (player.Power <= 480 && player.Power >= 410)
+            if (player.HandPower <= 480 && player.HandPower >= 410)
             {
                 this.Smooth(player, playerStatus, name, sCall, sRaise, neededChipsToCall, potStatus, ref raise, ref raising, ref rounds);
             }
 
-            if (player.Power <= 409 && player.Power >= 407)
+            if (player.HandPower <= 409 && player.HandPower >= 407)
             {
                 this.Smooth(player, playerStatus, name, sCall, sRaise, neededChipsToCall, potStatus, ref raise, ref raising, ref rounds);
             }
 
-            if (player.Power < 407 && player.Power >= 404)
+            if (player.HandPower < 407 && player.HandPower >= 404)
             {
                 this.Smooth(player, playerStatus, name, sCall, sRaise, neededChipsToCall, potStatus, ref raise, ref raising, ref rounds);
             }
@@ -118,12 +118,12 @@
         {
             int fhCall = this.randomGenerator.Next(1, 5);
             int fhRaise = this.randomGenerator.Next(2, 6);
-            if (player.Power <= 626 && player.Power >= 620)
+            if (player.HandPower <= 626 && player.HandPower >= 620)
             {
                 this.Smooth(player, playerStatus, name, fhCall, fhRaise, neededChipsToCall, potStatus, ref raise, ref raising, ref rounds);
             }
 
-            if (player.Power < 620 && player.Power >= 602)
+            if (player.HandPower < 620 && player.HandPower >= 602)
             {
                 this.Smooth(player, playerStatus, name, fhCall, fhRaise, neededChipsToCall, potStatus, ref raise, ref raising, ref rounds);
             }
@@ -133,7 +133,7 @@
         {
             int fkCall = this.randomGenerator.Next(1, 4);
             int fkRaise = this.randomGenerator.Next(2, 5);
-            if (player.Power <= 752 && player.Power >= 704)
+            if (player.HandPower <= 752 && player.HandPower >= 704)
             {
                 this.Smooth(player, playerStatus, name, fkCall, fkRaise, neededChipsToCall, potStatus, ref raise, ref raising, ref rounds);
             }
@@ -143,15 +143,12 @@
         {
             int sfCall = this.randomGenerator.Next(1, 3);
             int sfRaise = this.randomGenerator.Next(1, 3);
-            if (player.Power <= 913 && player.Power >= 804)
+            if (player.HandPower <= 913 && player.HandPower >= 804)
             {
                 this.Smooth(player, playerStatus, name, sfCall, sfRaise, neededChipsToCall, potStatus, ref raise, ref raising, ref rounds);
             }
         }
-
-        /// <summary>
-        /// Method which 
-        /// </summary>
+        
         private void Smooth(IPlayer player, Label botStatus, int name, int n, int r, int neededChipsToCall, TextBox potStatus, ref int raise, ref bool raising, ref int rounds)
         {
             int rnd = this.randomGenerator.Next(1, 3);

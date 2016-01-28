@@ -20,26 +20,18 @@
             this.Name = name;
             this.Chips = DefaultStartChips;
             this.Panel = new Panel();
-            this.Type = -1;
-            this.Power = 0;
+            this.HandType = -1;
+            this.HandPower = 0;
             this.Call = 0;
             this.Raise = 0;
             this.CanMakeTurn = false;
             this.OutOfChips = false;
             this.Folded = false;
-
-            //Initialize player with two cards, the default number of cards for texas poker
-            //Expandable for poker with 5 cards
-            this.Cards = new List<ICard>
-            {
-                new Card(),
-                new Card()
-            };
         }
 
         public string Name { get; set; }
 
-        public double Power { get; set; }
+        public double HandPower { get; set; }
 
         public int Chips
         {
@@ -68,7 +60,7 @@
 
         public Panel Panel { get; set; }
 
-        public double Type { get; set; }
+        public double HandType { get; set; }
 
         public void InitializePanel(Point location)
         {

@@ -577,15 +577,15 @@
                 }
             }
 
-            if (player.Type == this.sorted.Current)
+            if (player.HandType == this.sorted.Current)
             {
-                if (player.Power == this.sorted.Power)
+                if (player.HandPower == this.sorted.Power)
                 {
                     this.winners++;
                     this.pokerDatabase.CheckWinners.Add(player.Name);
 
                     //Converted to switch case because 5.5 Player type was converted to 5 in the if statement as well
-                    switch ((int)player.Type)
+                    switch ((int)player.HandType)
                     {
                         case -1:
                             MessageBox.Show(player.Name + " High Card ");
@@ -803,15 +803,15 @@
                 this.rounds = 0;
                 this.type = 0;
 
-                this.human.Power = 0;
+                this.human.HandPower = 0;
 
                 foreach (var bot in this.bots)
                 {
-                    bot.Power = 0;
-                    bot.Type = -1;
+                    bot.HandPower = 0;
+                    bot.HandType = -1;
                 }
 
-                this.human.Type = -1;
+                this.human.HandType = -1;
                 this.pokerDatabase.Chips.Clear();
                 this.pokerDatabase.CheckWinners.Clear();
                 this.winners = 0;
@@ -1034,21 +1034,20 @@
             this.turnCount = 0;
 
             this.human.Panel.Visible = false;
-            this.human.Power = 0;
-            this.human.Type = -1;
+            this.human.HandPower = 0;
+            this.human.HandType = -1;
             this.human.Folded = false;
             this.human.OutOfChips = false;
             this.human.CanMakeTurn = true;
             this.human.Call = 0;
             this.human.Raise = 0;
             this.humanStatus.Text = string.Empty;
-
-            // some repetitions removed
+            
             for (int botCount = 0; botCount < this.bots.Count; botCount++)
             {
                 this.bots[botCount].Panel.Visible = false;
-                this.bots[botCount].Power = 0;
-                this.bots[botCount].Type = -1;
+                this.bots[botCount].HandPower = 0;
+                this.bots[botCount].HandType = -1;
                 this.bots[botCount].CanMakeTurn = false;
                 this.bots[botCount].OutOfChips = false;
                 this.bots[botCount].Folded = false;
@@ -1126,7 +1125,7 @@
         {
             if (!player.OutOfChips)
             {
-                switch ((int)player.Type)
+                switch ((int)player.HandType)
                 {
                     case -1:
                         this.handType.HighCard(player, playerStatus, this.neededChipsToCall, this.potStatus, ref this.raise, ref this.raising);
