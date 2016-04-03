@@ -1,7 +1,7 @@
 ﻿namespace Poker.Utility
 {
     /// <summary>
-    /// All constant values needed for the poker.
+    /// All constant values needed for the poker game.
     /// </summary>
     public static class Constants
     {
